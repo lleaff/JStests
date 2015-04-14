@@ -13,9 +13,12 @@
     Has to stay on a single line, need to use \n
     Can be concatenated with + ("black" + " cat" => "black cat")
 
+### Boolean
+    3 > 2
+	true
+
 ### Unary operators
 #### typeof
     Produces a string: 
 	typeof 4.5 => "number"
 
-    
