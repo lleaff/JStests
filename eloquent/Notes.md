@@ -40,4 +40,18 @@ typeof
     Conditional expression
 	cond ? ifTrue : ifFalse;
 
+## Automatic type conversion
 
+Unexpected results:
+
+    console.log(8*null)
+	// 0
+	console.log("5" - 1)
+	// 4
+	console.log("5" + 1)
+	// 51
+	(^ conversion to string takes precedence)
+	console.log("five" * 2)
+	// NaN
+	console.log(true + 4)
+	// 5
