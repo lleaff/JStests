@@ -3,6 +3,10 @@
 
 ## Value types
 
+### Numbers
+    8.5
+	2.0369e-12
+
 ### Special numbers
     Infinity	-Infinity
     NaN  <- 0 / 0  or Infinity - Infinity
@@ -30,3 +34,5 @@ typeof
 
     Conditional expression
 	cond ? ifTrue : ifFalse;
+
+
