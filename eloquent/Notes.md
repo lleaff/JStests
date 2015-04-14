@@ -21,10 +21,12 @@
 
 #### Unary
 typeof
+
     Produces a string: 
 	typeof 4.5 => "number"
 
 #### Ternary
 ?
+
     Conditional expression
 	cond ? ifTrue : ifFalse;
