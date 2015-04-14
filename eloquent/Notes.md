@@ -34,6 +34,20 @@ typeof
     Produces a string: 
 	typeof 4.5 => "number"
 
+### Binary
+    ==	Performs comparison with type coercion
+	"5" == 5	=> true
+	"5" != 5	=> false
+	===	Performs comparison without type coercion
+	"5" === 5	=> false
+	"5" !== 5	=> true
+
+For safety use three character comparison operators by default
+
+    && and || work on all value types
+	&& returns the first value to evaluate to false, otherwise returns the first value
+	|| returns the first value to evaluate to true, otherwise returns the first value
+
 #### Ternary
 ?
 
