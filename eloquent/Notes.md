@@ -21,6 +21,11 @@
     3 > 2
 	true
 
+### Undefined values
+    null   undefined
+	Some operations produce 'undefined'
+	null and undefined are pretty much interchangeable
+
 ### Operators
 
 #### Unary
