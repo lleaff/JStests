@@ -4,3 +4,6 @@
 ## Numbers
 
 # Special numbers
+    Infinity	-Infinity
+    NaN  <- 0 / 0  or Infinity - Infinity
+	NaN != NaN
