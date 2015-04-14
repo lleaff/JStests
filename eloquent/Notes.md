@@ -1,14 +1,14 @@
-##### Eloquent JavaScript
+# Eloquent JavaScript
 =========================
 
 ## Value types
 
-# Special numbers
+### Special numbers
     Infinity	-Infinity
     NaN  <- 0 / 0  or Infinity - Infinity
 	NaN != NaN
 
-# Strings
+### Strings
 Enclosed by " or '
 Has to stay on a single line, need to use \n
 Can be concatenated with + ("black" + " cat" => "black cat")
