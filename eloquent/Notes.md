@@ -14,4 +14,8 @@
     Can be concatenated with + ("black" + " cat" => "black cat")
 
 ### Unary operators
+#### typeof
+    Produces a string: 
+	typeof 4.5 => "number"
+
     
