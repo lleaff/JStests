@@ -29,12 +29,14 @@
 ### Operators
 
 #### Unary
-typeof
 
-    Produces a string: 
+    typeof	Produces a string: 
 	typeof 4.5 => "number"
 
 ### Binary
+
+Comparison operators
+
     ==	Performs comparison with type coercion
 	"5" == 5	=> true
 	"5" != 5	=> false
@@ -42,7 +44,9 @@ typeof
 	"5" === 5	=> false
 	"5" !== 5	=> true
 
-For safety use three character comparison operators by default
+For safety always use three character comparison operators by default
+
+Logic operators
 
     && and || work on all value types
 	&& returns the first value to evaluate to false, otherwise returns the first value
