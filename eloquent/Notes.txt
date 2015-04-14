@@ -1,7 +1,7 @@
 ##### Eloquent JavaScript
 =========================
 
-## Numbers
+## Value types
 
 # Special numbers
     Infinity	-Infinity
