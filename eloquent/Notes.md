@@ -17,8 +17,14 @@
     3 > 2
 	true
 
-### Unary operators
-#### typeof
+### Operators
+
+#### Unary
+typeof
     Produces a string: 
 	typeof 4.5 => "number"
 
+#### Ternary
+?
+    Conditional expression
+	cond ? ifTrue : ifFalse;
