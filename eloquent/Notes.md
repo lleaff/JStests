@@ -50,7 +50,7 @@ Logic operators
 
     && and || work on all value types
 	&& returns the first value to evaluate to false, otherwise returns the first value
-	|| returns the first value to evaluate to true, otherwise returns the first value
+	|| returns the first value to evaluate to true, otherwise returns the last value
 
 #### Ternary
 ?
