@@ -73,3 +73,13 @@ Unexpected results:
 	// NaN
 	console.log(true + 4)
 	// 5
+
+## Variables
+
+Case-sensitive
+Symbols allowed: 
+
+    [a-z] [A-Z] [0-9] _ $
+
+No '-' allowed
+Cannot begin with [0-9]
