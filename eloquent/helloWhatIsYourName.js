@@ -8,7 +8,7 @@ age *= 1.6;
 age -= age % 1
 
 /* Build reaction string */
-var ageReaction = age + " year" + (age < 1 ? "s" : "") + " old?\nThat's ";
+var ageReaction = age + " year" + (age > 1 ? "s" : "") + " old?\nThat's ";
 if (age < 20) {
 	ageReaction += "pretty young!";
 } else if (age < 50) {
