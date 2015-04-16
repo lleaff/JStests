@@ -1,4 +1,4 @@
-var name = 0;
+var name;
 var defaultName = "Robert";
 var timesAsked = 1;
 while (true) {
