@@ -50,7 +50,7 @@ Logic operators
 
     && and || work on all value types
 	&& returns the first value to evaluate to false, otherwise returns the first value
-	|| returns the first value to evaluate to true, otherwise returns the first value
+	|| returns the first value to evaluate to true, otherwise returns the last value
 
 #### Ternary
 ?
@@ -73,3 +73,13 @@ Unexpected results:
 	// NaN
 	console.log(true + 4)
 	// 5
+
+## Variables
+
+Case-sensitive
+Symbols allowed: 
+
+    [a-z] [A-Z] [0-9] _ $
+
+No '-' allowed
+Cannot begin with [0-9]
