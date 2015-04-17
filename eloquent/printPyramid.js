@@ -7,3 +7,9 @@ function drawPyramid(width)
 		}
 	}
 }
+
+// Wrapper for text output function
+function print(string)
+{
+	process.stdout.write(string);
+}
