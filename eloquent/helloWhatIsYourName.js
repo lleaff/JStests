@@ -37,7 +37,7 @@ while (true) {
 	}
 }
 
-if (!isNaN(age)) {
+if (!isNaN(age) && age != 0) {
 	/* Reveal the real age */
 	age *= 1.6;
 	/* Truncate */
