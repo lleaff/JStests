@@ -83,3 +83,10 @@ Symbols allowed:
 
 No '-' allowed
 Cannot begin with [0-9]
+
+## Functions
+
+No function overloading
+Each function is an object
+Functions have an "argument" property which is an object of itself
+    argument.length		// Number of arguments
