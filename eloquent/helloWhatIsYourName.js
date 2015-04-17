@@ -25,7 +25,7 @@ while (true) {
 	age = prompt("And how old are you " + name + "?"); 
 
 	/* Test result and react accordingly */
-	if (isNaN(age)) {
+	if (isNaN(age) || age == 0) {
 		if (timesAsked++ <= 2) {
 			alert("What?" + ((timesAsked === 3) ? "!" : ""));
 		} else {
