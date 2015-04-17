@@ -86,6 +86,9 @@ Cannot begin with [0-9]
 
 ## Functions
 
+Parameters don't have types
+    typeof(argument) === "number"
+    // can be used for runtime type checking
 No function overloading
 Each function is an object
 Functions have an "argument" property which is an object of itself
