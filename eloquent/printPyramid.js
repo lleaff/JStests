@@ -25,8 +25,6 @@ function print(str)
 		print.strbuffer = "";
 	}
 
-	var printfunc = console.log;
-
 	if (typeof(str) == "string") {
 		print.strbuffer += str;
 		/* When newline char is detected, output and clear buffer */
