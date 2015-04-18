@@ -13,7 +13,6 @@ function drawPyramid(width, brick = "@", space = " ")
 		for (; x < width; ++x) {
 			print(space);
 		}
-		console.log("DEBUG:\\n");
 		print("\n");
 	}
 }
@@ -27,9 +26,11 @@ function print(str)
 
 	if (typeof(str) == "string") {
 		print.strbuffer += str;
+		/* When newline char is detected, output and clear buffer */
 		if (print.strbuffer[print.strbuffer.length - 1] === "\n") {
 			print.strbuffer[print.strbuffer.length - 1] = "";
 			console.log(print.strbuffer + "<<<");
+			print.strbuffer = "";
 		}
 	} else {
 		console.log("ERROR: print: \""+ str + "\" is not a string");
