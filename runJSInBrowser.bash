@@ -16,7 +16,7 @@ if (( $# < 1 )); then
 if [ ! -f $1 ]; then 
 	echo -e "${errorcolor}$1: file not found, aborting"; exit 1; fi
 
-HTMLFILE=$SCRIPTDIR/$SCRIPTNAME'DummyPage.html'
+HTMLFILE=/tmp/$SCRIPTNAME'DummyPage.html'
 
 echo "<!-- Temporary html file for executing a .js file -->
 <!DOCTYPE html>
