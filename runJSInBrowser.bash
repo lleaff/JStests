@@ -8,10 +8,13 @@ CALLINGDIR=$(pwd)
 SCRIPTDIR=$(cd $(dirname $0) && pwd)
 SCRIPTNAME=$(basename ${0%.*})
 
+errorcolor='\033[1;31m'
 # Test if a file was given as argument
-if (( $# < 1 )); then echo "Usage: $(basename $0) myScript.js"; exit; fi
+if (( $# < 1 )); then 
+	echo -e "${errorcolor}Usage: $(basename $0) myScript.js"; exit 1; fi
 # Test if file given in argument really exist
-if [ ! -f $1 ]; then echo "$1: file not found, aborting"; exit; fi
+if [ ! -f $1 ]; then 
+	echo -e "${errorcolor}$1: file not found, aborting"; exit 1; fi
 
 HTMLFILE=$SCRIPTDIR/$SCRIPTNAME'DummyPage.html'
 
