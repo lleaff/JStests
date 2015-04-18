@@ -4,15 +4,19 @@ bodyBackgroundColor='#262626'
 
 ################################
 CALLINGDIR=$(pwd)
-HTMLFILE=${0%.*}'DummyPage.html'
+SCRIPTDIR=$(cd $(dirname $0) && pwd)
+SCRIPTNAME=$(basename ${0%.*})
+HTMLFILE=$SCRIPTDIR/$SCRIPTNAME'DummyPage.html'
 
-cd $(dirname $0)
+echo "SCRIPTDIR=$SCRIPTDIR"
+echo "HTMLFILE=$HTMLFILE"
+
 echo "<!-- Temporary html file for executing a .js file -->
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset=\"utf-8\">
-		<title>${0%.*}</title>
+		<title>${1%.*}</title>
 		<script src=\"$CALLINGDIR/$1\"></script>
 		<style>
 			body { background-color:$bodyBackgroundColor; }
