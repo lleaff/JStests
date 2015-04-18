@@ -76,6 +76,10 @@ Unexpected results:
 
 ## Variables
 
+Declare with 'var' or 'let'
+var: identifier is hoisted but not assignment, scope is global or limited to the function body
+let: not hoisted, scope is limited to the current block
+
 Case-sensitive
 Symbols allowed: 
 
