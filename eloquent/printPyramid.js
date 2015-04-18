@@ -20,19 +20,15 @@ function drawPyramid(width, brick = "@", space = " ")
 // Wrapper for text output function
 function print(str)
 {
-	if (print.strbuffer == undefined) {
-		console.log("STRBUFFER INITIALIZATION");//DEBUG
-		strbuffer = "";
+	if (print.strbuffer === undefined) {
+		print.strbuffer = "";
 	}
 
-	console.log("str = " + str);//DEBUG
 	if (typeof(str) == "string") {
 		print.strbuffer += str;
-		console.log("DEBUG:strbuffer>" + strbuffer);//DEBUG
-		if (strbuffer[strbuffer.length - 1] === "\n") {
-			alert("NEWLINE");//DEBUG
-			strbuffer[strbuffer.length - 1] = '';
-			console.log(strbuffer);
+		if (print.strbuffer[print.strbuffer.length - 1] === "\n") {
+			print.strbuffer[print.strbuffer.length - 1] = '';
+			console.log(print.strbuffer);
 		}
 	} else {
 		console.log("ERROR: print: \""+ str + "\" is not a string");
