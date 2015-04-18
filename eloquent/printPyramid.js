@@ -1,8 +1,9 @@
 drawPyramid(7);
 drawPyramid(10, "x", ".");
 
-function drawPyramid(width)
+function drawPyramid()
 {
+	var width = (arguments.length < 1 ? 5 : arguments[0]);
 	var brick = (arguments.length < 2 ? "@" : arguments[1]);
 	var space = (arguments.length < 3 ? " " : arguments[2]);
 
