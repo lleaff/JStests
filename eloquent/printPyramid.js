@@ -3,7 +3,7 @@ drawPyramid(10, "x", ".");
 
 function drawPyramid(width, brick = "@", space = " ")
 {
-	var height = width / 2;
+	var height = width / 2 + 0.5;
 	for (var y = 1; y <= height; ++y) {
 		for (var x = 0; x < (width / 2) - y; ++x) {
 			print(space);
