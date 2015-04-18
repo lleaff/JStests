@@ -90,6 +90,7 @@ Parameters don't have types
     typeof(argument) === "number"
     // can be used for runtime type checking
 No function overloading
-Each function is an object
+Each function is an object so it can have properties
+	(useful to emulate static variables)
 Functions have an "argument" property which is an object of itself
     argument.length		// Number of arguments
