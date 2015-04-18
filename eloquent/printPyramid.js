@@ -1,4 +1,5 @@
 drawPyramid(7);
+drawPyramid(10, "x", ".");
 
 function drawPyramid(width, brick = "@", space = " ")
 {
@@ -24,12 +25,14 @@ function print(str)
 		print.strbuffer = "";
 	}
 
+	var printfunc = console.log;
+
 	if (typeof(str) == "string") {
 		print.strbuffer += str;
 		/* When newline char is detected, output and clear buffer */
 		if (print.strbuffer[print.strbuffer.length - 1] === "\n") {
-			print.strbuffer[print.strbuffer.length - 1] = "";
-			console.log(print.strbuffer + "<<<");
+			console.log(print.strbuffer.substring(
+				0, print.strbuffer.length - 1));
 			print.strbuffer = "";
 		}
 	} else {
