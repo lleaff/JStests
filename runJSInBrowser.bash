@@ -4,15 +4,15 @@ bodyBackgroundColor='#262626'
 
 ################################
 
-# Test if file given in argument really exist
-if [ ! -f $1 ]; then
-	echo "$1: file not found, aborting";
-	exit;
-fi
-
 CALLINGDIR=$(pwd)
 SCRIPTDIR=$(cd $(dirname $0) && pwd)
 SCRIPTNAME=$(basename ${0%.*})
+
+# Test if a file was given as argument
+if (( $# < 1 )); then echo "Usage: $(basename $0) myScript.js"; exit; fi
+# Test if file given in argument really exist
+if [ ! -f $1 ]; then echo "$1: file not found, aborting"; exit; fi
+
 HTMLFILE=$SCRIPTDIR/$SCRIPTNAME'DummyPage.html'
 
 echo "<!-- Temporary html file for executing a .js file -->
