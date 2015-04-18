@@ -86,6 +86,7 @@ Cannot begin with [0-9]
 
 ## Functions
 
+Function definitions are hoisted (no need to forward declare)
 Parameters don't have types
     typeof(argument) === "number"
     // can be used for runtime type checking
