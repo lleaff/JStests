@@ -15,18 +15,19 @@ for (var i = 0; i < 5; ++i) {
 }
 
 
-function myDummyStrFunc(dumArg)
+function myDummyStrFunc(ch)
 {
 	if (myDummyStrFunc.dumStrProp === undefined) {
 		console.log("INITIALIZING dumStrProp");
-		myDummyStrFunc.dumStrProp = "a";
+		myDummyStrFunc.dumStrProp = "";
 	}
 
-	myDummyStrFunc.dumStrProp += "a";
+	myDummyStrFunc.dumStrProp += ch;
 
 	return myDummyStrFunc.dumStrProp;
 }
 
-for (var i = 0; i < 5; ++i) {
-	console.log(myDummyStrFunc());
+for (var i = 0, ch = "a"; i < 5; ++i) {
+	console.log(myDummyStrFunc(ch));
+	ch = String.fromCharCode(ch.charCodeAt() + 1); // Increment character
 }
