@@ -3,13 +3,17 @@ BROWSER='sensible-browser'
 bodyBackgroundColor='#262626'
 
 ################################
+
+# Test if file given in argument really exist
+if [ ! -f $1 ]; then
+	echo "$1: file not found, aborting";
+	exit;
+fi
+
 CALLINGDIR=$(pwd)
 SCRIPTDIR=$(cd $(dirname $0) && pwd)
 SCRIPTNAME=$(basename ${0%.*})
 HTMLFILE=$SCRIPTDIR/$SCRIPTNAME'DummyPage.html'
-
-echo "SCRIPTDIR=$SCRIPTDIR"
-echo "HTMLFILE=$HTMLFILE"
 
 echo "<!-- Temporary html file for executing a .js file -->
 <!DOCTYPE html>
