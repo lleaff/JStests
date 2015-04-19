@@ -1,5 +1,5 @@
 #!/bin/bash
-BROWSER='sensible-browser'
+BROWSER='sensible-browser' # Default browser
 bodyBackgroundColor='#262626'
 
 ################################
@@ -24,10 +24,10 @@ echo "<!-- Temporary html file for executing a .js file -->
 	<head>
 		<meta charset=\"utf-8\">
 		<title>${1%.*}</title>
-		<script src=\"$CALLINGDIR/$1\"></script>
 		<style>
 			body { background-color:$bodyBackgroundColor; }
 		</style>
+		<script src=\"$CALLINGDIR/$1\"></script>
 	</head>
 	<body>
 	</body>
