@@ -99,3 +99,15 @@ Each function is an object so it can have properties
 	(useful to emulate static variables)
 Functions have an "argument" property which is an object of itself
     argument.length		// Number of arguments
+
+#### Closures
+A function can return another function that references its local variables.
+That returned function is called a 'closure' because the variables it cointains will have the value they had when the closure was created, the function "closes over" the variables.
+
+    function mamaRabbit(babies) {
+			// This is the closure
+			return function(years) { return Math.pow(years, babies); }
+	}
+	var pregnantMama = mamaRabbit(8);
+	console.log(pregnantMama(3) + " bunnies");
+	//-> 6561 bunnies
