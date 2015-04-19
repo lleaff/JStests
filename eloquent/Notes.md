@@ -76,33 +76,35 @@ Unexpected results:
 
 ## Variables
 
-Declare with 'var' or 'let'
-var: identifier is hoisted but not assignment, scope is global or limited to the function body
-let: not hoisted, scope is limited to the current block
+Declare with 'var' or 'let'  
+var: identifier is hoisted but not assignment, scope is global or limited to the function body  
+let: not hoisted, scope is limited to the current block  
 
-Case-sensitive
+Case-sensitive  
 Symbols allowed: 
 
     [a-z] [A-Z] [0-9] _ $
 
-No '-' allowed
+No '-' allowed  
 Cannot begin with [0-9]
 
 ## Functions
 
-Function definitions are hoisted (no need to forward declare)
-Parameters don't have types
+Function definitions are hoisted (no need to forward declare)  
+Parameters don't have types  
+
     typeof(argument) === "number"
     // can be used for runtime type checking
-No function overloading
+No function overloading  
 Each function is an object so it can have properties
-	(useful to emulate static variables)
-Functions have an "argument" property which is an object of itself
-    argument.length		// Number of arguments
+	(useful to emulate static variables)  
+Functions have an "argument" property which is an object of itself  
+
+    argument.length		// Number of arguments  
 
 #### Closures
 A function can return another function that references its local variables.
-That returned function is called a 'closure' because the variables it cointains will have the value they had when the closure was created, the function "closes over" the variables.
+That returned function is called a 'closure' because the variables it contains will retain the value they had when the closure was created, the returned function "closes over" the variables.
 
     function mamaRabbit(babies) {
 			// This is the closure
