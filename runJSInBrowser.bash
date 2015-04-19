@@ -50,4 +50,8 @@ if hash xdotool 2>/dev/null; then
 	elif [[ -n $(ps aux | grep chromium | grep -v grep) ]]; then
 		xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" J keyup Shift keyup Ctrl;
 	fi
+else
+	echo "You should install xdotool so this script can open your browser's JavaScript console automatically"
 fi
+
+exit 0
