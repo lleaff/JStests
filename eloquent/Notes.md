@@ -78,7 +78,7 @@ Unexpected results:
 
 Declare with 'var' or 'let'  
 var: identifier is hoisted but not assignment, scope is global or limited to the function body  
-let: not hoisted, scope is limited to the current block  
+let: not hoisted, scope is limited to the current block [ES6]  
 
 Case-sensitive  
 Symbols allowed: 
@@ -98,9 +98,12 @@ Parameters don't have types
 No function overloading  
 Each function is an object so it can have properties
 	(useful to emulate static variables)  
-Functions have an "argument" property which is an object of itself  
+
+Functions have an "argument" property which is an object containing methods and properties to parse the argument list
 
     argument.length		// Number of arguments  
+
+Default parameters [ES6]
 
 #### Closures
 A function can return another function that references its local variables.
