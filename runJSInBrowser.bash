@@ -2,7 +2,7 @@
 
 ######## User variables ########
 
-BROWSER='sensible-browser' # Default browser
+BROWSERCMD='sensible-browser' # Default browser
 bodyBackgroundColor='#262626'
 HTMLFILEDIR='/tmp'
 
@@ -11,6 +11,7 @@ HTMLFILEDIR='/tmp'
 CALLINGDIR=$(pwd)
 SCRIPTDIR=$(cd $(dirname $0) && pwd)
 SCRIPTNAME=$(basename ${0%.*})
+WINDOWTITLE=${1%.*}
 
 errorcolor='\033[1;31m'
 # Test if a file was given as argument
@@ -27,7 +28,7 @@ echo "<!-- Temporary html file for executing a .js file -->
 <html>
 	<head>
 		<meta charset=\"utf-8\">
-		<title>${1%.*}</title>
+		<title>$WINDOWTITLE</title>
 		<style>
 			body { background-color:$bodyBackgroundColor; }
 		</style>
@@ -37,4 +38,16 @@ echo "<!-- Temporary html file for executing a .js file -->
 	</body>
 </html>" > $HTMLFILE
 
-$BROWSER $HTMLFILE > /dev/null 2>&1
+$BROWSERCMD $HTMLFILE > /dev/null 2>&1
+
+
+# Send keystrokes to open the JavaScript console
+if hash xdotool 2>/dev/null; then
+	# if firefox is detected
+	if [[ -n $(ps aux | grep firefox | grep -v grep) ]]; then
+		xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl;
+	# else if chromium is detected
+	elif [[ -n $(ps aux | grep chromium | grep -v grep) ]]; then
+		xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" J keyup Shift keyup Ctrl;
+	fi
+fi
