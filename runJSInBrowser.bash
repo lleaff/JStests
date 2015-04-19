@@ -1,4 +1,7 @@
 #!/bin/bash
+
+######## User variables ########
+
 BROWSER='sensible-browser' # Default browser
 bodyBackgroundColor='#262626'
 
@@ -12,7 +15,7 @@ errorcolor='\033[1;31m'
 # Test if a file was given as argument
 if (( $# < 1 )); then 
 	echo -e "${errorcolor}Usage: $(basename $0) myScript.js"; exit 1; fi
-# Test if file given in argument really exist
+# Test if file given in argument really exists
 if [ ! -f $1 ]; then 
 	echo -e "${errorcolor}$1: file not found, aborting"; exit 1; fi
 
