@@ -42,17 +42,20 @@ echo "<!-- Temporary html file for executing a .js file -->
 $BROWSERCMD $HTMLFILE > /dev/null 2>&1
 
 
-# Send keystrokes to open the JavaScript console
-if hash xdotool 2>/dev/null; then
-	# if firefox is detected
-	if [[ -n $(ps aux | grep firefox | grep -v grep) ]]; then
-		xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl;
-	# else if chromium is detected
-	elif [[ -n $(ps aux | grep chromium | grep -v grep) ]]; then
-		xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" J keyup Shift keyup Ctrl;
+# if X is detected
+if hash xset 2>/dev/null; then
+	# Send keystrokes to open the JavaScript console
+	if hash xdotool 2>/dev/null; then
+		# if firefox is detected
+		if [[ -n $(ps aux | grep firefox | grep -v grep) ]]; then
+			xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl;
+			# else if chromium is detected
+		elif [[ -n $(ps aux | grep chromium | grep -v grep) ]]; then
+			xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" J keyup Shift keyup Ctrl;
+		fi
+	else
+		echo "You should install xdotool so this script can open your browser's JavaScript console automatically"
 	fi
-else
-	echo "You should install xdotool so this script can open your browser's JavaScript console automatically"
 fi
 
 exit 0
