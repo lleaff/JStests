@@ -1,10 +1,11 @@
 console.log("You have two operations available:\n\tAdd 5\n\t Multiply by 3");
 console.log("For each number, print the shortest sequence of operations required to go from 1 to the target");
 
-var targets = [ 13, 15, 24, 511 ];
+var targets = [ 1, 3, 13, 15, 24, 511, 999, 1024, 9999999999999 ];
 
-for (var i = 0; i < targets.length; ++i) {
-	console.log(targets[i] + ':\n' + (solveProblem(targets[i]) || "Can't reach"));
+for (var i = 0, solution; i < targets.length; ++i) {
+	solution = solveProblem(targets[i]);
+	console.log(targets[i] + ':\n' + (solution === "none" ? "Can't reach" : solution));
 }
 
 function solveProblem(target) {
@@ -26,7 +27,7 @@ function solveProblem(target) {
 	find(start, "");
 
 	if (successfullOperationRoutes.length === 1) {
-		return null;
+		return "none";
 	} else {
 
 		// Need to find the maximum value to have something to compare the values to after
