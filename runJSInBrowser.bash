@@ -2,11 +2,35 @@
 
 ######## User variables ########
 
-BROWSERCMD='sensible-browser' # Default browser
+# Default browser
+BROWSERCMD=''
 bodyBackgroundColor='#262626'
 HTMLFILEDIR='/tmp'
 
 ################################
+
+errorcolor='\033[1;31m'
+
+# If no user-specified browser cmd, try to find the most appropriate one
+if [[ ! $BROWSERCMD ]]; then
+	if [[ $(uname -s) == Linux ]]; then
+		# For Debian based GNU/Linux distros
+		if [[ -f /etc/debian_version ]]; then
+			BROWSERCMD='sensible-browser' 
+		else
+			if [[ ! $(hash firefox) ]]; then
+				BROWSERCMD='firefox'
+			elif [[ ! $(hash chromium-browser) ]]; then
+				BROWSERCMD='chromium browser'
+			else 
+				echo "${errorcolor}No supported browser found, please modify the script to include yours or install Firefox or Chromium"; exit 1;
+			fi
+		fi
+	elif [[ $(uname -s) == "Darwin" ]]; then 
+		# For OSX
+		BROWSERCMD='open -a firefox'
+	fi
+fi
 
 CALLINGDIR=$(pwd)
 SCRIPTDIR=$(cd $(dirname $0) && pwd)
@@ -14,7 +38,6 @@ SCRIPTNAME=$(basename $0)
 SCRIPTNAME=${SCRIPTNAME%.*}
 WINDOWTITLE=${1%.*}
 
-errorcolor='\033[1;31m'
 # Test if a file was given as argument
 if (( $# < 1 )); then 
 	echo -e "${errorcolor}Usage: $(basename $0) myScript.js"; exit 1; fi
