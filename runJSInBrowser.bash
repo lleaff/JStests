@@ -10,7 +10,8 @@ HTMLFILEDIR='/tmp'
 
 CALLINGDIR=$(pwd)
 SCRIPTDIR=$(cd $(dirname $0) && pwd)
-SCRIPTNAME=$(basename ${0%.*})
+SCRIPTNAME=$(basename $0)
+SCRIPTNAME=${SCRIPTNAME%.*}
 WINDOWTITLE=${1%.*}
 
 errorcolor='\033[1;31m'
