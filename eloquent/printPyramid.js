@@ -26,17 +26,17 @@ function drawPyramid(width, brick, space)
 // Wrapper for text output function
 function print(str)
 {
-	if (print.strbuffer === undefined) {
-		print.strbuffer = "";
+	if (this.strbuffer === undefined) {
+		this.strbuffer = "";
 	}
 
 	if (typeof(str) == "string") {
-		print.strbuffer += str;
+		this.strbuffer += str;
 		/* When newline char is detected, output and clear buffer */
-		if (print.strbuffer[print.strbuffer.length - 1] === "\n") {
-			console.log(print.strbuffer.substring(
-				0, print.strbuffer.length - 1));
-			print.strbuffer = "";
+		if (this.strbuffer[this.strbuffer.length - 1] === "\n") {
+			console.log(this.strbuffer.substring(
+				0, this.strbuffer.length - 1));
+			this.strbuffer = "";
 		}
 	} else {
 		console.log("ERROR: print: \""+ str + "\" is not a string");
