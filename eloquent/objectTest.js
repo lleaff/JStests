@@ -1,6 +1,6 @@
 var animal = {
 	size: 5,
-	talk: function(str) {
+	talk: function yap(str) {
 		console.log(str.toUpperCase() + "!!!");
 	}
 };
