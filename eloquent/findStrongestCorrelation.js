@@ -2,3 +2,8 @@
 if (JOURNAL === undefined) {
 	throw new Error("JOURNAL not found, no file to operate on");
 }
+
+function hasEvent(entry, eventName)
+{
+	return entry.events.indexOf(eventName) !== -1;
+}
