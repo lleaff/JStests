@@ -47,6 +47,11 @@ if [ ! -f $1 ]; then
 
 HTMLFILE=$HTMLFILEDIR'/'$SCRIPTNAME'DummyPage.html'
 
+SCRIPTTAGS=""
+for jsfile in "$@"; do
+	SCRIPTTAGS=$SCRIPTTAGS"<script src=\"$CALLINGDIR/$jsfile\"></script>"$'\n\t\t'
+done
+
 echo "<!-- Temporary html file for executing a .js file -->
 <!DOCTYPE html>
 <html>
@@ -56,7 +61,7 @@ echo "<!-- Temporary html file for executing a .js file -->
 		<style>
 			body { background-color:$bodyBackgroundColor; }
 		</style>
-		<script src=\"$CALLINGDIR/$1\"></script>
+		$SCRIPTTAGS
 	</head>
 	<body>
 	</body>
