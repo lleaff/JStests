@@ -22,11 +22,13 @@ USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
 	-b, --browser:
 		Command to launch the browser
 	-B, --background:
-		background-color argument in body tag, default is \"$bodyBackgroundColor\"
+		Open browser in background (add & at end of command)
+	-c, --color:
+		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
 
 Examples:
 	$(basename $0) someFile.js anotherFile.js -b chromium-browser
-Opens an html file in Chromium with someFile.js and anotherFile.js included in this order
+Opens an html file in Chromium with someFile.js and anotherFile.js included in the same order
 "
 
 ####### Process options ########
@@ -73,9 +75,9 @@ if [[ ! $BROWSERCMD ]]; then
 			if [[ ! $(hash firefox) ]]; then
 				BROWSERCMD='firefox'
 			elif [[ ! $(hash chromium-browser) ]]; then
-				BROWSERCMD='chromium browser'
+				BROWSERCMD='chromium-browser'
 			else 
-				echo "${errorcolor}No supported browser found, please modify the script to include yours or install Firefox or Chromium"; exit 1;
+				echo "${errorcolor}No supported browser found, please specify one with the -b option or modify the first appearance of BROWSERCMD in the script to include yours to make it permanent, or install either Firefox or Chromium"; exit 1;
 			fi
 		fi
 	elif [[ $(uname -s) == "Darwin" ]]; then 
@@ -84,6 +86,20 @@ if [[ ! $BROWSERCMD ]]; then
 	fi
 fi
 
+# Find out what family of browser BROWSERCMD refers to
+BROWSER=""
+case "$BROWSERCMD" in
+	"sensible-browser" )
+		if [[ -n "$(sensible-browser --help | grep firefox)" ]]; then
+			BROWSER="firefox"
+		elif [[ -n "$(sensible-browser --help | grep chromium\|chrome)" ]]; then
+			BROWSER="chromium"
+		fi ;;
+	"firefox" )
+		BROWSER="firefox" ;;
+	"chromium-browser" | "GoogleChrome" )
+		BROWSER="chromium" ;;
+esac
 
 HTMLFILE=$HTMLFILEDIR'/'$SCRIPTNAME'DummyPage.html'
 
@@ -107,7 +123,8 @@ echo "<!-- Temporary html file for executing a .js file -->
 	</body>
 </html>" > $HTMLFILE
 
-$BROWSERCMD $HTMLFILE > /dev/null 2>&1
+if [[ $BROWSER == "chromium" ]]; then OPENINBACKGROUND='&'; fi
+eval "$BROWSERCMD $HTMLFILE > /dev/null 2>&1 $OPENINBACKGROUND"
 
 
 # if X is detected
@@ -115,12 +132,13 @@ if hash xset 2>/dev/null; then
 	# Send keystrokes to open the JavaScript console
 	if hash xdotool 2>/dev/null; then
 		# if firefox is detected
-		if [[ -n $(ps aux | grep firefox | grep -v grep) ]]; then
-			xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl;
-			# else if chromium is detected
-		elif [[ -n $(ps aux | grep chromium | grep -v grep) ]]; then
-			xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" J keyup Shift keyup Ctrl;
-		fi
+		XDOTOOLWINDOWOPTION="--window "$(xdotool search --name \"$WINDOWTITLE\")""
+		case $BROWSER in
+			"firefox" )
+				xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl; ;;
+			"chromium" )
+				xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" J keyup Shift keyup Ctrl; ;;
+		esac
 	else
 		echo "You should install xdotool so this script can open your browser's JavaScript console automatically"
 	fi
