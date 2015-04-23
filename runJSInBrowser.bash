@@ -13,7 +13,6 @@ CALLINGDIR=$(pwd)
 SCRIPTDIR=$(cd $(dirname $0) && pwd)
 SCRIPTNAME=$(basename $0)
 SCRIPTNAME=${SCRIPTNAME%.*}
-WINDOWTITLE=${1%.*}
 
 # Shell output colors
 nocolor='\033[0m'
@@ -39,11 +38,28 @@ while [[ $1 ]]; do
 		"-b" | "--browser" ) 
 			BROWSERCMD=$2; shift 2 ;;
 		"-B" | "--background" )
+			OPENINBACKGROUND='&'; shift ;;
+		"-c" | "--color" )
 			bodyBackgroundColor=$2; shift 2 ;;
 		* )
 			jsfiles=$jsfiles' '$1; shift ;;
 	esac
 done
+
+# Test if a file was given as argument
+if [[ $jsfiles == "" ]]; then 
+	echo -e "${errorcolor}$USAGE"; exit 1; 
+fi
+# Test if files given in argument really exists
+for f in $jsfiles; do
+	if [ ! -f $f ]; then 
+		echo -e "${errorcolor}$f: file not found, aborting${nocolor}"; exit 1; 
+	fi
+done
+
+# Take window title from name of first file argument
+read -r WINDOWTITLE _ <<< $jsfiles 
+WINDOWTITLE=${WINDOWTITLE%.*}
 
 ################################
 
@@ -68,16 +84,6 @@ if [[ ! $BROWSERCMD ]]; then
 	fi
 fi
 
-# Test if a file was given as argument
-if [[ $jsfiles == "" ]]; then 
-	echo -e "${errorcolor}$USAGE"; exit 1; 
-fi
-# Test if files given in argument really exists
-for f in $jsfiles; do
-	if [ ! -f $f ]; then 
-		echo -e "${errorcolor}$f: file not found, aborting${nocolor}"; exit 1; 
-	fi
-done
 
 HTMLFILE=$HTMLFILEDIR'/'$SCRIPTNAME'DummyPage.html'
 
