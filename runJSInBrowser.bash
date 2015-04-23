@@ -82,8 +82,13 @@ if [[ ! $BROWSERCMD ]]; then
 		fi
 	elif [[ $(uname -s) == "Darwin" ]]; then 
 		# For OSX
-		BROWSERCMD='open -a firefox'
+		BROWSERCMD='firefox'
 	fi
+fi
+
+# On OS X, use 'open -a' command to open the browser
+if [[ $(uname -s) == "Darwin" ]]; then
+	BROWSERCMD='open -a '$BROWSERCMD
 fi
 
 # Find out what family of browser BROWSERCMD refers to
