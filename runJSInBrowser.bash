@@ -128,7 +128,7 @@ echo "<!-- Temporary html file for executing a .js file -->
 	</body>
 </html>" > $HTMLFILE
 
-if [[ $BROWSER == "chromium" ]]; then OPENINBACKGROUND='&'; fi
+if [[ $BROWSERFAMILY == "chromium" ]]; then OPENINBACKGROUND='&'; fi
 eval "$BROWSERCMD $HTMLFILE > /dev/null 2>&1 $OPENINBACKGROUND"
 
 
@@ -138,7 +138,7 @@ if hash xset 2>/dev/null; then
 	if hash xdotool 2>/dev/null; then
 		# if firefox is detected
 		XDOTOOLWINDOWOPTION="--window "$(xdotool search --name \"$WINDOWTITLE\")""
-		case $BROWSER in
+		case $BROWSERFAMILY in
 			"firefox" )
 				xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl; ;;
 			"chromium" )
