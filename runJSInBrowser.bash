@@ -7,6 +7,27 @@ BROWSERCMD=''
 bodyBackgroundColor='#262626'
 HTMLFILEDIR='/tmp'
 
+####### Script variables #######
+
+CALLINGDIR=$(pwd)
+SCRIPTDIR=$(cd $(dirname $0) && pwd)
+SCRIPTNAME=$(basename $0)
+SCRIPTNAME=${SCRIPTNAME%.*}
+WINDOWTITLE=${1%.*}
+
+####### Process options ########
+
+while [[ $1 ]]; do
+	case $1 in
+		"-b" | "--browser" ) 
+			BROWSERCMD=$2; shift 2 ;;
+		"-B" | "--background" )
+			bodyBackgroundColor=$2; shift 2 ;;
+		* )
+			jsfiles=$jsfiles' '$1; shift ;;
+	esac
+done
+
 ################################
 
 errorcolor='\033[1;31m'
@@ -32,23 +53,21 @@ if [[ ! $BROWSERCMD ]]; then
 	fi
 fi
 
-CALLINGDIR=$(pwd)
-SCRIPTDIR=$(cd $(dirname $0) && pwd)
-SCRIPTNAME=$(basename $0)
-SCRIPTNAME=${SCRIPTNAME%.*}
-WINDOWTITLE=${1%.*}
-
 # Test if a file was given as argument
-if (( $# < 1 )); then 
-	echo -e "${errorcolor}Usage: $(basename $0) myScript.js"; exit 1; fi
-# Test if file given in argument really exists
-if [ ! -f $1 ]; then 
-	echo -e "${errorcolor}$1: file not found, aborting"; exit 1; fi
+if [[ $jsfiles == "" ]]; then 
+	echo -e "${errorcolor}Usage: $(basename $0) myScript.js"; exit 1; 
+fi
+# Test if files given in argument really exists
+for f in $jsfiles; do
+	if [ ! -f $f ]; then 
+		echo -e "${errorcolor}$f: file not found, aborting"; exit 1; 
+	fi
+done
 
 HTMLFILE=$HTMLFILEDIR'/'$SCRIPTNAME'DummyPage.html'
 
 SCRIPTTAGS=""
-for jsfile in "$@"; do
+for jsfile in $jsfiles; do
 	SCRIPTTAGS=$SCRIPTTAGS"<script src=\"$CALLINGDIR/$jsfile\"></script>"$'\n\t\t'
 done
 
