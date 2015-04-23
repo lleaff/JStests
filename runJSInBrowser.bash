@@ -15,10 +15,27 @@ SCRIPTNAME=$(basename $0)
 SCRIPTNAME=${SCRIPTNAME%.*}
 WINDOWTITLE=${1%.*}
 
+# Shell output colors
+nocolor='\033[0m'
+errorcolor='\033[1;31m'
+
+USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
+	-b, --browser:
+		Command to launch the browser
+	-B, --background:
+		background-color argument in body tag, default is \"$bodyBackgroundColor\"
+
+Examples:
+	$(basename $0) someFile.js anotherFile.js -b chromium-browser
+Opens an html file in Chromium with someFile.js and anotherFile.js included in this order
+"
+
 ####### Process options ########
 
 while [[ $1 ]]; do
 	case $1 in
+		"-h" | "--help" )
+			echo "$USAGE"; exit 0 ;;
 		"-b" | "--browser" ) 
 			BROWSERCMD=$2; shift 2 ;;
 		"-B" | "--background" )
@@ -29,8 +46,6 @@ while [[ $1 ]]; do
 done
 
 ################################
-
-errorcolor='\033[1;31m'
 
 # If no user-specified browser cmd, try to find the most appropriate one
 if [[ ! $BROWSERCMD ]]; then
@@ -55,12 +70,12 @@ fi
 
 # Test if a file was given as argument
 if [[ $jsfiles == "" ]]; then 
-	echo -e "${errorcolor}Usage: $(basename $0) myScript.js"; exit 1; 
+	echo -e "${errorcolor}$USAGE"; exit 1; 
 fi
 # Test if files given in argument really exists
 for f in $jsfiles; do
 	if [ ! -f $f ]; then 
-		echo -e "${errorcolor}$f: file not found, aborting"; exit 1; 
+		echo -e "${errorcolor}$f: file not found, aborting${nocolor}"; exit 1; 
 	fi
 done
 
