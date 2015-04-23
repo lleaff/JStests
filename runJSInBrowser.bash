@@ -128,7 +128,8 @@ echo "<!-- Temporary html file for executing a .js file -->
 	</body>
 </html>" > $HTMLFILE
 
-if [[ $BROWSERFAMILY == "chromium" ]]; then OPENINBACKGROUND='&'; fi
+
+# Launch the browser
 eval "$BROWSERCMD $HTMLFILE > /dev/null 2>&1 $OPENINBACKGROUND"
 
 
