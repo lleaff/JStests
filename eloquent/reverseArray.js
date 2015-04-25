@@ -6,7 +6,7 @@ assert.isArray = function(obj)
 		   obj.hasOwnProperty("0"));
 };
 
-function reversedArray(arrayToReverse)
+function reverseArray(arrayToReverse)
 {
 	// Type check
 	if (!assert.isArray(arrayToReverse)) {
@@ -21,4 +21,13 @@ function reversedArray(arrayToReverse)
 	}
 
 	return arr;
+}
+
+function reverseArraytest() {
+	var normalArr = [ 1, 2, 3 ];
+	var reversedArray = reverseArray(normalArr);
+	reverseArrayInPlace(normalArr);
+
+	if (reversedArray[2] !== 1 || normalArr[0] !== 3) return "failure";
+	else return "success";
 }
