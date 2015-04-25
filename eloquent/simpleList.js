@@ -46,7 +46,8 @@ function arrayToListRecur(arr)
 	return createLink(arr);
 }
 
-function __simpleListTest()
+if (tests === undefined) var tests = {};
+tests.simpleListTest = function() 
 {
 	var result = 0;
 
@@ -64,6 +65,6 @@ function __simpleListTest()
 	if (!result)	console.log("success");
 	else			console.log("failure (" + result + ")");
 	return result;
-}
+};
 
-__simpleListTest();
+tests.simpleListTest();
