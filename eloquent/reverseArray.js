@@ -1,9 +1,15 @@
+var assert = {};
+assert.isArray = function(obj) 
+{
+	return (obj !== undefined &&
+		   typeof(obj) === "object" &&
+		   obj.hasOwnProperty("0"));
+};
+
 function reversedArray(arrayToReverse)
 {
 	// Type check
-	if (arrayToReverse === undefined || 
-		typeof(arrayToReverse) !== "object" || 
-			!arrayToReverse.hasOwnProperty("0")) {
+	if (!assert.isArray(arrayToReverse)) {
 		throw new Error("reverseArray's argument must be an array");
 	}
 
