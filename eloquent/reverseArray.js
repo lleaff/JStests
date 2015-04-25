@@ -15,12 +15,25 @@ function reverseArray(arrayToReverse)
 
 	var arr = [];
 
-	var tmp;
 	for (var i = 0; i < arrayToReverse.length; ++i) {
 		arr[i] = arrayToReverse[arrayToReverse.length - 1 - i]; 
 	}
 
 	return arr;
+}
+
+function reverseArrayInPlace(arrayToReverse)
+{
+	if (!assert.isArray(arrayToReverse)) {
+		throw new Error("reverseArrayInPlace's argument must be an array");
+	}
+
+	var tmp;
+	for (var i = 0; i < arrayToReverse.length / 2; ++i) {
+		tmp = arrayToReverse[arrayToReverse.length - 1];
+		arrayToReverse[arrayToReverse.length - 1] = arrayToReverse[i];
+		arrayToReverse[i] = tmp;
+	}
 }
 
 function reverseArraytest() {
