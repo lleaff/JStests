@@ -1,10 +1,22 @@
 var animal = {
 	say: function(str) {
-		console.log(str);
+		console.log(str + 
+					(this.species !== undefined ? (" i'm a " + this.species) : ""));
 	}
 };
 
-var squirrel = Object.create(animal);
-squirrel.type = squirrel;
 
-squirrel.say("hey");
+
+var rabbit = Object.create(animal);
+rabbit.species = "rabbit";
+
+rabbit.say("hi!!");
+
+
+
+var mouse = {
+	species: "mouse"
+};
+Object.setPrototypeOf(mouse, animal);
+
+mouse.say("hullo :>");
