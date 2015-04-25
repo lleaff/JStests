@@ -1,12 +1,20 @@
-function range(startInt, endInt) {
+function range(startInt, endInt, step, forceEnd) {
+	if (step === undefined)		step = 1;
+	if (forceEnd === undefined)	forceEnd = false;
 	// Type check
-	if ((typeof(startInt) !== "number" || typeof(endInt) !== "number" ) || 
-		(startInt % 1 !== 0 || endInt % 1 !== 0))
+	if (typeof(startInt) !== "number" || typeof(endInt) !== "number" ||
+		typeof(step) !== "number")
 		throw new Error("range() arguments must be integer numbers");
 
 	var arr = [];
-	for (var i = startInt; i <= endInt; ++i)
+	for (var i = startInt; ; i += step) {
+		if ((step > 0 && i > endInt) || (step < 0 && i < endInt)) {
+			if (forceEnd && (i - step) !== endInt)
+				arr.push(endInt);
+			break;
+		}
 		arr.push(i);
+	}
 	return arr;
 }
 
