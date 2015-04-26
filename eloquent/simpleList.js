@@ -141,6 +141,7 @@ tests.simpleListTest = function()
 		li = li.prepend("z");
 
 		result += (li.value !== "z");
+		result += (li.nth(3) !== "c");
 	}
 
 
