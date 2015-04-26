@@ -1,8 +1,31 @@
-function deepEqual()
+var debug = false;
+function DEBUG(str) { if (debug) console.log("DEBUG   " + str); }
+
+function deepEqual(obj1, obj2)
 {
-
+	if (typeof(obj1) === "function") {
+		if (typeof(obj2) !== "function") return false;
+		else return ""+obj1 === ""+obj2;
+	} else if (typeof(obj1) !== "object" || obj1 === null) {
+		if (obj1 !== obj2)  {
+			DEBUG(obj1 + "!== " + obj2);
+			return false;
+		}
+	} else {
+		for (var prop in obj1) {
+			if (!obj2.hasOwnProperty(prop)) {
+				DEBUG("!obj2.hasOwnProperty(" + prop + ")");
+				return false;
+			} else {
+				if (!deepEqual(obj1[prop], obj2[prop])) {
+					DEBUG("!deepEqual("+ obj1[prop] +", "+ obj2[prop] +")");
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }
-
 
 function __deepEqualTest()
 {
