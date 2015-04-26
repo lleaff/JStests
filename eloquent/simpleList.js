@@ -142,6 +142,7 @@ tests.simpleListTest = function()
 
 		result += (li.value !== "z");
 		result += (li.nth(3) !== "c");
+		result += (li.nth(4) !== undefined);
 	}
 
 
