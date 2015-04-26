@@ -30,7 +30,7 @@ var list = {
 		function readLink(link, n) {
 			if (n === 0)
 				return link.value;
-			else if (link.rest === null)
+			else if (n < 0 || link.rest === null)
 				return undefined;
 			else 
 				return readLink(link.rest, --n);
@@ -142,6 +142,7 @@ tests.simpleListTest = function()
 
 		result += (li.value !== "z");
 		result += (li.nth(3) !== "c");
+		result += (li.nth(-1) !== undefined);
 		result += (li.nth(4) !== undefined);
 	}
 
