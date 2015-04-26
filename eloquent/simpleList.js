@@ -100,6 +100,7 @@ tests.simpleListTest = function()
 {
 	var result = 0;
 
+
 	function testArrayToList(atolver) {
 		var li = atolver([ "a", "b", "c" ]);
 
@@ -111,6 +112,7 @@ tests.simpleListTest = function()
 	testArrayToList(arrayToList);
 	testArrayToList(arrayToListRecur);
 
+
 	function testListToArray(ltoaver) {
 		var ar = ltoaver(createList("a", "b", "c"));
 
@@ -119,6 +121,15 @@ tests.simpleListTest = function()
 	}
 
 	testListToArray(listToArray);
+
+
+	{
+		var li = createList("a", "b", "c");
+		li = li.prepend("z");
+
+		result += (li.value !== "z");
+	}
+
 
 	if (!result)	console.log("success");
 	else			console.log("failure (" + result + ")");
