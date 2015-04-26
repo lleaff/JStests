@@ -19,10 +19,10 @@ var list = {
 	rest: null,
 
 	prepend: function(elem) {
-		var newFistLink = Object.create(list);
+		var newFirstLink = Object.create(list);
 		newFirstLink.value = elem;
 		newFirstLink.rest = this;
-		return newFistLink;
+		return newFirstLink;
 	}
 };
 
