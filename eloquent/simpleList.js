@@ -19,6 +19,23 @@ var list = {
 	rest: null
 };
 
+function createList()
+{
+	var args = arguments;
+	function createLink(i) {
+		if (i >= args.length) {
+			return null;
+		} else {
+			var link = Object.create(list);
+			link.value = args[i];
+			link.rest = createLink(++i);
+			return link;
+		}
+	}
+
+	return createLink(0);
+}
+
 function arrayToList(arr)
 {
 	if (!assert.isArray(arr)) 
@@ -86,6 +103,12 @@ tests.simpleListTest = function()
 
 	testArrayToList(arrayToList);
 	testArrayToList(arrayToListRecur);
+
+	function testListToArray(ltoaver) {
+		var ar = ltoaver();
+	}
+
+	testListToArray(listToArray);
 
 	if (!result)	console.log("success");
 	else			console.log("failure (" + result + ")");
