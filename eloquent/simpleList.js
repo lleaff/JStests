@@ -105,7 +105,10 @@ tests.simpleListTest = function()
 	testArrayToList(arrayToListRecur);
 
 	function testListToArray(ltoaver) {
-		var ar = ltoaver();
+		var ar = ltoaver(createList("a", "b", "c"));
+
+		result += (ar[0] !== "a");
+		result += (ar[2] !== "c");
 	}
 
 	testListToArray(listToArray);
