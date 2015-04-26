@@ -1,9 +1,18 @@
 var assert = {};
+
 assert.isArray = function(obj) {
 	return (obj !== undefined &&
 			typeof(obj) === "object" &&
 			obj.hasOwnProperty("0"));
 };
+
+assert.isList = function(obj) {
+	return (obj !== undefined &&
+		   typeof(obj) === "object" &&
+		   obj.hasOwnProperty("value") &&
+		   obj.hasOwnProperty("rest"));
+};
+
 
 var list = {
 	value: null,
@@ -28,7 +37,7 @@ function arrayToList(arr)
 function arrayToListRecur(arr)
 {
 	if (!assert.isArray(arr))
-		throw new Error ("arrayToListRecur: arr needs to be an array object");
+		throw new Error ("arrayToListRecur(): arr needs to be an array object");
 
 	function createLink(myArray, index) {
 		if (index === undefined) index = 0;
@@ -45,6 +54,14 @@ function arrayToListRecur(arr)
 
 	return createLink(arr);
 }
+
+
+function listToArray(myList)
+{
+	if (!assert.isList(myList))
+		throw new Error ("listToArray(): myList needs to be a list object");
+}
+
 
 if (tests === undefined) var tests = {};
 tests.simpleListTest = function() 
