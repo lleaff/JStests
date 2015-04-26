@@ -47,28 +47,34 @@ function __deepEqualTest()
 		}
 	};
 
-	var testObj2 = {
-		prop1: 4,
-		prop2: {
-			prop1: 9,
-			fn1: function() { return 1; }
-		}
-	};
+	var testObjects = [
+		[{
+			prop1: 4,
+			prop2: {
+				prop1: 9,
+				fn1: function() { return 1; }
+			}
+		}, true ],
 
-	var testObj3 = {
-		prop1: 4
-	};
-	
-	var testObj4 = {
-		prop1: 4,
-		prop2: {
-			prop1: 0
-		}
-	};
+		[{
+			prop1: 4
+		}, false ],
 
-	test(deepEqual(testObj1, testObj2), true);
-	test(deepEqual(testObj1, testObj3), false);
-	test(deepEqual(testObj1, testObj4), false);
+		[{
+			prop1: 4,
+			prop2: {
+				prop1: 0
+			}
+		}, false ],
+
+		[
+			5, 
+			false ]
+	];
+
+	for (var i = 0; i < testObjects.length; ++i) {
+		test(deepEqual(testObj1, testObjects[i][0]), testObjects[i][1]);
+	}
 
 	console.log(result ? ("failure: " + result) : "success");
 	return result;
