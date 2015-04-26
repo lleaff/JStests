@@ -27,10 +27,12 @@ var list = {
 
 	// Returns the value of the list's nth element
 	nth: function(n) {
+		if (n < 0) return undefined;
+
 		function readLink(link, n) {
 			if (n === 0)
 				return link.value;
-			else if (n < 0 || link.rest === null)
+			else if (link.rest === null)
 				return undefined;
 			else 
 				return readLink(link.rest, --n);
