@@ -23,6 +23,19 @@ var list = {
 		newFirstLink.value = elem;
 		newFirstLink.rest = this;
 		return newFirstLink;
+	},
+
+	// Returns the value of the list's nth element
+	nth: function(n) {
+		function readLink(link, n) {
+			if (n === 0)
+				return link.value;
+			else if (link.rest === null)
+				return undefined;
+			else 
+				return readLink(link.rest, --n);
+		}
+		return readLink(this, n);
 	}
 };
 
