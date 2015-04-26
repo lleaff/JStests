@@ -8,6 +8,10 @@ function __deepEqualTest()
 {
 	var result = 0;
 
+	function test(expression, expectedResult) {
+		result += (expression !== expectedResult);
+	}
+
 	var testObj1 = {
 		prop1: 4,
 		prop2: {
@@ -31,8 +35,8 @@ function __deepEqualTest()
 		}
 	};
 
-	result += (!deepEqual(testObj1, testObj2));
-	result += (deepEqual(testObj1, testObj3));
+	test(deepEqual(testObj1, testObj2), true);
+	test(deepEqual(testObj1, testObj3), false);
 
 	console.log(result ? ("failure :" + result) : "success");
 	return result;
