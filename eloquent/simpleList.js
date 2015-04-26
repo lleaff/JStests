@@ -79,7 +79,7 @@ function listToArray(myList)
 		throw new Error ("listToArray(): myList needs to be a list object");
 
 	var myArray = [];
-	for (var i = 0; ; ++i) {
+	for (var i = 0; myList !== null; ++i) {
 		myArray[i] = myList.value;
 		myList = myList.rest;
 	}
