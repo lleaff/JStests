@@ -30,7 +30,8 @@ Object.prototype.advForEach = function(fn, arrValPos) {
 		fn.apply(callingObj, callArgs);
 	};
 
-	this.basicForEach(cfn);
+	for (var i = 0; i < this.length; ++i)
+		cfn(this[i]);
 };
 
 function print() { console.log.apply(console, arguments); }
