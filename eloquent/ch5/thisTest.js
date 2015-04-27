@@ -55,6 +55,7 @@ function big() {
 
 big();
 
+
 var BIG = new big();
 
 BIG.small("BIG");
