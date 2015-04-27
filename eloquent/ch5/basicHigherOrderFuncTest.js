@@ -11,6 +11,8 @@ Object.prototype.basicForEach =  function(fn) {
 testArr.basicForEach(function(a) { console.log(a + 1); });
 
 
+/* Usage: array.advForEach(func, 2, "first", "second", "third", "fourth"); 
+ * => func( "first", "second", array[i], "third", "fourth"); */
 Object.prototype.advForEach = function(fn, arrValPos) {
 	if (!this.hasOwnProperty('0')) throw new Error(this.toString + "is not an array");
 
