@@ -23,9 +23,8 @@ console.log("ancestry[3].name: " + ancestry[3].name);
 function arrayFilter(array, test)
 {
 	var valid = [];
-	for (var i = 0; i < array.length; ++i)
-		if (test(array[i]))
-			valid.push(array[i]);
+	array.forEach(
+		function(val) { if (test(val)) { valid.push(val); } } );
 	return valid;
 }
 
