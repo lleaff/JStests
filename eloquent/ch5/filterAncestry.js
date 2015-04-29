@@ -9,6 +9,7 @@ ancestry.getAge = function(index)
 
 console.log("length: "+ancestry.length);
 
-console.log("JSON.stringify(): \n"+
-			JSON.stringify(ancestry[3], ["name", "sex", "born", "died"], 1) + "\"age\":" + ancestry.getAge(3));
-console.log("ancestry[3].name: "+ancestry[3].name);
+console.log("JSON.stringify(): \n" +
+			JSON.stringify(ancestry[3], ["name", "sex", "born", "died"], 1) +
+			"\"age\":" + ancestry.getAge(3));
+console.log("ancestry[3].name: " + ancestry[3].name);
