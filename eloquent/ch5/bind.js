@@ -19,3 +19,34 @@ evenArr.forEach(console.log.bind(console, ">"));
 drawSeparator();
 
 evenArr.forEach(function(a) { console.log(a); });
+
+drawSeparator("=");
+
+function toBase(base, decimalInt)
+{
+	if (!(typeof(base) === typeof(decimalInt) && typeof(base) === "number"))
+		throw new Error("toBase: base and number arguments must be of type \"number\"");
+
+	function numToDigit(num)
+	{
+		if (num > 36) throw new Error("numToDigit: base > 36 not supported");
+		if (num < 10)
+			return Math.floor(num).toString();
+		else
+			return String.fromCharCode("A".charCodeAt(0) + Math.floor(num) - 10);
+	}
+
+	return (
+		function helper(str, decimalInt)
+		{
+			if (decimalInt < base) {
+				return numToDigit(decimalInt);
+			} else {
+				var tmp = decimalInt;
+				decimalInt /= base;
+				tmp -= decimalInt;
+				return numToDigit(tmp) + helper(str, Math.floor(decimalInt / base));
+			}
+		}
+	)("", decimalInt);
+}
