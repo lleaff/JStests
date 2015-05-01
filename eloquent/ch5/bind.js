@@ -29,7 +29,7 @@ function toBase(base, decimalInt)
 
 	function numToDigit(num)
 	{
-		if (num > 36) throw new Error("numToDigit: base > 36 not supported");
+		if (num > 36) throw new Error("toBase("+decimalInt+"): numToDigit("+num+"): base > 36 not supported");
 		if (num < 10)
 			return Math.floor(num).toString();
 		else
@@ -50,3 +50,9 @@ function toBase(base, decimalInt)
 		}
 	)("", decimalInt);
 }
+
+var toHex = toBase.bind(null, 16);
+
+var testToBaseVals = [ 1, 10, 15, 16, 25, 255, 10000 ];
+
+testToBaseVals.forEach(function(a) { console.log(a+": "+toHex(a)); });
