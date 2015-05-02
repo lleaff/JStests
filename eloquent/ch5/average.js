@@ -29,4 +29,12 @@ function randomIntArray(length, lowerLimit, upperLimit)
 	return arr;
 }
 
+Array.prototype.print = function() {
+	var str = "";
+	for (var i = 0; i < this.length; ++i)
+		str += this[i] + ((i == this.length - 1) ? "" : ", ");
+		console.log(str);
+};
+
 var testArr = randomIntArray(10, 0, 10);
+testArr.print();
