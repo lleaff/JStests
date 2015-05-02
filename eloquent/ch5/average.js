@@ -36,6 +36,7 @@ Array.prototype.print = function() {
 		console.log(str);
 };
 
+/* Execution */
 console.log("Deviation: " + (function test(testC) {
 	var expectedAverage = 5;
 	var range = [0, 10];
