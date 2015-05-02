@@ -30,6 +30,7 @@ function toBase(base, decimalInt)
 	function numToDigit(num)
 	{
 		if (num > 36) throw new Error("toBase("+decimalInt+"): numToDigit("+num+"): base > 36 not supported");
+		if (num % 1) console.log("[Warning]: "+num+" is not an integer, flooring it to "+Math.floor(num));
 		if (num < 10)
 			return Math.floor(num).toString();
 		else
@@ -42,10 +43,7 @@ function toBase(base, decimalInt)
 			if (decimalInt < base) {
 				return numToDigit(decimalInt);
 			} else {
-				var tmp = decimalInt;
-				decimalInt /= base;
-				tmp -= decimalInt;
-				return numToDigit(tmp) + helper(str, Math.floor(decimalInt / base));
+				return helper(str, Math.floor(decimalInt / base)) + numToDigit(Math.floor(decimalInt % base));
 			}
 		}
 	)("", decimalInt);
