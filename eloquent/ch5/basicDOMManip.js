@@ -9,8 +9,17 @@ var fakeButt = document.createElement("div");
 // <div></div>
 fakeButt.appendChild(document.createTextNode("button-ton!"));
 // <div>button-ton</div>
+fakeButt.appendChild(document.createElement("br"));
+// <div>button-ton<br/></div>
+fakeButt.appendChild(document.createTextNode("ton-ton!"));
+// <div>button-ton<br/>ton-ton!</div>
 fakeButt.setAttribute("style",
-					  "background-color: #100; color: #ff6; display: block; font-size: 1em; width: 6em");
+					  "background-color: #333;"+
+						  "color: #ff6;"+
+						  "display: block;"+
+						  "font-size: 1em;"+
+						  "width: 19em;"+
+						  "height: 2.5em;");
 //<div style="backgr...">button-ton</div>
 fakeButt.onclick = function() {
 alert("I'm a button!");
