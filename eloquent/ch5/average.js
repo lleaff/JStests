@@ -37,13 +37,16 @@ Array.prototype.print = function() {
 };
 
 /* Execution */
-console.log("Deviation: " + (function test(testC) {
-	var expectedAverage = 5;
-	var range = [0, 10];
-	var averages = [];
-	for (testArr = []; testC > 0; --testC) {
-		testArr = randomIntArray(10, range[0], range[1]);
-		averages.push(average(testArr));
+function test() {
+	console.log("Deviation: " + (function test(testC) {
+		var expectedAverage = 5;
+		var range = [0, 10];
+		var averages = [];
+		for (testArr = []; testC > 0; --testC) {
+			testArr = randomIntArray(10, range[0], range[1]);
+			averages.push(average(testArr));
+		}
+		return Math.abs(average(averages) - expectedAverage);
+	})(100000));
+}
 	}
-	return Math.abs(average(averages) - expectedAverage);
-})(100000));
