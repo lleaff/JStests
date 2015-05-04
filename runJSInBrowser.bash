@@ -115,6 +115,19 @@ if [[ "$(ls -A $TMPFILESDIR)" ]]; then
 	fi
 fi
 
+# Populate script work directory
+if [[ ! $copyjsfiles ]]; then linkOperationForjsfiles='ln -s';
+else linkOperationForjsfiles='cp'; fi
+if [[ ! $nosymlink ]]; then linkOperationForextrafiles='ln -s';
+else linkOperationForextrafiles='cp'; fi
+
+for file in $jsfiles; do
+	$linkOperationForjsfiles $(realpath $file) "$TMPFILESDIR/$(basename $file)"
+done
+for file in $extrafiles; do
+	$linkOperationForextrafiles $(realpath $file) "$TMPFILESDIR/$(basename $file)"
+done
+
 ################################
 
 # If no user-specified browser cmd, try to find the most appropriate one
