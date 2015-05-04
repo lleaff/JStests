@@ -181,11 +181,11 @@ case "$BROWSERCMD" in
 		BROWSER="chromium" ;;
 esac
 
-HTMLFILE=$HTMLFILEDIR'/'$SCRIPTNAME'DummyPage.html'
+HTMLFILE=$TMPFILESDIR'/'$SCRIPTNAME'DummyPage.html'
 
 SCRIPTTAGS=""
 for jsfile in $jsfiles; do
-	SCRIPTTAGS=$SCRIPTTAGS"<script src=\"$CALLINGDIR/$jsfile\"></script>"$'\n\t\t'
+	SCRIPTTAGS=$SCRIPTTAGS"<script src=\"$jsfile\"></script>"$'\n\t\t'
 done
 
 echo "<!DOCTYPE html>
