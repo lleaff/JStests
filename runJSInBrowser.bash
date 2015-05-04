@@ -188,8 +188,9 @@ for jsfile in $jsfiles; do
 	SCRIPTTAGS=$SCRIPTTAGS"<script src=\"$CALLINGDIR/$jsfile\"></script>"$'\n\t\t'
 done
 
-echo "<!-- Temporary html file for executing a .js file -->
-<!DOCTYPE html>
+echo "<!DOCTYPE html>
+<!-- Temporary html file for executing JavaScript files -->
+
 <html>
 	<head>
 		<meta charset=\"utf-8\">
