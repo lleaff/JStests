@@ -90,6 +90,27 @@ if [[ ! -d $TMPFILESDIR ]]; then
 	$NEEDSUDO mkdir -p $TMPFILESDIR
 	$NEEDSUDO chown $USER $TMPFILESDIR
 fi
+
+# Clean script work directory
+if [[ "$(ls -A $TMPFILESDIR)" ]]; then
+	for file in $TMPFILESDIR/*; do
+		found=false
+		for folderfile in $extrafiles; do
+			if [[ "($basename $folderfile)" == $(basename $file) ]]; then
+				found=true
+			fi
+		done
+		if [[ $found == false ]]; then 
+			rm $file; deletedfiles=$deletedfiles' '$(basename $file);
+		fi 
+	done
+	if [[ $deletedfiles ]]; then
+		echo -e "${discreetcolor}Removed old temporary files in $TMPFILESDIR:\n$deletedfiles${nocolor}";
+	fi
+fi
+
+################################
+
 # If no user-specified browser cmd, try to find the most appropriate one
 if [[ ! $BROWSERCMD ]]; then
 	if [[ $(uname -s) == Linux ]]; then
