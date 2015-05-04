@@ -54,6 +54,12 @@ while [[ $1 ]]; do
 			OPENINBACKGROUND='&'; shift ;;
 		"-c" | "--color" )
 			bodyBackgroundColor=$2; shift 2 ;;
+		"-i" | "--include" )
+			extrafiles=$extrafiles' '$2; shift 2 ;;
+		"-l" | "--nosymlink" )
+			nosymlink=true; shift ;;
+		"-C" | "--copyjsfiles" )
+			copyjsfiles=true; shift ;;
 		* )
 			jsfiles=$jsfiles' '$1; shift ;;
 	esac
