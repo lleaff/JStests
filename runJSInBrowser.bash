@@ -216,7 +216,7 @@ if hash xset 2>/dev/null; then
 	if hash xdotool 2>/dev/null; then
 		# if firefox is detected
 		XDOTOOLWINDOWOPTION="--window "$(xdotool search --name \"$WINDOWTITLE\")""
-		case $BROWSERFAMILY in
+		case $BROWSER in
 			"firefox" )
 				xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl; ;;
 			"chromium" )
