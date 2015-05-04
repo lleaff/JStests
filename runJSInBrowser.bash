@@ -16,7 +16,9 @@ SCRIPTNAME=${SCRIPTNAME%.*}
 
 # Shell output colors
 nocolor='\033[0m'
-errorcolor='\033[1;31m'
+errorcolor='\033[1;31m' #red
+okcolor='\033[0;32m' #green
+discreetcolor='\033[0;35m' #purple
 
 USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
 	-b, --browser:
@@ -144,6 +146,7 @@ echo "<!-- Temporary html file for executing a .js file -->
 
 
 # Launch the browser
+echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
 eval "$BROWSERCMD $HTMLFILE > /dev/null 2>&1 $OPENINBACKGROUND"
 
 
