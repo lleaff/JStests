@@ -5,7 +5,7 @@
 # Default browser
 BROWSERCMD=''
 bodyBackgroundColor='#262626'
-HTMLFILEDIR='/tmp'
+BASEDIR='/tmp'
 
 ####### Script variables #######
 
@@ -65,6 +65,20 @@ WINDOWTITLE=${WINDOWTITLE%.*}
 
 ################################
 
+TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
+
+# Create script work directory if it doesn't exist
+if [[ ! -d $TMPFILESDIR ]]; then
+	if [[ $(stat $BASEDIR --format=%U) == "root" ]]; then
+		NEEDSUDO=sudo
+		echo "Need root permission to create folder in $BASEDIR, using \"sudo\"..."
+	else 
+		NEEDSUDO="" 
+	fi
+
+	$NEEDSUDO mkdir -p $TMPFILESDIR
+	$NEEDSUDO chown $USER $TMPFILESDIR
+fi
 # If no user-specified browser cmd, try to find the most appropriate one
 if [[ ! $BROWSERCMD ]]; then
 	if [[ $(uname -s) == Linux ]]; then
