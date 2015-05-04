@@ -222,7 +222,6 @@ if hash xset 2>/dev/null; then
 	# Send keystrokes to open the JavaScript console
 	if hash xdotool 2>/dev/null; then
 		xdotoolBrowserWindow=$(echo $(xdotool search --name "$HTMLDOCTITLE") | awk '{print $1}')
-		echo "windowid=$xdotoolBrowserWindow"
 		xdotool windowactivate $xdotoolBrowserWindow
 		case $BROWSER in
 			"firefox" )
