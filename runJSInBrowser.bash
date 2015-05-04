@@ -213,8 +213,8 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-disown
 eval "$OSXOpenPrefix$BROWSERCMD $HTMLFILE $BROWSEROPTIONS > /dev/null 2>&1 &"
+if [[ ! $OSXOpenPrefix ]]; then disown; fi
 
 
 # if X is detected
