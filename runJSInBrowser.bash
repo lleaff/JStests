@@ -33,6 +33,15 @@ Examples:
 Opens an html file in Chromium with someFile.js and anotherFile.js included in the same order
 "
 
+drawSeparator()
+{
+	if [[ $1 ]]; then sign=$1; else sign='-'; fi
+	# Stupid but reliable method that works with '*'
+	str=""
+	i=$(tput cols); while [[ $i > 0 ]]; do str+="$sign"; i=$[$i-1]; done
+	echo "$str"
+}
+
 ####### Process options ########
 
 while [[ $1 ]]; do
