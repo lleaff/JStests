@@ -168,9 +168,11 @@ fi
 BROWSER=""
 case "$BROWSERCMD" in
 	"sensible-browser" )
-		if [[ -n "$(sensible-browser --help | grep firefox)" ]]; then
+		if [[ -n "$(sensible-browser --help 2>/dev/null |
+			grep firefox)" ]]; then
 			BROWSER="firefox"
-		elif [[ -n "$(sensible-browser --help | grep chromium\|chrome)" ]]; then
+		elif [[ -n "$(sensible-browser --help 2>/dev/null | 
+			grep chromium\|chrome)" ]]; then
 			BROWSER="chromium"
 		fi ;;
 	"firefox" )
@@ -199,7 +201,7 @@ echo "<!-- Temporary html file for executing a .js file -->
 	</head>
 	<body>
 	</body>
-</html>" > $HTMLFILE
+</html>" 1> $HTMLFILE 2> /dev/null
 
 
 # Launch the browser
