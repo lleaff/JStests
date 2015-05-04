@@ -31,8 +31,6 @@ USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
 		Copy the JavaScript(s) files instead of making symbolic links to them, you will have to rerun this script to apply updates to your script(s)
 	-b, --browser:
 		Command to launch the browser
-	-B, --background:
-		Open browser in background (add & at end of command)
 	-c, --color:
 		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
 
@@ -58,8 +56,6 @@ while [[ $1 ]]; do
 			echo "$USAGE"; exit 0 ;;
 		"-b" | "--browser" ) 
 			BROWSERCMD=$2; shift 2 ;;
-		"-B" | "--background" )
-			OPENINBACKGROUND='&'; shift ;;
 		"-c" | "--color" )
 			bodyBackgroundColor=$2; shift 2 ;;
 		"-i" | "--include" )
@@ -207,7 +203,8 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-eval "$BROWSERCMD $HTMLFILE > /dev/null 2>&1 $OPENINBACKGROUND"
+eval "$BROWSERCMD $HTMLFILE > /dev/null 2>&1 &"
+disown
 
 
 # if X is detected
