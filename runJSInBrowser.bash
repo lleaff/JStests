@@ -21,6 +21,14 @@ okcolor='\033[0;32m' #green
 discreetcolor='\033[0;35m' #purple
 
 USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
+	-h, --help:
+		Show this help
+	-i, --include:
+		Include file in temporary folder (without any reference in the generated HTML file)
+	-l, --nosymlink
+		Copy the extra included file(s) instead of making symbolic links to them, useful if your script(s) modify their content
+	-C, --copyjsfiles
+		Copy the JavaScript(s) files instead of making symbolic links to them, you will have to rerun this script to apply updates to your script(s)
 	-b, --browser:
 		Command to launch the browser
 	-B, --background:
@@ -151,7 +159,7 @@ if [[ ! $BROWSERCMD ]]; then
 	fi
 fi
 
-# On OS X, use 'open -a' command to open the browser
+# On OS X, use the 'open -a' command to open the browser
 if [[ $(uname -s) == "Darwin" ]]; then
 	BROWSERCMD='open -a '$BROWSERCMD
 fi
