@@ -86,6 +86,9 @@ HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 
 ################################
 
+# Detect Mac OS
+if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else OSX=false; fi
+
 TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
 
 # Create script work directory if it doesn't exist
@@ -156,8 +159,10 @@ if [[ ! $BROWSERCMD ]]; then
 fi
 
 # On OS X, use the 'open -a' command to open the browser
-if [[ $(uname -s) == "Darwin" ]]; then
-	BROWSERCMD='open -a '$BROWSERCMD
+if [[ $OSX ]]; then
+	OSXOpenPrefix='open -a '
+else
+	OSXOpenPrefix=""
 fi
 
 # Find out what family of browser BROWSERCMD refers to
@@ -208,8 +213,8 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-eval "$BROWSERCMD $HTMLFILE $BROWSEROPTIONS > /dev/null 2>&1 &"
 disown
+eval "$OSXOpenPrefix$BROWSERCMD $HTMLFILE $BROWSEROPTIONS > /dev/null 2>&1 &"
 
 
 # if X is detected
