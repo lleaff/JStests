@@ -81,8 +81,8 @@ for f in $jsfiles; do
 done
 
 # Take window title from name of first file argument
-read -r WINDOWTITLE _ <<< $jsfiles 
-WINDOWTITLE=${WINDOWTITLE%.*}
+read -r HTMLDOCTITLE _ <<< $jsfiles 
+HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 
 ################################
 
@@ -177,6 +177,11 @@ case "$BROWSERCMD" in
 		BROWSER="chromium" ;;
 esac
 
+case "$BROWSER" in
+	"firefox" )
+		BROWSEROPTIONS='--foreground --jsconsole'
+esac
+
 HTMLFILE=$TMPFILESDIR'/'$SCRIPTNAME'DummyPage.html'
 
 SCRIPTTAGS=""
@@ -190,7 +195,7 @@ echo "<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset=\"utf-8\">
-		<title>$WINDOWTITLE</title>
+		<title>$HTMLDOCTITLE</title>
 		<style>
 			body { background-color:$bodyBackgroundColor; }
 		</style>
@@ -203,7 +208,7 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-eval "$BROWSERCMD $HTMLFILE > /dev/null 2>&1 &"
+eval "$BROWSERCMD $HTMLFILE $BROWSEROPTIONS > /dev/null 2>&1 &"
 disown
 
 
@@ -211,13 +216,14 @@ disown
 if hash xset 2>/dev/null; then
 	# Send keystrokes to open the JavaScript console
 	if hash xdotool 2>/dev/null; then
-		# if firefox is detected
-		XDOTOOLWINDOWOPTION="--window "$(xdotool search --name \"$WINDOWTITLE\")""
+		xdotoolBrowserWindow=$(echo $(xdotool search --name "$HTMLDOCTITLE") | awk '{print $1}')
+		echo "windowid=$xdotoolBrowserWindow"
+		xdotool windowactivate $xdotoolBrowserWindow
 		case $BROWSER in
 			"firefox" )
-				xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" K keyup Shift keyup Ctrl; ;;
+				xdotool keydown Shift keydown Ctrl key --window $xdotoolBrowserWindow K keyup Shift keyup Ctrl; ;;
 			"chromium" )
-				xdotool keydown Shift keydown Ctrl key --window "$(xdotool search --name \"$WINDOWTITLE\")" J keyup Shift keyup Ctrl; ;;
+				xdotool keydown Shift keydown Ctrl key --window $xdotoolBrowserWindow J keyup Shift keyup Ctrl; ;;
 		esac
 	else
 		echo "You should install xdotool so this script can open your browser's JavaScript console automatically"
