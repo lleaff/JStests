@@ -49,4 +49,35 @@ function test() {
 		return Math.abs(average(averages) - expectedAverage);
 	})(100000));
 }
+
+/* =Application on ancestry data
+ * ------------------------------------------------------------ */
+
+var jsFile = "/home/elo/SoftwareDev/JStests/eloquent/ch5/ancestry.js";
+function loadJsFile(jsFile, callback){
+	if (typeof(jsFile) !== "string") throw new Error("jsFile must be a string");
+
+	/* Create the node */
+	var script = document.createElement("script");
+	script.setAttribute("src", jsFile);
+	/* Append it to <head> */
+	var head = document.getElementsByTagName("head")[0];
+	head.appendChild(script);
+
+	if (script === undefined) throw new Error("script undefined"); //DEBUG
+	console.log("script: " + script);
+	var n = 0;//DEBUG
+	if (callback === undefined) { 	/* Synchronous */
+		if (script === undefined) throw new Error("script undefined"); //DEBUG
+		/* Wait until the script is loaded before returning */
+		while (script.readyState != "complete") {
+			console.log(n++);//DEBUG
+			if (script === undefined) throw new Error("script undefined"); //DEBUG
+		}
+	} else { 						/* Asynchronous */
+	script.onload = callback;
 	}
+}
+
+loadJsFile("ancestry.js", function() { console.log(JSON.parse(ANCESTRY_FILE)); });
+console.log("done");
