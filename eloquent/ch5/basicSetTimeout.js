@@ -24,7 +24,7 @@ function htmlButton(text, onclick, refElem, beforeThisElement)
 	return but;
 }
 
-var but2 = htmlButton("Button n°2", console.log.bind(console, "n°2 clicked"), "document.body");
+var but2 = htmlButton("Button n°2", setTimeout.bind(null, console.log.bind(console, "n°2...clicked..."), 300), "document.body");
 var but1 = htmlButton("Button n°1", console.log.bind(console, "n°1 clicked"), "document.body", but2);
 
 (function() {
