@@ -23,8 +23,8 @@ discreetcolor='\033[0;35m' #purple
 USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
 	-h, --help:
 		Show this help
-	-i, --include:
-		Include file in temporary folder (without any reference in the generated HTML file)
+	-x, --extra:
+		Include extra file in temporary folder (without any reference in the generated HTML file)
 	-l, --nosymlink
 		Copy the extra included file(s) instead of making symbolic links to them, useful if your script(s) modify their content
 	-C, --copyjsfiles
@@ -58,7 +58,7 @@ while [[ $1 ]]; do
 			BROWSERCMD=$2; shift 2 ;;
 		"-c" | "--color" )
 			bodyBackgroundColor=$2; shift 2 ;;
-		"-i" | "--include" )
+		"-x" | "--extra" )
 			extrafiles=$extrafiles' '$2; shift 2 ;;
 		"-l" | "--nosymlink" )
 			nosymlink=true; shift ;;
