@@ -5,7 +5,7 @@ function obj() {
 
 obj.prototype = {
 	pprop: "p",
-	opprop: { yop: "hai" }
+	opprop: { yop: "hai" } /* Modifications to opprop.yop will affect every instance of the object */
 };
 
 var objInst1 = new obj();
