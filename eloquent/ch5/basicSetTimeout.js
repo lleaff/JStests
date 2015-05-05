@@ -1,6 +1,7 @@
 var onWindowLoad = []; /* Array of functions to execute when window is loaded */
 
 /* "button" node initialization
+ *  Use a string if you want to reference an element that doesn't yet exist
  *  eg: htmlButton("click me", alert("thx"), "document.body");
  *      htmlButton("me first", alert("ty!"), "document.body", document.body.children[0]);
  *   => <body>
