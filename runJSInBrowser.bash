@@ -159,7 +159,7 @@ if [[ ! $BROWSERCMD ]]; then
 fi
 
 # On OS X, use the 'open -a' command to open the browser
-if [[ $OSX ]]; then
+if [[ $OSX == true ]]; then
 	OSXOpenPrefix='open -a '
 else
 	OSXOpenPrefix=""
