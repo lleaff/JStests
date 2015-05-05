@@ -2,7 +2,7 @@ var onWindowLoad = []; /* Array of functions to execute when window is loaded */
 
 /* "button" node initialization
  *  eg: htmlButton("click me", alert("thx"), "document.body");
- *      htmlButton("me first", alert("ty!"), "document.body", document.body[0]);
+ *      htmlButton("me first", alert("ty!"), "document.body", document.body.children[0]);
  *   => <body>
  *          <button onclick=alert("ty!")>me first</button>
  *          <button onclick=alert("thx")>click me</button>
@@ -24,15 +24,15 @@ function htmlButton(text, onclick, refElem, beforeThisElement)
 	return but;
 }
 
-(function() {
-	var but = document.createElement("button");
-	but.appendChild(document.createTextNode("button"));
-	but.onclick = console.log.bind(console, "clicked!");
-	onWindowLoad.push(function() { document.body.insertBefore(but, document.body[0]); });
-})();
-
 var but2 = htmlButton("Button n°2", console.log.bind(console, "n°2 clicked"), "document.body");
 var but1 = htmlButton("Button n°1", console.log.bind(console, "n°1 clicked"), "document.body", but2);
+
+(function() {
+	var but1 = document.createElement("button");
+	but1.appendChild(document.createTextNode("Button n°0"));
+	but1.onclick = console.log.bind(console, "n°0 clicked");
+	onWindowLoad.push(function() { document.body.insertBefore(but1, document.body.children[0]); });
+})();
 
 
 window.onload = function() { onWindowLoad.forEach(function(el) { el(); }); };
