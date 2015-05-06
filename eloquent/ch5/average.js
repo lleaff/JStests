@@ -55,7 +55,8 @@ function test() {
 
 var jsFile = "/home/elo/SoftwareDev/JStests/eloquent/ch5/ancestry.js";
 function loadJsFile(jsFile, callback){
-	if (typeof(jsFile) !== "string") throw new Error("jsFile must be a string");
+	if (typeof(jsFile) !== "string")
+		throw new Error("jsFile must be a string");
 
 	/* Create the node */
 	var script = document.createElement("script");
@@ -65,10 +66,12 @@ function loadJsFile(jsFile, callback){
 	head.appendChild(script);
 
 	if (callback === undefined) { 	/* Synchronous */
-		if (loadJsFile.loaded === undefined) loadJsFile.loaded = {};
+		if (loadJsFile.loaded === undefined) 
+			loadJsFile.loaded = {}; /* Holds the names of jsFiles being loaded */
 
 		script.onload = function() { loadJsFile.loaded[jsFile] = true; };
-		while( !loadJsFile.loaded[jsFile] ) ; /* Block execution */
+		while( !loadJsFile.loaded[jsFile] ) {} /* Block execution */
+
 	} else { 						/* Asynchronous */
 		script.onload = callback;
 	}
