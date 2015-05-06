@@ -53,6 +53,7 @@ function test() {
 /* =Application on ancestry data
  * ------------------------------------------------------------ */
 
+/* Load ancestry.js */
 var jsFile = "/home/elo/SoftwareDev/JStests/eloquent/ch5/ancestry.js";
 function loadJsFile(jsFile, callback){
 	if (typeof(jsFile) !== "string")
@@ -77,10 +78,14 @@ function loadJsFile(jsFile, callback){
 	}
 }
 
-var ancestry = null;
-loadJsFile("ancestry.js");
-ancestry = JSON.parse(ANCESTRY_FILE); 
+loadJsFile("ancestry.js", workOnAncestry);
 
-console.log(ancestry[1].name); //DEBUG
+/* Application */
+function workOnAncestry() 
+{
+	var ancestry = JSON.parse(ANCESTRY_FILE); 
 
-console.log("done");
+	console.log(ancestry[1].name); //DEBUG
+}
+
+console.log("---Synchronous execution done---");
