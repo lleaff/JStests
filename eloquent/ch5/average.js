@@ -1,7 +1,7 @@
-function average(arr)
+Array.prototype.average = function ()
 {
 	function add(a, b) { return a + b; }
-	return arr.reduce(add) / arr.length;
+	return this.reduce(add) / this.length;
 }
 
 /* =Tests
