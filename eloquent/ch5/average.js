@@ -64,24 +64,20 @@ function loadJsFile(jsFile, callback){
 	var head = document.getElementsByTagName("head")[0];
 	head.appendChild(script);
 
-	if (script === undefined) throw new Error("script undefined"); //DEBUG
-	console.log("script: " + script);
-	var n = 0;//DEBUG
 	if (callback === undefined) { 	/* Synchronous */
-		loadJsFile.ready = false;
-		script.onload = function() { loadJsFile.ready = true; };
-		//while (loadJsFile.ready === false) {}
-		//if (script === undefined) throw new Error("script undefined"); //DEBUG
-		///* Wait until the script is loaded before returning */
-		//while (script.readyState != "complete") {
-		//	console.log(n++);//DEBUG
-		//	if (script === undefined) throw new Error("script undefined"); //DEBUG
-		//}
+		if (loadJsFile.loaded === undefined) loadJsFile.loaded = {};
+
+		script.onload = function() { loadJsFile.loaded[jsFile] = true; };
+		while( !loadJsFile.loaded[jsFile] ) ; /* Block execution */
 	} else { 						/* Asynchronous */
 		script.onload = callback;
 	}
 }
 
-//loadJsFile("ancestry.js", function() { console.log(JSON.parse(ANCESTRY_FILE)); });
+var ancestry = null;
 loadJsFile("ancestry.js");
+ancestry = JSON.parse(ANCESTRY_FILE); 
+
+console.log(ancestry[1].name); //DEBUG
+
 console.log("done");
