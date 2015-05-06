@@ -85,7 +85,19 @@ function workOnAncestry()
 {
 	var ancestry = JSON.parse(ANCESTRY_FILE); 
 
-	console.log(ancestry[1].name); //DEBUG
+	function getDeathAge(person)	{ return person.died - person.born; }
+	function getFemale(person)		{ return person.sex === "f" };
+	function getMale(person) 		{ return person.sex === "m" };
+
+	var avrAge = ancestry.map(getDeathAge).average();
+	var avrAgeF = ancestry.filter(getFemale).map(getDeathAge).average();
+	var avrAgeM = ancestry.filter(getMale).map(getDeathAge).average();
+	console.log(["Average age of death:",
+				"all:\t" + avrAge,
+				"female:\t" + avrAgeF,
+				"male:\t" + avrAgeM].join("\n"));
+
+
 }
 
 console.log("---Synchronous execution done---");
