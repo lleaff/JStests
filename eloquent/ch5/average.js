@@ -71,7 +71,7 @@ function loadJsFile(jsFile, callback){
 
 		script.onload = function() { loadJsFile.loaded[jsFile] = true; };
 		while( !loadJsFile.loaded[jsFile] ) {} /* Block execution */
-
+		delete loadJsFile.loaded[jsFile]; /* Clean up now useless property */
 	} else { 						/* Asynchronous */
 		script.onload = callback;
 	}
