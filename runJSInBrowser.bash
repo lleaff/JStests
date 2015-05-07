@@ -95,7 +95,7 @@ TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
 if [[ ! -d $TMPFILESDIR ]]; then
 	if [[ $OSX == false ]]; then STATFORMAT='--format=%U';
 	else STATFORMAT='-f %Su'; fi
-	if [[ $(stat $BASEDIR $STATFORMAT) == "root" ]]; then
+	if [[ $(stat $STATFORMAT $BASEDIR) == "root" ]]; then
 		NEEDSUDO=sudo
 		echo "Need root permission to create folder in $BASEDIR, using \"sudo\"..."
 	else 
