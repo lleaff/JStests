@@ -180,7 +180,7 @@ case "$BROWSERCMD" in
 		fi ;;
 	"firefox" )
 		BROWSER="firefox" ;;
-	"chromium-browser" | "GoogleChrome" )
+	"chromium-browser" | "Google Chrome" )
 		BROWSER="chromium" ;;
 esac
 
@@ -215,7 +215,7 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-eval "$OSXOpenPrefix$BROWSERCMD $HTMLFILE $OSXOpenArgsOpt$BROWSEROPTIONS > /dev/null 2>&1 &"
+eval "$OSXOpenPrefix'$BROWSERCMD' $HTMLFILE $OSXOpenArgsOpt$BROWSEROPTIONS > /dev/null 2>&1 &"
 if [[ ! $OSXOpenPrefix ]]; then disown; fi
 
 
