@@ -103,6 +103,18 @@ function workOnAncestry()
 
 	console.log((byName(ancestry, "Pieter Haverbeke")));
 
+	/* -------------------------------------------------------------------------------- */
+
+	function byMotherName(dataArr, name) {
+		return dataArr.reduce(function(a, b) { return (b.mother === name) ? b : a; }, null);
+	}
+
+	function isMother(person, _, array) { return byMotherName(array, person.name); }
+
+	var mothers = ancestry.filter(isMother);
+	console.log(mothers);
+	var avrAgeMCDiff = 0;
+
 }
 
 console.log("---Synchronous execution done---");
