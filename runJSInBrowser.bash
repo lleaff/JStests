@@ -80,8 +80,8 @@ for f in $jsfiles; do
 	fi
 done
 
-# Take window title from name of first file argument
-read -r HTMLDOCTITLE _ <<< $jsfiles 
+# Take window title from name of last file argument
+HTMLDOCTITLE=${jsfiles##* }
 HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 
 ################################
