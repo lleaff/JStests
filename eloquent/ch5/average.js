@@ -118,7 +118,11 @@ function workOnAncestry()
 	var mothers = ancestry.filter(isMother);
 	var mothersAndChildren = mothers.map(function(a) { return { mother: a, children: children(ancestry, a.name) }; });
 
-	var avrAgeMCDiff = 0;
+	var avrAgeMCDiff = mothersAndChildren.map(function(a) { 
+		return a.children.map(function(b){ return b.born - a.mother.born; }).average();
+	}).average();
+
+	console.log("Average mother-child age difference:\n\t" + avrAgeMCDiff);
 
 }
 
