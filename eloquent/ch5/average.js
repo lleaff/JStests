@@ -93,9 +93,9 @@ function workOnAncestry()
 	var avrAgeF = ancestry.filter(getFemale).map(getDeathAge).average();
 	var avrAgeM = ancestry.filter(getMale).map(getDeathAge).average();
 	console.log(["Average age of death:",
-				"all:\t" + avrAge,
-				"female:\t" + avrAgeF,
-				"male:\t" + avrAgeM].join("\n"));
+				"all:\t" + (avrAge >>0),
+				"female:\t" + (avrAgeF >>0),
+				"male:\t" + (avrAgeM >>0)].join("\n"));
 
 	function byName(dataArr, name) {
 		return dataArr.reduce(function(a, b) {
@@ -129,7 +129,8 @@ function workOnAncestry()
 			function(b){ return b.born - a.mother.born; }).average();
 	}).average();
 
-	console.log("Average mother-child age difference:\n\t" + avrAgeMCDiff);
+	console.log("Average mother-child age difference:\n\t" + 
+				(avrAgeMCDiff >>0));
 
 }
 
