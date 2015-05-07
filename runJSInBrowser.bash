@@ -93,7 +93,9 @@ TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
 
 # Create script work directory if it doesn't exist
 if [[ ! -d $TMPFILESDIR ]]; then
-	if [[ $(stat $BASEDIR --format=%U) == "root" ]]; then
+	if [[ $OSX == false ]]; then STATFORMAT='--format=%U';
+	else STATFORMAT='-f %Su'; fi
+	if [[ $(stat $BASEDIR $STATFORMAT) == "root" ]]; then
 		NEEDSUDO=sudo
 		echo "Need root permission to create folder in $BASEDIR, using \"sudo\"..."
 	else 
@@ -129,10 +131,10 @@ if [[ ! $nosymlink ]]; then linkOperationForextrafiles='ln -s';
 else linkOperationForextrafiles='cp'; fi
 
 for file in $jsfiles; do
-	$linkOperationForjsfiles $(realpath $file) "$TMPFILESDIR/$(basename $file)"
+	$linkOperationForjsfiles "$(pwd)/$file" "$TMPFILESDIR/$(basename $file)"
 done
 for file in $extrafiles; do
-	$linkOperationForextrafiles $(realpath $file) "$TMPFILESDIR/$(basename $file)"
+	$linkOperationForextrafiles "$(pwd)/$file" "$TMPFILESDIR/$(basename $file)"
 done
 
 ################################
