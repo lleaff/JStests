@@ -132,4 +132,4 @@ function workOnAncestry()
 
 }
 
-console.log("---Synchronous execution done---");
+console.log("---average.js:\t\tSynchronous execution done---");

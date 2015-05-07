@@ -13,3 +13,5 @@ function workOnAncestry()
 {
 	console.log("hi");
 }
+
+console.log("---lifeExpectancy.js:\tSynchronous execution done---");
