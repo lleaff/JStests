@@ -97,9 +97,8 @@ function workOnAncestry()
 				"female:\t" + avrAgeF,
 				"male:\t" + avrAgeM].join("\n"));
 
-	function byName(dataArr, name)
-	{
-		return dataArr.reduce(function(a, b) { return (b.name === name) ? b : a; });
+	function byName(dataArr, name) {
+		return dataArr.reduce(function(a, b) { return (b.name === name) ? b : a; }, null);
 	}
 
 	console.log((byName(ancestry, "Pieter Haverbeke")));
