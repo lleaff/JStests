@@ -109,10 +109,15 @@ function workOnAncestry()
 		return dataArr.reduce(function(a, b) { return (b.mother === name) ? b : a; }, null);
 	}
 
+	function children(dataArr, name) {
+		return dataArr.filter(function(a){ return a.mother === name || a.father === name; });
+	}
+
 	function isMother(person, _, array) { return byMotherName(array, person.name); }
 
 	var mothers = ancestry.filter(isMother);
-	console.log(mothers);
+	var mothersAndChildren = mothers.map(function(a) { return { mother: a, children: children(ancestry, a.name) }; });
+
 	var avrAgeMCDiff = 0;
 
 }
