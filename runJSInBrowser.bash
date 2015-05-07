@@ -162,9 +162,9 @@ fi
 
 # On OS X, use the 'open -a' command to open the browser
 if [[ $OSX == true ]]; then
-	OSXOpenPrefix='open -a '
+	OSXOpenPrefix='open -a '; OSXOpenArgsOpt='--args ';
 else
-	OSXOpenPrefix=""
+	OSXOpenPrefix=''; OSXOpenArgsOpt='';
 fi
 
 # Find out what family of browser BROWSERCMD refers to
@@ -215,7 +215,7 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-eval "$OSXOpenPrefix$BROWSERCMD $HTMLFILE $BROWSEROPTIONS > /dev/null 2>&1 &"
+eval "$OSXOpenPrefix$BROWSERCMD $HTMLFILE $OSXOpenArgsOpt$BROWSEROPTIONS > /dev/null 2>&1 &"
 if [[ ! $OSXOpenPrefix ]]; then disown; fi
 
 
