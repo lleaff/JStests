@@ -102,8 +102,6 @@ function workOnAncestry()
 			return (b.name === name) ? b : a; }, null);
 	}
 
-	console.log((byName(ancestry, "Pieter Haverbeke")));
-
 	/* ------------------------------------------------------------ */
 
 	function byMotherName(dataArr, name) {
