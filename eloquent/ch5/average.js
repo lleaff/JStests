@@ -2,7 +2,7 @@ Array.prototype.average = function ()
 {
 	function add(a, b) { return a + b; }
 	return this.reduce(add) / this.length;
-}
+};
 
 /* =Tests
  * ------------------------------------------------------------ */
@@ -86,8 +86,8 @@ function workOnAncestry()
 	var ancestry = JSON.parse(ANCESTRY_FILE); 
 
 	function getDeathAge(person)	{ return person.died - person.born; }
-	function getFemale(person)		{ return person.sex === "f" };
-	function getMale(person) 		{ return person.sex === "m" };
+	function getFemale(person)		{ return person.sex === "f"; }
+	function getMale(person) 		{ return person.sex === "m"; }
 
 	var avrAge = ancestry.map(getDeathAge).average();
 	var avrAgeF = ancestry.filter(getFemale).map(getDeathAge).average();
