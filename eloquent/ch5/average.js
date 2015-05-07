@@ -67,12 +67,12 @@ function loadJsFile(jsFile, callback){
 	head.appendChild(script);
 
 	if (callback === undefined) { 	/* Synchronous */
+		/* Holds the names of jsFiles being loaded */
 		if (loadJsFile.loaded === undefined) 
-			loadJsFile.loaded = {}; /* Holds the names of jsFiles being loaded */
-
+			loadJsFile.loaded = {}; 
 		script.onload = function() { loadJsFile.loaded[jsFile] = true; };
-		while( !loadJsFile.loaded[jsFile] ) {} /* Block execution */
-		delete loadJsFile.loaded[jsFile]; /* Clean up now useless property */
+		while( !loadJsFile.loaded[jsFile] ) {} // Block execution
+		delete loadJsFile.loaded[jsFile]; // Clean up now useless property
 	} else { 						/* Asynchronous */
 		script.onload = callback;
 	}
@@ -98,28 +98,35 @@ function workOnAncestry()
 				"male:\t" + avrAgeM].join("\n"));
 
 	function byName(dataArr, name) {
-		return dataArr.reduce(function(a, b) { return (b.name === name) ? b : a; }, null);
+		return dataArr.reduce(function(a, b) {
+			return (b.name === name) ? b : a; }, null);
 	}
 
 	console.log((byName(ancestry, "Pieter Haverbeke")));
 
-	/* -------------------------------------------------------------------------------- */
+	/* ------------------------------------------------------------ */
 
 	function byMotherName(dataArr, name) {
-		return dataArr.reduce(function(a, b) { return (b.mother === name) ? b : a; }, null);
+		return dataArr.reduce(function(a, b) {
+			return (b.mother === name) ? b : a; }, null);
 	}
 
 	function children(dataArr, name) {
-		return dataArr.filter(function(a){ return a.mother === name || a.father === name; });
+		return dataArr.filter(function(a){
+			return a.mother === name || a.father === name; });
 	}
 
-	function isMother(person, _, array) { return byMotherName(array, person.name); }
+	function isMother(person, _, array) { 
+		return byMotherName(array, person.name); 
+	}
 
 	var mothers = ancestry.filter(isMother);
-	var mothersAndChildren = mothers.map(function(a) { return { mother: a, children: children(ancestry, a.name) }; });
+	var mothersAndChildren = mothers.map(function(a) { 
+		return { mother: a, children: children(ancestry, a.name) }; });
 
 	var avrAgeMCDiff = mothersAndChildren.map(function(a) { 
-		return a.children.map(function(b){ return b.born - a.mother.born; }).average();
+		return a.children.map(
+			function(b){ return b.born - a.mother.born; }).average();
 	}).average();
 
 	console.log("Average mother-child age difference:\n\t" + avrAgeMCDiff);
