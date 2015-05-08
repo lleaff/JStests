@@ -48,12 +48,41 @@ drawSeparator()
 	echo "$str"
 }
 
+################################
+
+createDirIfNotExist() {
+	if [[ ! -d $1 ]]; then
+		if [[ $OSX == false ]]; then local STATFORMAT='--format=%U';
+		else local STATFORMAT='-f %Su'; fi
+		if [[ $(stat $STATFORMAT $BASEDIR) == "root" ]]; then
+			NEEDSUDO=sudo
+			echo "Need root permission to create folder in $BASEDIR, using \"sudo\"..."
+		else 
+			NEEDSUDO="" 
+		fi
+
+		$NEEDSUDO mkdir -p $1
+		$NEEDSUDO chown $USER $1
+	fi
+}
+
+# Install script
+inst()
+{
+	createDirIfNotExist $1
+	# We can reuse NEEDSUDO since it isn't declared as local in the function
+	$NEEDSUDO cp $0 "$1/$2"
+}
+
 ####### Process options ########
 
 while [[ $1 ]]; do
 	case $1 in
 		"-h" | "--help" )
 			echo "$USAGE"; exit 0 ;;
+		"--install" )
+			INSTALLDIR=$2; INSTALLNAME=$3;
+			inst $INSTALLDIR $INSTALLNAME; exit 0 ;;
 		"-b" | "--browser" ) 
 			BROWSERCMD=$2; shift 2 ;;
 		"-c" | "--color" )
@@ -92,19 +121,7 @@ if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else OSX=false; fi
 TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
 
 # Create script work directory if it doesn't exist
-if [[ ! -d $TMPFILESDIR ]]; then
-	if [[ $OSX == false ]]; then STATFORMAT='--format=%U';
-	else STATFORMAT='-f %Su'; fi
-	if [[ $(stat $STATFORMAT $BASEDIR) == "root" ]]; then
-		NEEDSUDO=sudo
-		echo "Need root permission to create folder in $BASEDIR, using \"sudo\"..."
-	else 
-		NEEDSUDO="" 
-	fi
-
-	$NEEDSUDO mkdir -p $TMPFILESDIR
-	$NEEDSUDO chown $USER $TMPFILESDIR
-fi
+createDirIfNotExist $TMPFILESDIR
 
 # Clean script work directory
 if [[ "$(ls -A $TMPFILESDIR)" ]]; then
