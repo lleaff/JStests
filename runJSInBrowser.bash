@@ -54,7 +54,7 @@ drawSeparator()
 
 createDirIfNotExist() {
 	if [[ ! -d $1 ]]; then
-		if [[ $OSX == false ]]; then local STATFORMAT='--format=%U';
+		if [[ ! $OSX ]]; then local STATFORMAT='--format=%U';
 		else local STATFORMAT='-f %Su'; fi
 		if [[ $(stat $STATFORMAT $BASEDIR) == "root" ]]; then
 			NEEDSUDO=sudo
@@ -121,7 +121,7 @@ HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 ################################
 
 # Detect Mac OS
-if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else OSX=false; fi
+if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else unset OSX; fi
 
 # Create script work directory if it doesn't exist
 createDirIfNotExist $TMPFILESDIR
@@ -180,13 +180,6 @@ if [[ ! $BROWSERCMD ]]; then
 	fi
 fi
 
-# On OS X, use the 'open -a' command to open the browser
-if [[ $OSX == true ]]; then
-	OSXOpenPrefix='open -a '; OSXOpenArgsOpt='--args ';
-else
-	OSXOpenPrefix=''; OSXOpenArgsOpt='';
-fi
-
 # Find out what family of browser BROWSERCMD refers to
 BROWSER=""
 case "$BROWSERCMD" in
@@ -235,8 +228,8 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-eval "$OSXOpenPrefix'$BROWSERCMD' $HTMLFILE $OSXOpenArgsOpt$BROWSEROPTIONS > /dev/null 2>&1 &"
-if [[ ! $OSXOpenPrefix ]]; then disown; fi
+eval "${OSX:+open -a }'$BROWSERCMD' $HTMLFILE ${OSX:+--args }$BROWSEROPTIONS > /dev/null 2>&1 &"
+if [[ ! $OSX ]]; then disown; fi
 
 
 # if X is detected
