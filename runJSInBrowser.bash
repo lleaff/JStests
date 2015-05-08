@@ -20,6 +20,9 @@ errorcolor='\033[1;31m' #red
 okcolor='\033[0;32m' #green
 discreetcolor='\033[0;35m' #purple
 
+# Detect Mac OS
+if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else unset OSX; fi
+
 USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
 	-h, --help:
 		Show this help
@@ -119,9 +122,6 @@ HTMLDOCTITLE=${jsfiles##* }
 HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 
 ################################
-
-# Detect Mac OS
-if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else unset OSX; fi
 
 # Create script work directory if it doesn't exist
 createDirIfNotExist $TMPFILESDIR
