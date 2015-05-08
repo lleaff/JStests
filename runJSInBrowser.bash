@@ -41,7 +41,7 @@ USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
 
 Examples:
 	$(basename $0) someFile.js anotherFile.js -b chromium-browser
-Opens an html file in Chromium with someFile.js and anotherFile.js included in the same order
+Opens an html file in Chromium with someFile.js and anotherFile.js included in that order
 "
 
 drawSeparator()
