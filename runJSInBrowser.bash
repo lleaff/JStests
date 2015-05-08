@@ -56,12 +56,17 @@ drawSeparator()
 ################################
 
 createDirIfNotExist() {
+	CONTDIR=${1##*/}
 	if [[ ! -d $1 ]]; then
 		if [[ ! $OSX ]]; then local STATFORMAT='--format=%U';
 		else local STATFORMAT='-f %Su'; fi
-		if [[ $(stat $STATFORMAT $BASEDIR) == "root" ]]; then
-			NEEDSUDO=sudo
-			echo "Need root permission to create folder in $BASEDIR, using \"sudo\"..."
+		if [[ $(stat $STATFORMAT $CONTDIR) == "root" && "$UID" != 0 ]]; then
+			if [[ ! $(hash sudo) ]]; then
+				NEEDSUDO=sudo
+				echo "Need root privilege to create folder in $CONTDIR, using \"sudo\"..."
+			else
+				echo "${errorcolor}Need root privilege to create folder in $CONTDIR${nocolor}"
+			fi
 		else 
 			NEEDSUDO="" 
 		fi
