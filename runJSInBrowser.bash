@@ -20,7 +20,7 @@ errorcolor='\033[1;31m' #red
 okcolor='\033[0;32m' #green
 discreetcolor='\033[0;35m' #purple
 
-USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
+USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
 	-h, --help:
 		Show this help
 	-x, --extra:
@@ -33,6 +33,8 @@ USAGE="Usage: $(basename $0) [FILE]... [OPTION]...${nocolor}
 		Command to launch the browser
 	-c, --color:
 		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
+	--install DIR [executable name]:
+		copy the script file to DIR
 
 Examples:
 	$(basename $0) someFile.js anotherFile.js -b chromium-browser
