@@ -66,12 +66,15 @@ createDirIfNotExist() {
 	fi
 }
 
+TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
+
 # Install script
 inst()
 {
 	createDirIfNotExist $1
-	# We can reuse NEEDSUDO since it isn't declared as local in the function
+	# We can reuse NEEDSUDO since it isn't declared as local to the function
 	$NEEDSUDO cp $0 "$1/$2"
+	createDirIfNotExist $TMPFILESDIR
 }
 
 ####### Process options ########
@@ -117,8 +120,6 @@ HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 
 # Detect Mac OS
 if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else OSX=false; fi
-
-TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
 
 # Create script work directory if it doesn't exist
 createDirIfNotExist $TMPFILESDIR
