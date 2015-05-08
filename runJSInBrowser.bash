@@ -78,7 +78,9 @@ inst()
 {
 	createDirIfNotExist $1
 	# We can reuse NEEDSUDO since it isn't declared as local to the function
-	$NEEDSUDO cp $0 "$1/$2"
+	local newExecutable="$1/$2"
+	$NEEDSUDO cp $0 $newExecutable
+	$NEEDSUDO chmod +x $newExecutable
 	createDirIfNotExist $TMPFILESDIR
 }
 
