@@ -34,14 +34,28 @@ function workOnAncestry()
 
 	function getAge(person) { return person.died - person.born; }
 
+	function century(person) { return Math.ceil(person.died / 100); }
+
 	function lifeExpectancy(arr) {
 		return arr.map(getAge).filter(
 			function(a){ return (typeof a === "number" && !isNaN(a)); }
-		).average(); 
+		).average()>>0; 
 	}
 
 	console.log("Overall life expectancy:\n\t" + 
 				(lifeExpectancy(ancestry)>>0) );
+
+	var lifeExpectancyByCentury = ancestry.groupBy(century);
+	lifeExpectancyByCentury.forEach(
+		function(val, prop, obj) {
+			obj[prop] = lifeExpectancy(val);
+		}
+	);
+
+	console.log("Life expectancy by century:");
+	lifeExpectancyByCentury.forEach(function(val, prop, obj) {
+		console.log(prop + ": " + val);
+	});
 }
 
 console.log("---lifeExpectancy.js:\tSynchronous execution done---");
