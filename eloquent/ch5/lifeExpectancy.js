@@ -9,6 +9,14 @@ var ancestryScript = Array.filter(
 /* Override its onload function */
 ancestryScript.onload = workOnAncestry;
 
+Object.prototype.forEach = function(fn)
+{
+	if (typeof fn === "function")
+		for (var a in this) 
+			if (this.hasOwnProperty(a))
+				fn(this[a], ""+a, this);
+};
+
 function workOnAncestry() 
 {
 	var ancestry = JSON.parse(ANCESTRY_FILE);
