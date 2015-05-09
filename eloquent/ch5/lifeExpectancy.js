@@ -9,6 +9,17 @@ var ancestryScript = Array.filter(
 /* Override its onload function */
 ancestryScript.onload = workOnAncestry;
 
+Array.prototype.groupBy = function(fn)
+{
+	var map = {};
+	this.forEach(function(a) {
+		var group = fn(a);
+		if (map[group] === undefined) map[group] = [];
+		map[group].push(a);
+	});
+	return map;
+};
+
 Object.prototype.forEach = function(fn)
 {
 	if (typeof fn === "function")
