@@ -1,10 +1,15 @@
 Array.prototype.customSome = function(fn)
 {
-
+	var result = false;
+	this.forEach(function(a){ if(fn(a)) result = true; });
+	return result;
 };
 
 Array.prototype.customEvery = function(fn)
 {
+	var result = true;
+	this.forEach(function(a) { if(!fn(a)) result = false; });
+	return result;
 };
 
 !function testCustomEveryAndSome()
