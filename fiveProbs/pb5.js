@@ -1,6 +1,7 @@
-function getToWith(getTo, nums) 
+function getToWithUsing(getTo, nums, operations) 
 {
-	var operations = [ "+", "-", "" ];
+	if (operations === undefined) 
+		operations = [ "+", "-", "" ];
 
 	var solutions = [];
 
@@ -19,7 +20,10 @@ function getToWith(getTo, nums)
 	return solutions;
 }
 
-var getTo100 = getToWith.bind(null, 100, [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+var getTo100 = getToWithUsing.bind(null,
+								100,
+								[ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+								[ "+", "-", "" ]);
 
 var solutions = getTo100();
 solutions.forEach(function(a){ console.log(a); });
