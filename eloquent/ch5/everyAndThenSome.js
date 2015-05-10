@@ -1,17 +1,24 @@
 Array.prototype.customSome = function(fn)
 {
-	var result = false;
-	this.forEach(
-		function(val, i, arr){ if(fn(val, i, arr)) result = true; });
-	return result;
+	try{
+		this.forEach(
+			function(val, i, arr){ if(fn(val, i, arr)) throw true; });
+	} catch(e) {
+		return true;
+	}
+	return false;
 };
 
 Array.prototype.customEvery = function(fn)
 {
 	var result = true;
-	this.forEach(
-		function(val, i, arr) { if(!fn(val, i, arr)) result = false; });
-	return result;
+	try {
+		this.forEach(
+			function(val, i, arr) { if(!fn(val, i, arr)) throw false; });
+	} catch(e) {
+		return false;
+	}
+	return true;
 };
 
 !function testCustomEveryAndSome()
