@@ -10,10 +10,10 @@ function makeBiggestNum(arr) {
 	while (arr.length) {
 		var bestI = 0;
 		for (var i = 1; i < arr.length; ++i)
-			if ((""+arr[i]+arr[bestI]>>0) > (""+arr[bestI]+arr[i]>>0))
+			if ((""+arr[i]+arr[bestI]>>0) >= (""+arr[bestI]+arr[i]>>0))
 				bestI = i;
 		num = ""+num+arr[bestI];
-		arr.splice(bestI, 1);
+		arr.splice(bestI, 1); // Remove selected number
 	}
 	return num;
 }
