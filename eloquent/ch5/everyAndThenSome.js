@@ -4,6 +4,7 @@ Array.prototype.customSome = function(fn)
 		this.forEach(
 			function(val, i, arr){ if(fn(val, i, arr)) throw true; });
 	} catch(e) {
+		if (e !== true) throw e;
 		return true;
 	}
 	return false;
@@ -16,6 +17,7 @@ Array.prototype.customEvery = function(fn)
 		this.forEach(
 			function(val, i, arr) { if(!fn(val, i, arr)) throw false; });
 	} catch(e) {
+		if (e !== false) throw e;
 		return false;
 	}
 	return true;
