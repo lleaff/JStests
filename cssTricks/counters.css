@@ -1,14 +1,15 @@
 body {
 	counter-reset: ctest;
+
+	margin: 0;
+
+	text-align: center;
 }
 
 h1 {
 	counter-increment: ctest;
 	background-color: #fbb;
 	display: table;
-	/* display: inline-block; */
-	/* float: left;
-	clear: left; */
 }
 
 h1::before {
@@ -16,7 +17,9 @@ h1::before {
 }
 
 .nav {
-	border: 1px solid black;
-	width: content;
+	border: 4px solid #bfb;
 	counter-reset: ctest;
+
+	width: auto;
+	display: inline-block;
 }
