@@ -1,0 +1,11 @@
+body {
+	counter-reset: ctest;
+}
+
+h1 {
+	counter-increment: ctest;
+}
+
+h1::before {
+	content: counter(ctest);
+}
