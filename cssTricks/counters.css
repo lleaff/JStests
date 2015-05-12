@@ -4,8 +4,19 @@ body {
 
 h1 {
 	counter-increment: ctest;
+	background-color: #fbb;
+	display: table;
+	/* display: inline-block; */
+	/* float: left;
+	clear: left; */
 }
 
 h1::before {
-	content: counter(ctest);
+	content: "[" counter(ctest) "]";
+}
+
+.nav {
+	border: 1px solid black;
+	width: content;
+	counter-reset: ctest;
 }
