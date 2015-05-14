@@ -61,32 +61,34 @@ TextCell.prototype.minWidth = function() {
 	}, 0);
 };
 
-TextCell.prototype._DrawCell = 
-	function(stringArray, width, height, alignRight) {
+TextCell.prototype.draw = function(width, height, alignRight) {
+	if (alignRight !== undefined && !isNaN(+this.text)) alignRight = true;
 	var result = [];
 	for (var i = 0; i < height; ++i) {
-		var line = stringArray[i] || "";
+		var line = this.text[i] || "";
 		var fill = Array(width + 1 - line.length).join(" ");
 		result.push(alignRight ? fill + line : line + fill);
 	}
 	return result;
 };
 
-TextCell.prototype.draw = function(width, height, alignRight) {
-	if (alignRight !== undefined && !isNaN(+this.text)) alignRight = true;
-	return this._DrawCell(this.text, width, height, alignRight);
-};
-
 
 /* Underlined text cell */
 function UnderlinedTextCell(value) {
-	TextCell.call(this, value); /* Inherit from TextCell */
+	this.inner = new TextCell(value);
 }
 
-UnderlinedTextCell.prototype = new TextCell();
+UnderlinedTextCell.prototype.minHeight = function() {
+	return this.inner.minHeight() + 1;
+};
+UnderlinedTextCell.prototype.minWidth = function() {
+	return this.inner.minWidth();
+};
 
 UnderlinedTextCell.prototype.draw = 
 	function(width, height, underlineCharacter, alignRight) {
 	if (underlineCharacter === undefined) underlineCharacter = "-";
 
+	return this.inner.draw(width, height - 1, alignRight).concat( 
+		[Array(width + 1).join(underlineCharacter)]);
 };
