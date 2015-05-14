@@ -10,28 +10,28 @@ function colWidths(rows) {
 	return rows[0].map(function(_cell, i) {
 		return rows.reduce(function(max, row) {
 			return Math.max(max, row[i].minWidth());
-		});
+		}, 0);
 	});
 }
 
-function drawTable(rows, colSeparator) {
-	if (colSeparator === undefined) colSeparator = " ";
+function drawTable(rows, collSeparator) {
+	if (collSeparator === undefined) collSeparator = " ";
 
-	var width	= rowWidths(rows);
-	var height	= rowHeights(rows);
+	var widths	= colWidths(rows);
+	var heights	= rowHeights(rows);
 
 	function drawLine(blocks, lineNum) {
 		return blocks.map(function(block) {
 			return block[lineNum];
-		}).join(colSeparator);
+		}).join(collSeparator);
 	}
 
 	function drawRow(row, rowNum) {
 		var blocks = row.map(function(cell, collNum) {
-			cell.draw(width, height);
+			return cell.draw(widths[collNum], heights[rowNum]);
 		});
 		return blocks[0].map(function(_block, lineNum) {
-			drawLine(blocks, lineNum);
+			return drawLine(blocks, lineNum);
 		}).join("\n");
 	}
 
