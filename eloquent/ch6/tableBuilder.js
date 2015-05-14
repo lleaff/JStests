@@ -1,3 +1,30 @@
+/* =Table building function
+ * ------------------------------------------------------------ */
+
+/* 'data' must be a parsed JSON array [ {}, {}, {} ] */
+function buildTable(data) {
+	var rows = [];
+	
+	rows = data.map(function(entry) {
+		var result = [];
+		for (var p in entry) { if (entry.hasOwnProperty(p)){ 
+			result.push(new TextCell(entry[p]));
+		}}
+		return result;
+	});
+
+	rows.unshift((function() {
+		var propNames = [];
+		for (var p in data[0]) { if (data[0].hasOwnProperty(p)) {
+			propNames.push(new UnderlinedTextCell(p));
+		}}
+		return propNames;
+	})());
+
+	return drawTable(rows);
+}
+
+
 /* =Draw functions
  * ------------------------------------------------------------ */
 
