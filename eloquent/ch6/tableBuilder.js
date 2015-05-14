@@ -46,6 +46,7 @@ function drawTable(rows, collSeparator) {
 
 /* Regular text cell */
 function TextCell(value) {
+	if (value === undefined) return this;
 	if (typeof value !== "string") value = value.toString();
 	this.text = value.split("\n");
 }
@@ -63,7 +64,7 @@ TextCell.prototype._DrawCell =
 	function(stringArray, width, height, alignRight) {
 	var result = [];
 	for (var i = 0; i < height; ++i) {
-		var line = stringArray.text[i] || "";
+		var line = stringArray[i] || "";
 		var fill = Array(width + 1 - line.length).join(" ");
 		result.push(alignRight ? fill + line : line + fill);
 	}
@@ -77,15 +78,16 @@ TextCell.prototype.draw = function(width, height, alignRight) {
 
 /* Underlined text cell */
 function UnderlinedTextCell(value) {
-	TextCell(); /* Inherit from TextCell */
+	TextCell.call(this, value); /* Inherit from TextCell */
 }
+
+UnderlinedTextCell.prototype = new TextCell();
 
 UnderlinedTextCell.prototype.draw = 
 	function(width, height, underlineCharacter, alignRight) {
 	if (underlineCharacter === undefined) underlineCharacter = "-";
-
 	this.text.push(
 		Array((width + 1)/underlineCharacter.length).join(underlineCharacter));
 
-	return this._DrawCell(this.text, width, height, alignRight);
+	return this._DrawCell(this.text, width, height + 1, alignRight);
 };
