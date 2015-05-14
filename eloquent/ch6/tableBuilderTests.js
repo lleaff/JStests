@@ -18,3 +18,5 @@ testData.forEach(function(val, i) {
 	});
 	console.log(drawTable(rowsOfCells));
 });
+
+if (!MOUNTAINS) { console.log("Include mountains.js"); }
