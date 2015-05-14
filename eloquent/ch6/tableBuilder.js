@@ -1,8 +1,9 @@
 /* =Table building function
  * ------------------------------------------------------------ */
 
-/* 'data' must be a parsed JSON array [ {}, {}, {} ] */
-function buildTable(data) {
+/* 'data' must be a parsed JSON array [ {}, {}, {} ],
+ *  'collSeparator' is optional */
+function buildTable(data, collSeparator) {
 	var rows = [];
 	
 	rows = data.map(function(entry) {
@@ -21,7 +22,7 @@ function buildTable(data) {
 		return propNames;
 	})());
 
-	return drawTable(rows);
+	return drawTable(rows, collSeparator);
 }
 
 

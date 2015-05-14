@@ -38,5 +38,5 @@ includeScript("http://eloquentjavascript.net/code/mountains.js",
 
 function mountainTest() {
 	console.log("Mountains data set:");
-	console.log(buildTable(MOUNTAINS));
+	console.log(buildTable(MOUNTAINS, " | "));
 }
