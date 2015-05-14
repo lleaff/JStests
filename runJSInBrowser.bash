@@ -3,7 +3,7 @@
 ######## User variables ########
 
 # Default browser
-BROWSERCMD=''
+_BROWSERCMD=''
 bodyBackgroundColor='#262626'
 BASEDIR='/tmp'
 
@@ -99,15 +99,15 @@ while [[ $1 ]]; do
 			INSTALLDIR=$2; INSTALLNAME=$3;
 			inst $INSTALLDIR $INSTALLNAME; exit 0 ;;
 		"-b" | "--browser" ) 
-			BROWSERCMD=$2; shift 2 ;;
+			_BROWSERCMD=$2; shift 2 ;;
 		"-c" | "--color" )
 			bodyBackgroundColor=$2; shift 2 ;;
 		"-x" | "--extra" )
 			extrafiles=$extrafiles' '$2; shift 2 ;;
 		"-l" | "--nosymlink" )
-			nosymlink=true; shift ;;
+			_nosymlink=true; shift ;;
 		"-C" | "--copyjsfiles" )
-			copyjsfiles=true; shift ;;
+			_copyjsfiles=true; shift ;;
 		* )
 			jsfiles=$jsfiles' '$1; shift ;;
 	esac
@@ -136,13 +136,13 @@ createDirIfNotExist $TMPFILESDIR
 # Clean script work directory
 if [[ "$(ls -A $TMPFILESDIR)" ]]; then
 	for file in $TMPFILESDIR/*; do
-		found=false
+		local _found=false
 		for folderfile in $extrafiles; do
-			if [[ "($basename $folderfile)" == $(basename $file) ]]; then
-				found=true
+			if [[ "$(basename $folderfile)" == $(basename $file) ]]; then
+				_found=true
 			fi
 		done
-		if [[ $found == false ]]; then 
+		if [[ $_found == false ]]; then
 			rm $file; deletedfiles=$deletedfiles' '$(basename $file);
 		fi 
 	done
@@ -152,9 +152,9 @@ if [[ "$(ls -A $TMPFILESDIR)" ]]; then
 fi
 
 # Populate script work directory
-if [[ ! $copyjsfiles ]]; then linkOperationForjsfiles='ln -s';
+if [[ ! $_copyjsfiles ]]; then linkOperationForjsfiles='ln -s';
 else linkOperationForjsfiles='cp'; fi
-if [[ ! $nosymlink ]]; then linkOperationForextrafiles='ln -s';
+if [[ ! $_nosymlink ]]; then linkOperationForextrafiles='ln -s';
 else linkOperationForextrafiles='cp'; fi
 
 for file in $jsfiles; do
@@ -167,44 +167,44 @@ done
 ################################
 
 # If no user-specified browser cmd, try to find the most appropriate one
-if [[ ! $BROWSERCMD ]]; then
+if [[ ! $_BROWSERCMD ]]; then
 	if [[ $(uname -s) == Linux ]]; then
 		# For Debian based GNU/Linux distros
 		if [[ -f /etc/debian_version ]]; then
-			BROWSERCMD='sensible-browser' 
+			_BROWSERCMD='sensible-browser' 
 		else
 			if [[ ! $(hash firefox) ]]; then
-				BROWSERCMD='firefox'
+				_BROWSERCMD='firefox'
 			elif [[ ! $(hash chromium-browser) ]]; then
-				BROWSERCMD='chromium-browser'
+				_BROWSERCMD='chromium-browser'
 			else 
-				echo "${errorcolor}No supported browser found, please specify one with the -b option or modify the first appearance of BROWSERCMD in the script to include yours to make it permanent, or install either Firefox or Chromium"; exit 1;
+				echo "${errorcolor}No supported browser found, please specify one with the -b option or modify the first appearance of _BROWSERCMD in the script to include yours to make it permanent, or install either Firefox or Chromium"; exit 1;
 			fi
 		fi
 	elif [[ $(uname -s) == "Darwin" ]]; then 
 		# For OSX
-		BROWSERCMD='firefox'
+		_BROWSERCMD='firefox'
 	fi
 fi
 
-# Find out what family of browser BROWSERCMD refers to
-BROWSER=""
-case "$BROWSERCMD" in
+# Find out what family of browser _BROWSERCMD refers to
+_BROWSER=""
+case "$_BROWSERCMD" in
 	"sensible-browser" )
 		if [[ -n "$(sensible-browser --help 2>/dev/null |
 			grep firefox)" ]]; then
-			BROWSER="firefox"
+			_BROWSER="firefox"
 		elif [[ -n "$(sensible-browser --help 2>/dev/null | 
 			grep chromium\|chrome)" ]]; then
-			BROWSER="chromium"
+			_BROWSER="chromium"
 		fi ;;
 	"firefox" )
-		BROWSER="firefox" ;;
+		_BROWSER="firefox" ;;
 	"chromium-browser" | "Google Chrome" )
-		BROWSER="chromium" ;;
+		_BROWSER="chromium" ;;
 esac
 
-case "$BROWSER" in
+case "$_BROWSER" in
 	"firefox" )
 		BROWSEROPTIONS='--foreground --jsconsole'
 esac
@@ -235,7 +235,7 @@ echo "<!DOCTYPE html>
 
 # Launch the browser
 echo -e "${okcolor}Opening page in $BROWSER...${nocolor}"
-eval "${OSX:+open -a }'$BROWSERCMD' $HTMLFILE ${OSX:+--args }$BROWSEROPTIONS > /dev/null 2>&1 &"
+eval "${OSX:+open -a }'$_BROWSERCMD' $HTMLFILE ${OSX:+--args }$BROWSEROPTIONS > /dev/null 2>&1 &"
 if [[ ! $OSX ]]; then disown; fi
 
 
@@ -245,7 +245,7 @@ if hash xset 2>/dev/null; then
 	if hash xdotool 2>/dev/null; then
 		xdotoolBrowserWindow=$(echo $(xdotool search --name "$HTMLDOCTITLE") | awk '{print $1}')
 		xdotool windowactivate $xdotoolBrowserWindow
-		case $BROWSER in
+		case $_BROWSER in
 			"firefox" )
 				xdotool keydown Shift keydown Ctrl key --window $xdotoolBrowserWindow K keyup Shift keyup Ctrl; ;;
 			"chromium" )
