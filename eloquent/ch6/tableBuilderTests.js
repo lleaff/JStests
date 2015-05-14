@@ -11,9 +11,9 @@ var testData = [
 testData.forEach(function(val, i) {
 	console.log("Data set n°"+(i+1)+":");
 
-	var rowsOfCells = val.map(function(row) {
-		return row.map(function(value, index) {
-			return index? new TextCell(value) : new UnderlinedTextCell(value);
+	var rowsOfCells = val.map(function(row, index) {
+		return row.map(function(value) {
+			return (index) ? (new TextCell(value)) : (new UnderlinedTextCell(value));
 		});
 	});
 	console.log(drawTable(rowsOfCells));
