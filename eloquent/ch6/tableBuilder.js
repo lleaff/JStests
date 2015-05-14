@@ -1,3 +1,6 @@
+/* =Draw functions
+ * ------------------------------------------------------------ */
+
 function rowHeights(rows) {
 	return rows.map(function(row) {
 		return row.reduce(function(max, cell) {
@@ -38,6 +41,8 @@ function drawTable(rows, collSeparator) {
 	return rows.map(drawRow).join("\n");
 }
 
+/* =Cell objects
+ * ------------------------------------------------------------ */
 
 function TextCell(value) {
 	if (typeof value !== "string") value = value.toString();
@@ -62,3 +67,9 @@ TextCell.prototype.draw = function(width, height, alignRight) {
 	}
 	return result;
 };
+
+function UnderlinedTextCell(value) {
+	TextCell(); /* Inherit from TextCell */
+}
+
+
