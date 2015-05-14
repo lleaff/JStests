@@ -46,9 +46,10 @@ function drawTable(rows, collSeparator) {
 
 /* Regular text cell */
 function TextCell(value) {
-	if (value === undefined) return this;
-	if (typeof value !== "string") value = value.toString();
-	this.text = value.split("\n");
+	if (value !== undefined) {
+		if (typeof value !== "string") value = value.toString();
+		this.text = value.split("\n");
+	}
 }
 
 TextCell.prototype.minHeight = function() {
@@ -72,6 +73,7 @@ TextCell.prototype._DrawCell =
 };
 
 TextCell.prototype.draw = function(width, height, alignRight) {
+	if (!isNaN(+this.text)) alignRight = true;
 	return this._DrawCell(this.text, width, height, alignRight);
 };
 
