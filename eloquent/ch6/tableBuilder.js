@@ -14,11 +14,28 @@ function colWidths(rows) {
 	});
 }
 
-function drawTable(rows) {
-	var height	= rowHeights(rows);
+function drawTable(rows, colSeparator) {
+	if (colSeparator === undefined) colSeparator = " ";
+
 	var width	= rowWidths(rows);
+	var height	= rowHeights(rows);
 
+	function drawLine(blocks, lineNum) {
+		return blocks.map(function(block) {
+			return block[lineNum];
+		}).join(colSeparator);
+	}
 
+	function drawRow(row, rowNum) {
+		var blocks = row.map(function(cell, collNum) {
+			cell.draw(width, height);
+		});
+		return blocks[0].map(function(_block, lineNum) {
+			drawLine(blocks, lineNum);
+		}).join("\n");
+	}
+
+	return rows.map(drawRow).join("\n");
 }
 
 
