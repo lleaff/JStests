@@ -19,4 +19,23 @@ testData.forEach(function(val, i) {
 	console.log(drawTable(rowsOfCells));
 });
 
-if (!MOUNTAINS) { console.log("Include mountains.js"); }
+/* =Mountain test
+ * ------------------------------------------------------------ */
+
+function includeScript(src, callback, appendTo) {
+	if (appendTo === undefined)
+		appendTo = document.body || document.head;
+
+	var script = document.createElement("script");
+	script.setAttribute("src", src);
+	if (callback) script.onload = callback;
+	appendTo.appendChild(script);
+	return script;
+}
+
+includeScript("http://eloquentjavascript.net/code/mountains.js",
+			 mountainTest);
+
+function mountainTest() {
+	console.log(MOUNTAINS);
+}
