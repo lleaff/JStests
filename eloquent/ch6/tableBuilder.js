@@ -14,18 +14,16 @@ function colWidths(rows) {
 	});
 }
 
-function Cell() {
+function TextCell(value) {
+	if (typeof value !== "string") value = value.toString();
+	this.text = value.split("\n");
 }
 
-Cell.prototype.minHeight = function() {
-	var str = this.value.toString();
-	var newline = 0;
-	for(var i = 0; i < str.length - 1; ++i)
-		if (str[i] === "\n") ++newline;
-	return newline + 1;
+TextCell.prototype.minHeight = function() {
+	return this.text.length;
 };
-Cell.prototype.minWidth = function() {
-	return this.value.toString().length;
+TextCell.prototype.minWidth = function() {
+	return this.text.reduce(function(max, line) {
+		return Math.max(max, line.length);
+	}, 0);
 };
-
-
