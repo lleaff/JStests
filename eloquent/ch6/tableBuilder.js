@@ -62,7 +62,7 @@ TextCell.prototype.minWidth = function() {
 };
 
 TextCell.prototype.draw = function(width, height, alignRight) {
-	if (alignRight !== undefined && !isNaN(+this.text)) alignRight = true;
+	if (alignRight === undefined && !isNaN(+this.text)) alignRight = true;
 	var result = [];
 	for (var i = 0; i < height; ++i) {
 		var line = this.text[i] || "";
