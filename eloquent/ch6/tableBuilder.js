@@ -73,7 +73,7 @@ TextCell.prototype._DrawCell =
 };
 
 TextCell.prototype.draw = function(width, height, alignRight) {
-	if (!isNaN(+this.text)) alignRight = true;
+	if (alignRight !== undefined && !isNaN(+this.text)) alignRight = true;
 	return this._DrawCell(this.text, width, height, alignRight);
 };
 
@@ -88,8 +88,5 @@ UnderlinedTextCell.prototype = new TextCell();
 UnderlinedTextCell.prototype.draw = 
 	function(width, height, underlineCharacter, alignRight) {
 	if (underlineCharacter === undefined) underlineCharacter = "-";
-	this.text.push(
-		Array((width + 1)/underlineCharacter.length).join(underlineCharacter));
 
-	return this._DrawCell(this.text, width, height + 1, alignRight);
 };
