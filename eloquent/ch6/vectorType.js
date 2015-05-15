@@ -33,6 +33,9 @@ Vector.prototype.minus = function(toSubstract) {
 	return this._operate(function(a, b){ return a-b; }, toSubstract);
 };
 
+/* =Tests
+ * ------------------------------------------------------------ */
+
 var testVec1 = new Vector(1, 1);
 
-console.log(testVec1.length);
+console.log(""+testVec1 + " length: " + (testVec1.length*10 - testVec1.length*10 % 1)/10);
