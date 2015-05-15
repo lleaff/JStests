@@ -120,3 +120,18 @@ UnderlinedTextCell.prototype.draw =
 	return this.inner.draw(width, height - 1, alignRight).concat( 
 		[Array(width + 1).join(underlineCharacter)]);
 };
+
+/* Streched cell */
+function StretchedTextCell(value, width, height) {
+	this.inner = new TextCell(value);
+	this.forcedMinWidth = width;
+	this.forcedMinHeight = height;
+}
+
+StretchedTextCell.prototype.minWidth = function() {
+	return Math.max(this.inner.minWidth(), this.forcedMinWidth);
+};
+
+StretchedTextCell.prototype.minHeight = function() {
+	return Math.max(this.inner.minHeight(), this.forcedMinHeight);
+};
