@@ -8,22 +8,25 @@ Object.defineProperty(Vector.prototype, "length", {
 	}
 });
 
-Vector.prototype.plus = function(toAdd) {
-	if (typeof toAdd === "number") {
-		this.x += toAdd; this.y += toAdd;
-		return this;
+Vector.prototype._operate = function(operation, target) {
+	if (typeof target === "number") {
+		return new Vector(
+			operation(this.x, target),
+			operation(this.y, (typeof arguments[2] === undefined) ? 
+						  target : +arguments[2]));
 	} else {
-		return new Vector(this.x + toAdd.x, this.y + toAdd.y);
+		return new Vector(
+			operation(this.x, target.x),
+			operation(this.y, target.y));
 	}
 };
 
+Vector.prototype.plus = function(toAdd) {
+	return this._operate(function(a, b){ return a+b; }, toAdd);
+};
+
 Vector.prototype.minus = function(toSubstract) {
-	if (typeof toAdd === "number") {
-		this.x -= toAdd; this.y -= toAdd;
-		return this;
-	} else {
-		return new Vector(this.x - toSubstract.x, this.y - toSubstract.y);
-	}
+	return this._operate(function(a, b){ return a-b; }, toSubstract);
 };
 
 var testVec1 = new Vector(1, 1);
