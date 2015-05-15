@@ -8,6 +8,24 @@ Object.defineProperty(Vector.prototype, "length", {
 	}
 });
 
+Vector.prototype.plus = function(toAdd) {
+	if (typeof toAdd === "number") {
+		this.x += toAdd; this.y += toAdd;
+		return this;
+	} else {
+		return new Vector(this.x + toAdd.x, this.y + toAdd.y);
+	}
+};
+
+Vector.prototype.minus = function(toSubstract) {
+	if (typeof toAdd === "number") {
+		this.x -= toAdd; this.y -= toAdd;
+		return this;
+	} else {
+		return new Vector(this.x - toSubstract.x, this.y - toSubstract.y);
+	}
+};
+
 var testVec1 = new Vector(1, 1);
 
 console.log(testVec1.length);
