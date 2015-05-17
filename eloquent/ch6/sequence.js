@@ -28,16 +28,25 @@ Object.defineProperty(Array.prototype, "current", {
 	set: function(a) { this[this.currentIndex] = a; }
 });
 
-Array.prototype.next = function() {
-	var prevIndex = this._currentIndex;
-	this.currentIndex = prevIndex + 1;
-	return prevIndex !== this._currentIndex;
+Object.defineProperty(Array.prototype, "next", { 
+	configurable: false, enumerable: false,
+	value: function() {
+		var prevIndex = this._currentIndex;
+		this.currentIndex = prevIndex + 1;
+		return prevIndex !== this._currentIndex;
+	}
+});
+
+Object.defineProperty(Array.prototype, "previous", { 
+	configurable: false, enumerable: false,
+	value: function() {
+		var prevIndex = this._currentIndex;
+		this.currentIndex = prevIndex - 1;
+		return prevIndex !== this._currentIndex;
+	}
+});
 };
 
-Array.prototype.previous = function() {
-	var prevIndex = this._currentIndex;
-	this.currentIndex = prevIndex - 1;
-	return prevIndex !== this._currentIndex;
 };
 
 /* =Sequence interface functions
