@@ -13,3 +13,7 @@ Grid.prototype.forEach = function(fn) {
 		for (j = 0; j < this.arr[i].length; ++j)
 			fn(this.arr[i][j], j, arr[i]);
 };
+
+Grid.prototype.fill = function(val) {
+	this.forEach(function(_, col, row) { row[col] = val; });
+};
