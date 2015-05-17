@@ -17,3 +17,7 @@ Grid.prototype.forEach = function(fn) {
 Grid.prototype.fill = function(val) {
 	this.forEach(function(_, col, row) { row[col] = val; });
 };
+
+Grid.prototype.getCell = function(x, y) { return this.arr[y][x]; };
+
+Grid.prototype.setCell = function(x, y, value) { this.arr[y][x] = value; };
