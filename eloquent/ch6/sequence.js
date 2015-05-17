@@ -1,3 +1,13 @@
+/* Sequence interface:
+ * .current		-> current value
+ * .next		-> step to the next item,
+ * 						returns false if boundary was reached
+ * .previous	-> step to the previous item,
+ * 						returns false if boundary was reached */
+
+/* =Array sequence implementation
+ * ------------------------------------------------------------ */
+
 Object.defineProperty(Array.prototype, "_length", {
 	configurable: false, enumerable: false,
 	get: function() { return this.length; }
@@ -29,3 +39,6 @@ Array.prototype.previous = function() {
 	this.currentIndex = prevIndex - 1;
 	return prevIndex !== this._currentIndex;
 };
+
+/* =Sequence interface functions
+ * ------------------------------------------------------------ */
