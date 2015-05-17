@@ -42,3 +42,10 @@ Array.prototype.previous = function() {
 
 /* =Sequence interface functions
  * ------------------------------------------------------------ */
+
+/* Log the first five items in sequence */
+function logFive(seq) {
+	do {
+		console.log(seq.current);
+	} while(seq.next());
+}
