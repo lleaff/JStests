@@ -88,9 +88,15 @@ RangeSeq.prototype.previous = function() {
 /* =Sequence interface functions
  * ------------------------------------------------------------ */
 
+function goToStart(seq)	{ while(seq.previous()); }
+function goToEnd(seq) 	{ while(seq.next()); }
+
 /* Log the first five items in sequence */
 function logFive(seq) {
+	goToStart(seq);
+
+	var counter = 5;
 	do {
 		console.log(seq.current);
-	} while(seq.next());
+	} while(seq.next() && --counter);
 }
