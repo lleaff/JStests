@@ -62,8 +62,15 @@ Object.defineProperty(RangeSeq.prototype, "current", {
 });
 
 RangeSeq.prototype._move = function(distance) {
-	if (typeof this.from === "number") { this_.currentVal += distance; }
-	else if (typeof this.from === "string" && this.from.length === 1) {
+	if (typeof this.from === "number") { 
+		if (this._currentVal + distance > this.to ||
+		    this._currentVal + distance < this.from) {
+			return false;
+		} else {
+			this._currentVal += distance; 
+			return true;
+		}
+	} else if (typeof this.from === "string" && this.from.length === 1) {
 		var curCharCode = this._currentVal.charCodeAt(0);
 		if (curCharCode + distance > this.to.charCodeAt(0) ||
 		    curCharCode + distance < this.from.charCodeAt(0)) {
