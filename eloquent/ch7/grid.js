@@ -25,3 +25,20 @@ Grid.prototype.get = function(vector) {
 Grid.prototype.set = function(vector, value) {
 	this.arr[vector.y][vector.x] = value;
 };
+
+Grid.prototype.isInside = function(vector) {
+	var xIn = false, yIn = false;
+	if (this.width >= vector.x && 0 >= vector.x)
+		xIn = true;
+	if (this.height >= vector.y && 0 <= vector.y)
+		yIn = true;
+
+	if (xIn && yIn) {
+		return true;
+	} else {
+		/* Return difference vector */
+		return new Vector(
+			xIn ? 0 : vector.x - this.width,
+			yIn ? 0 : vector.y - this.height );
+	}
+};
