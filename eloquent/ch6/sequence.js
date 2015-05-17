@@ -107,3 +107,9 @@ function logFive(seq) {
 		console.log(seq.current);
 	} while(seq.next() && --counter);
 }
+
+function logAll(seq, reverse) {
+	if (!reverse) goToStart(seq); else goToEnd(seq);
+	var stepFunction = !reverse ? seq.next : seq.previous;
+	do { console.log(seq.current); } while(stepFunction.call(seq));
+}

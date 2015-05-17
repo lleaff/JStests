@@ -14,6 +14,12 @@ var OneToFourRange = new RangeSeq(1, 4);
 console.log("[2-50]:"); logFive(TwoToFiftyRange);
 console.log("[1-4]:"); logFive(OneToFourRange);
 
+console.log(Array(61).join("-"));
+
 var aToZ = new RangeSeq("a", "z");
 
 console.log("[a-z]:"); logFive(aToZ);
+
+console.log(Array(61).join("-"));
+
+console.log("all (reversed):"); logAll(aToZ, true);
