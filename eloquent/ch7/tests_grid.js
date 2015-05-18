@@ -10,3 +10,8 @@ console.log(mark+": "+testGrid.get(mark));
 
 console.log("is "+mark+" inside the grid? "+
 			(!testGrid.isOutside(mark) ? "yes" : "no"));
+
+var newGrid = testGrid.map(function(val) {
+	return val === "@" ? "X" : "@"; });
+console.log(""+newGrid);
+console.log(""+testGrid);
