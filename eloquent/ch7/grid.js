@@ -8,6 +8,7 @@ function Grid(width, height) {
 }
 
 Grid.prototype.draw = function() { return this.arr.join("\n"); };
+Grid.prototype.toString = Grid.prototype.draw;
 
 /* Usage: grid.forEach(function(val, col, row) {...}) */
 Grid.prototype.forEach = function(fn) {
