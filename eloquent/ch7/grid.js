@@ -3,7 +3,6 @@ function Grid(width, height) {
 
 	/* Create 2D array */
 	this.arr = new Array(height);
-
 	for (var i = 0; i < this.arr.length; ++i)
 		this.arr[i] = new Array(width);
 }
