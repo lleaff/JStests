@@ -30,13 +30,13 @@ Grid.prototype.set = function(vector, value) {
 
 Grid.prototype.isOutside = function(vector) {
 	var xIn = false, yIn = false;
-	if (this.width >= vector.x && 0 >= vector.x)
+	if (this.width >= vector.x && 0 <= vector.x)
 		xIn = true;
 	if (this.height >= vector.y && 0 <= vector.y)
 		yIn = true;
 
 	if (xIn && yIn) {
-		return true;
+		return false;
 	} else {
 		/* Return difference vector */
 		return new Vector(
