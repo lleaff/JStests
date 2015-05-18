@@ -9,3 +9,7 @@ Vector.prototype.minus = function(vec) {
 Vector.prototype.add = function(x, y) { this.x += x; this.y += y; };
 
 Vector.prototype.substract = function(x, y) { this.x -= x; this.y -= y; };
+
+Vector.prototype.toString = function() {
+	return "{"+this.x+", "+this.y+"}";
+};
