@@ -29,7 +29,7 @@ Grid.prototype.set = function(vector, value) {
 	this.arr[vector.y][vector.x] = value;
 };
 
-Grid.prototype.isInside = function(vector) {
+Grid.prototype.isOutside = function(vector) {
 	var xIn = false, yIn = false;
 	if (this.width >= vector.x && 0 >= vector.x)
 		xIn = true;
