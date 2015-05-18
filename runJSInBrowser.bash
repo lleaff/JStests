@@ -23,27 +23,6 @@ discreetcolor='\033[0;35m' #purple
 # Detect Mac OS
 if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else unset OSX; fi
 
-USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
-	-h, --help:
-		Show this help
-	-x, --extra:
-		Include extra file in temporary folder (without any reference in the generated HTML file)
-	-l, --nosymlink
-		Copy the extra included file(s) instead of making symbolic links to them, useful if your script(s) modify their content
-	-C, --copyjsfiles
-		Copy the JavaScript(s) files instead of making symbolic links to them, you will have to rerun this script to apply updates to your script(s)
-	-b, --browser:
-		Command to launch the browser
-	-c, --color:
-		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
-	--install DIR [executable name]:
-		copy the script file to DIR
-
-Examples:
-	$(basename $0) someFile.js anotherFile.js -b chromium-browser
-Opens an html file in Chromium with someFile.js and anotherFile.js included in that order
-"
-
 drawSeparator()
 {
 	if [[ $1 ]]; then sign=$1; else sign='-'; fi
@@ -88,6 +67,29 @@ inst()
 	$NEEDSUDO chmod +x $newExecutable
 	createDirIfNotExist $TMPFILESDIR
 }
+
+####### Help ########
+
+USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
+	-h, --help:
+		Show this help
+	-x, --extra:
+		Include extra file in temporary folder (without any reference in the generated HTML file)
+	-l, --nosymlink
+		Copy the extra included file(s) instead of making symbolic links to them, useful if your script(s) modify their content
+	-C, --copyjsfiles
+		Copy the JavaScript(s) files instead of making symbolic links to them, you will have to rerun this script to apply updates to your script(s)
+	-b, --browser:
+		Command to launch the browser
+	-c, --color:
+		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
+	--install DIR [executable name]:
+		copy the script file to DIR
+
+Examples:
+	$(basename $0) someFile.js anotherFile.js -b chromium-browser
+Opens an html file in Chromium with someFile.js and anotherFile.js included in that order
+"
 
 ####### Process options ########
 
