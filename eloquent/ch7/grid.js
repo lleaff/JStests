@@ -2,7 +2,10 @@ function Grid(width, height) {
 	this.width = width; this.height = height;
 
 	/* Create 2D array */
-	this.arr = Array(height).map(function() { Array(width); });
+	this.arr = new Array(height);
+
+	for (var i = 0; i < this.arr.length; ++i)
+		this.arr[i] = new Array(width);
 }
 
 Grid.prototype.draw = function() { return this.arr.join("\n"); };
