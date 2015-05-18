@@ -14,7 +14,7 @@ Grid.prototype.draw = function() { return this.arr.join("\n"); };
 Grid.prototype.forEach = function(fn) {
 	for (var i = 0, j; i < this.arr.length; ++i)
 		for (j = 0; j < this.arr[i].length; ++j)
-			fn(this.arr[i][j], j, arr[i]);
+			fn(this.arr[i][j], j, this.arr[i]);
 };
 
 Grid.prototype.fill = function(val) {
