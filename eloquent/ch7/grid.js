@@ -10,15 +10,22 @@ function Grid(width, height) {
 Grid.prototype.draw = function() { return this.arr.join("\n"); };
 Grid.prototype.toString = Grid.prototype.draw;
 
-/* Usage: grid.forEach(function(val, col, row) {...}) */
+/* Usage: grid.forEach(function(val, col, row, arr) {...}) */
 Grid.prototype.forEach = function(fn) {
 	for (var i = 0, j; i < this.arr.length; ++i)
 		for (j = 0; j < this.arr[i].length; ++j)
-			fn(this.arr[i][j], j, this.arr[i]);
+			fn(this.arr[i][j], j, i, this.arr);
+};
+
+Grid.prototype.map = function(fn) {
+	var newGrid = new Grid(this.width, this.height);
+	this.forEach(function(val, col, row, arr) {
+		newGrid.arr[row][col] = fn(val, col, row, arr); });
+	return newGrid;
 };
 
 Grid.prototype.fill = function(val) {
-	this.forEach(function(_, col, row) { row[col] = val; });
+	this.forEach(function(_, col, row, arr) { arr[row][col] = val; });
 };
 
 Grid.prototype.get = function(vector) {
