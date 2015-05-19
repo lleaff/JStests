@@ -143,22 +143,25 @@ HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 createDirIfNotExist $TMPFILESDIR
 
 # Clean script work directory
-if [[ "$(ls -A $TMPFILESDIR)" ]]; then
-	for file in $TMPFILESDIR/*; do
-		local _found=false
-		for folderfile in $extrafiles; do
-			if [[ "$(basename $folderfile)" == $(basename $file) ]]; then
-				_found=true
-			fi
+_cleanWorkDir() {
+	if [[ "$(ls -A $TMPFILESDIR)" ]]; then
+		for file in $TMPFILESDIR/*; do
+			local _found=false
+			for folderfile in $extrafiles; do
+				if [[ "$(basename $folderfile)" == $(basename $file) ]]; then
+					_found=true
+				fi
+			done
+			if [[ $_found == false ]]; then
+				rm $file; deletedfiles=$deletedfiles' '$(basename $file);
+			fi 
 		done
-		if [[ $_found == false ]]; then
-			rm $file; deletedfiles=$deletedfiles' '$(basename $file);
-		fi 
-	done
-	if [[ $deletedfiles ]]; then
-		echo -e "${discreetcolor}Removed old temporary files in $TMPFILESDIR:\n$deletedfiles${nocolor}";
+		if [[ $deletedfiles ]]; then
+			echo -e "${discreetcolor}Removed old temporary files in $TMPFILESDIR:\n$deletedfiles${nocolor}";
+		fi
 	fi
-fi
+}
+_cleanWorkDir
 
 # Populate script work directory
 if [[ ! $_copyjsfiles ]]; then linkOperationForjsfiles='ln -s';
