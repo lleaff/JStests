@@ -85,8 +85,8 @@ USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
 		Ignore missing files
 	-c, --color:
 		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
-	--install DIR [executable name]:
-		copy the script file to DIR
+	--install DIR [EXECUTABLE_NAME]:
+		copy the script file to DIR and rename to EXECUTABLE_NAME
 
 Examples:
 	$(basename $0) someFile.js anotherFile.js -b chromium-browser
