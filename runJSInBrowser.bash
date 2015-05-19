@@ -37,8 +37,9 @@ _drawSeparator()
 _createDirIfNotExist() {
 	CONTDIR=${1%*/*}
 	if [[ ! -d $1 ]]; then
-		if [[ $(stat --version | grep BSD) ]]; then local STATFORMAT='-f %Su';
-		else local STATFORMAT='--format=%U'; fi
+		if [[ $(stat --version | grep 'GNU') ]];
+		then local STATFORMAT='--format=%U';
+		else local STATFORMAT='-f %Su'; fi
 		if [[ $(stat $STATFORMAT $CONTDIR) == "root" && "$UID" != 0 ]]; then
 			if [[ ! $(hash sudo) ]]; then
 				NEEDSUDO=sudo
