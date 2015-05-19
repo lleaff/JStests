@@ -124,14 +124,16 @@ if [[ $jsfiles == "" ]]; then
 	echo -e "${errorcolor}$USAGE"; exit 1; 
 fi
 # Test if files given in argument really exists
-if [[ $ignoremissing != true ]]; then
-	for f in $jsfiles; do
-		if [ ! -f $f ]; then 
+for f in $jsfiles; do
+	if [ ! -f $f ]; then 
+		if [[ $ignoremissing != true ]]; then
 			echo -e "${errorcolor}$f: file not found, aborting${nocolor}";
 			exit 1; 
+		else
+			jsfiles=$(echo $jsfiles | sed "s/[ ]*\<$f\>//")
 		fi
-	done
-fi
+	fi
+done
 
 # Take window title from name of last file argument
 HTMLDOCTITLE=${jsfiles##* }
