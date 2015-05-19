@@ -23,7 +23,7 @@ discreetcolor='\033[0;35m' #purple
 # Detect Mac OS
 if [[ $(uname -s) == "Darwin" ]]; then OSX=true; else unset OSX; fi
 
-drawSeparator()
+_drawSeparator()
 {
 	if [[ $1 ]]; then sign=$1; else sign='-'; fi
 	# Stupid but reliable method that works with '*'
@@ -34,7 +34,7 @@ drawSeparator()
 
 ################################
 
-createDirIfNotExist() {
+_createDirIfNotExist() {
 	CONTDIR=${1%*/*}
 	if [[ ! -d $1 ]]; then
 		if [[ $(stat --version | grep BSD) ]]; then local STATFORMAT='-f %Su';
@@ -58,14 +58,14 @@ createDirIfNotExist() {
 TMPFILESDIR=$BASEDIR'/'$SCRIPTNAME'Files'
 
 # Install script
-inst()
+_inst()
 {
-	createDirIfNotExist $1
+	_createDirIfNotExist $1
 	# We can reuse NEEDSUDO since it isn't declared as local to the function
 	local newExecutable="$1/$2"
 	$NEEDSUDO cp $0 $newExecutable
 	$NEEDSUDO chmod +x $newExecutable
-	createDirIfNotExist $TMPFILESDIR
+	_createDirIfNotExist $TMPFILESDIR
 }
 
 ####### Help ########
@@ -101,7 +101,7 @@ while [[ $1 ]]; do
 			echo "$USAGE"; exit 0 ;;
 		"--install" )
 			INSTALLDIR=$2; INSTALLNAME=$3;
-			inst $INSTALLDIR $INSTALLNAME; exit 0 ;;
+			_inst $INSTALLDIR $INSTALLNAME; exit 0 ;;
 		"-b" | "--browser" ) 
 			_BROWSERCMD=$2; shift 2 ;;
 		"-c" | "--color" )
@@ -142,7 +142,7 @@ HTMLDOCTITLE=${HTMLDOCTITLE%.*}
 ################################
 
 # Create script work directory if it doesn't exist
-createDirIfNotExist $TMPFILESDIR
+_createDirIfNotExist $TMPFILESDIR
 
 # Clean script work directory
 _cleanWorkDir() {
