@@ -35,7 +35,7 @@ drawSeparator()
 ################################
 
 createDirIfNotExist() {
-	CONTDIR=${1##*/}
+	CONTDIR=${1%*/*}
 	if [[ ! -d $1 ]]; then
 		if [[ $(stat --version | grep BSD) ]]; then local STATFORMAT='-f %Su';
 		else local STATFORMAT='--format=%U'; fi
@@ -81,6 +81,8 @@ USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
 		Copy the JavaScript(s) files instead of making symbolic links to them, you will have to rerun this script to apply updates to your script(s)
 	-b, --browser:
 		Command to launch the browser
+	-I, --ignoremissing
+		Ignore missing files
 	-c, --color:
 		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
 	--install DIR [executable name]:
@@ -110,6 +112,8 @@ while [[ $1 ]]; do
 			_nosymlink=true; shift ;;
 		"-C" | "--copyjsfiles" )
 			_copyjsfiles=true; shift ;;
+		"-I" | "--ignoremissing" )
+			ignoremissing=true; shift ;;
 		* )
 			jsfiles=$jsfiles' '$1; shift ;;
 	esac
@@ -120,11 +124,14 @@ if [[ $jsfiles == "" ]]; then
 	echo -e "${errorcolor}$USAGE"; exit 1; 
 fi
 # Test if files given in argument really exists
-for f in $jsfiles; do
-	if [ ! -f $f ]; then 
-		echo -e "${errorcolor}$f: file not found, aborting${nocolor}"; exit 1; 
-	fi
-done
+if [[ $ignoremissing != true ]]; then
+	for f in $jsfiles; do
+		if [ ! -f $f ]; then 
+			echo -e "${errorcolor}$f: file not found, aborting${nocolor}";
+			exit 1; 
+		fi
+	done
+fi
 
 # Take window title from name of last file argument
 HTMLDOCTITLE=${jsfiles##* }
