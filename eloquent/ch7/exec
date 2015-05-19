@@ -1,0 +1,3 @@
+#!/bin/bash
+
+runJS --ignoremissing vector.js grid.js world.js data.js
