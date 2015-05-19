@@ -11,10 +11,12 @@ Grid.prototype.draw = function() { return this.arr.join("\n"); };
 Grid.prototype.toString = Grid.prototype.draw;
 
 /* Usage: grid.forEach(function(val, col, row, arr) {...}) */
-Grid.prototype.forEach = function(fn) {
-	for (var i = 0, j; i < this.arr.length; ++i)
-		for (j = 0; j < this.arr[i].length; ++j)
-			fn(this.arr[i][j], j, i, this.arr);
+Grid.prototype.forEach = function(fn, thisArg) {
+	if (thisArg === undefined) thisArg = this;
+
+	for (var i = 0, j; i < thisArg.arr.length; ++i)
+		for (j = 0; j < thisArg.arr[i].length; ++j)
+			fn(thisArg.arr[i][j], j, i, thisArg.arr);
 };
 
 Grid.prototype.map = function(fn) {
