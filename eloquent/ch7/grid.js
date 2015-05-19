@@ -54,3 +54,29 @@ Grid.prototype.isOutside = function(vector) {
 			yIn ? 0 : vector.y - this.height );
 	}
 };
+
+Grid.parse = function(rectangularString) {
+	/* Get width and height first */
+	var width, height = 0;
+	for (var i = 0; i < rectangularString.length; ++i) {
+		if (rectangularString[i] === "\n") {
+			if (width === undefined)
+				width = i;
+			++height;
+		}
+	}
+	/* Handle absence of trailing newline char */
+	if (rectangularString[rectangularString.length -1] !== "\n")
+		++height;
+
+	var grid = new Grid(width, height);
+
+	/* Fill in the grid */
+	var offset = 0;
+	for (i = 0; i < rectangularString.length; ++i) {
+		if (rectangularString[i] === "\n") ++offset;
+		grid.set(new Vector((i - offset) % width, ((i - offset) / width)>>0), rectangularString[i]);
+	}
+
+	return grid;
+};
