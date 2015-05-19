@@ -7,7 +7,10 @@ function Grid(width, height) {
 		this.arr[i] = new Array(width);
 }
 
-Grid.prototype.draw = function() { return this.arr.join("\n"); };
+Grid.prototype.draw = function() {
+	return this.arr.map(function(row) { return row.join(""); }, "")
+		.join("\n");
+};
 Grid.prototype.toString = Grid.prototype.draw;
 
 /* Usage: grid.forEach(function(val, col, row, arr) {...}) */
