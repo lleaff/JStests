@@ -13,8 +13,8 @@ Grid.prototype.draw = function() {
 };
 Grid.prototype.toString = Grid.prototype.draw;
 
-/* Usage: grid.forEach(function(val, col, row, arr) {...}) */
-Grid.prototype.forEach = function(fn, thisArg) {
+/* Usage: grid.forAll(function(val, col, row, arr) {...}) */
+Grid.prototype.forAll = function(fn, thisArg) {
 	if (thisArg === undefined) thisArg = this;
 
 	for (var i = 0, j; i < thisArg.arr.length; ++i)
@@ -22,15 +22,26 @@ Grid.prototype.forEach = function(fn, thisArg) {
 			fn(thisArg.arr[i][j], j, i, thisArg.arr);
 };
 
+/* Usage: grid.forEach(function(val, col, row, arr) {...}) */
+Grid.prototype.forEach = function(fn, thisArg) {
+	if (thisArg === undefined) thisArg = this;
+
+	for (var i = 0, j; i < thisArg.arr.length; ++i)
+		for (j = 0; j < thisArg.arr[i].length; ++j)
+			if (thisArg.arr[i][j] !== undefined &&
+				thisArg.arr[i][j] !== null)
+				fn(thisArg.arr[i][j], j, i, thisArg.arr);
+};
+
 Grid.prototype.map = function(fn) {
 	var newGrid = new Grid(this.width, this.height);
-	this.forEach(function(val, col, row, arr) {
+	this.forAll(function(val, col, row, arr) {
 		newGrid.arr[row][col] = fn(val, col, row, arr); });
 	return newGrid;
 };
 
 Grid.prototype.fill = function(val) {
-	this.forEach(function(_, col, row, arr) { arr[row][col] = val; });
+	this.forAll(function(_, col, row, arr) { arr[row][col] = val; });
 };
 
 Grid.prototype.get = function(vector) {
