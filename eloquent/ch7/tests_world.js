@@ -6,6 +6,6 @@ var testPlan = [
 	"#  o       #",
 	"#        o #",
 	"############"].join("\n");
-var testWorld1 = new World(testPlan);
+var testWorld1 = new World(testPlan, legend);
 
-console.log(""+testWorld1.grid);
+console.log(""+testWorld1);

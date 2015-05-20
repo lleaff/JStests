@@ -1,7 +1,6 @@
 function World(plan, legend) {
 	var grid = (typeof plan === "object") ? plan : Grid.parse(plan);
-	this.grid = grid;
-	this.charGridToElemGrid();
+	this.grid = World.charGridToElemGrid(grid, legend);
 
 	this.legend = legend;
 }
@@ -20,22 +19,18 @@ World.elementToChar = function(element) {
 	return element.originChar;
 };
 
-World.prototype.charGridToElemGrid = function() {
-	this.grid.map(function(char) {
-		return World.charToElement(char, this.legend); });
+World.charGridToElemGrid = function(grid, legend) {
+	return grid.map(function(char) {
+		return World.charToElement(char, legend); });
 };
 
-var legend = {
-	"#":  function() {
-		this.type = "wall";
-		this.solid = true;
-	},
-	" ": function() {
-		this.type = "emptySpace";
-		this.solid = false;
-	},
-	"o": function() {
-		this.type = "critter";
-		this.solid = true;
-	}
+World.elemGridToCharGrid = function(grid) {
+	return grid.map(function(elem) {
+		return elem.originChar;
+	});
 };
+
+World.prototype.draw = function() {
+	return World.elemGridToCharGrid(this.grid).toString();
+};
+World.prototype.toString = World.prototype.draw;
