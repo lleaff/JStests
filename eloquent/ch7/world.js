@@ -3,26 +3,36 @@ function World(plan, legend) {
 	this.grid = World.charGridToElemGrid(grid, legend);
 
 	this.legend = legend;
+	this.actions = new World.Actions(this);
 }
 
 /* =Helper functions
  * ------------------------------------------------------------ */
-World.charToElement = function(char, legend) {
-	var element = new legend[char]();
-	element.originChar = char;
-	return element;
+World.charToElements = function(char, legend) {
+	var elements = new legend[char]();
+	if (Array.isArray(elements)) {
+		elements.forEach(function(_, i, elements) {
+			elements[i].originChar = char;
+		});
+	} else {
+		elements.originChar = char;
+		elements = [ elements ];
+	}
+	return elements;
 };
 World.charGridToElemGrid = function(grid, legend) {
 	return grid.map(function(char) {
-		return World.charToElement(char, legend); });
+		return World.charToElements(char, legend); });
 };
 
 World.elementToChar = function(element) {
 	return element.originChar;
 };
 World.elemGridToCharGrid = function(grid) {
-	return grid.map(function(elem) {
-		return elem.originChar;
+	return grid.map(function(elements) {
+		return elements.reduce(function(a, elem) {
+			return (elem.solid) ? elem : a; },
+			elements[0]).originChar;
 	});
 };
 

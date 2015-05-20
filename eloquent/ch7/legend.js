@@ -21,8 +21,8 @@ var legend = (function() {
 	}
 
 	function Critter() {
-			this.type = "critter";
-			this.solid = true;
+		this.type = "critter";
+		this.solid = true;
 	}
 
 	return legend;
