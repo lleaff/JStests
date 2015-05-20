@@ -47,9 +47,15 @@ Grid.prototype.fill = function(val) {
 Grid.prototype.get = function(vector) {
 	return this.arr[vector.y][vector.x];
 };
+Grid.prototype.getAt = function(x, y) {
+	return this.arr[y][x];
+};
 
 Grid.prototype.set = function(vector, value) {
 	this.arr[vector.y][vector.x] = value;
+};
+Grid.prototype.setAt = function(x, y, value) {
+	this.arr[y][x] = value;
 };
 
 Grid.prototype.isOutside = function(vector) {

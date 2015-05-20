@@ -15,7 +15,6 @@ World.charGridToElemGrid = function(grid, legend) {
 		return World.charToElement(char, legend); });
 };
 
-
 World.elementToChar = function(element) {
 	return element.originChar;
 };
