@@ -45,3 +45,18 @@ World.prototype.turn = function() {
 
 	World.actions.apply();
 };
+
+World.directions = {
+	"n":	0,	"up":		0,
+	"ne": 	3,
+	"e":	6,	"right":	6,
+	"se":	9,
+	"s":	12,	"bottom":	12,
+	"sw":	15,
+	"w":	18,	"left":		18,
+	"nw":	21
+};
+
+World.actions = {
+
+};
