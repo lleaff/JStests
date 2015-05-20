@@ -5,25 +5,20 @@ function World(plan, legend) {
 	this.legend = legend;
 }
 
-World.prototype.toString = function() {
-	return this.grid.toString();
-};
-
 World.charToElement = function(char, legend) {
 	var element = new legend[char]();
 	element.originChar = char;
 	return element;
 };
-
-World.elementToChar = function(element) {
-	return element.originChar;
-};
-
 World.charGridToElemGrid = function(grid, legend) {
 	return grid.map(function(char) {
 		return World.charToElement(char, legend); });
 };
 
+
+World.elementToChar = function(element) {
+	return element.originChar;
+};
 World.elemGridToCharGrid = function(grid) {
 	return grid.map(function(elem) {
 		return elem.originChar;
