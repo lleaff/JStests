@@ -57,6 +57,6 @@ World.directions = {
 	"nw":	21
 };
 
-World.actions = {
+World.prototype.actions = {
 
 };
