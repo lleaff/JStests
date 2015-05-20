@@ -9,15 +9,11 @@ function World(plan, legend) {
 /* =Helper functions
  * ------------------------------------------------------------ */
 World.charToElements = function(char, legend) {
-	var elements = new legend[char]();
-	if (Array.isArray(elements)) {
-		elements.forEach(function(_, i, elements) {
-			elements[i].originChar = char;
-		});
-	} else {
-		elements.originChar = char;
-		elements = [ elements ];
-	}
+	var elements = legend[char].map(function(elemConstructor) {
+		return new elemConstructor(); });
+	elements.forEach(function(_, i, elements) {
+		elements[i].originChar = char;
+	});
 	return elements;
 };
 World.charGridToElemGrid = function(grid, legend) {

@@ -3,9 +3,9 @@ var legend = (function() {
 	/* =Character map
 	 * ------------------------------------------------------------ */
 	var legend = {
-		"#":  Wall,
-		" ": EmptySpace,
-		"o": Critter
+		"#": [ Wall ],
+		" ": [ EmptySpace ],
+		"o": [ Critter, EmptySpace]
 	};
 
 	/* =Constructors
