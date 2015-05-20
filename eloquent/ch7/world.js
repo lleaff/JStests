@@ -5,6 +5,8 @@ function World(plan, legend) {
 	this.legend = legend;
 }
 
+/* =Helper functions
+ * ------------------------------------------------------------ */
 World.charToElement = function(char, legend) {
 	var element = new legend[char]();
 	element.originChar = char;
@@ -28,3 +30,18 @@ World.prototype.draw = function() {
 	return World.elemGridToCharGrid(this.grid).toString();
 };
 World.prototype.toString = World.prototype.draw;
+
+/* =World logic
+ * ------------------------------------------------------------ */
+World.prototype.turn = function() {
+	var actors = [];
+	this.grid.forEach(function(elem) {
+		if (elem.act) actors.push(elem);
+	});
+
+	var actions = actors.map(function(elem) {
+		return elem.act();
+	});
+
+	World.actions.apply();
+};
