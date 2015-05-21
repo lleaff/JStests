@@ -7,11 +7,14 @@ function Grid(width, height) {
 		this.arr[i] = new Array(width);
 }
 
-Grid.prototype.draw = function() { return this.arr.join("\n"); };
+Grid.prototype.draw = function() {
+	return this.arr.map(function(row) { return row.join(""); }, "")
+		.join("\n");
+};
 Grid.prototype.toString = Grid.prototype.draw;
 
-/* Usage: grid.forEach(function(val, col, row, arr) {...}) */
-Grid.prototype.forEach = function(fn, thisArg) {
+/* Usage: grid.forAll(function(val, col, row, arr) {...}) */
+Grid.prototype.forAll = function(fn, thisArg) {
 	if (thisArg === undefined) thisArg = this;
 
 	for (var i = 0, j; i < thisArg.arr.length; ++i)
@@ -19,23 +22,40 @@ Grid.prototype.forEach = function(fn, thisArg) {
 			fn(thisArg.arr[i][j], j, i, thisArg.arr);
 };
 
+/* Usage: grid.forEach(function(val, col, row, arr) {...}) */
+Grid.prototype.forEach = function(fn, thisArg) {
+	if (thisArg === undefined) thisArg = this;
+
+	for (var i = 0, j; i < thisArg.arr.length; ++i)
+		for (j = 0; j < thisArg.arr[i].length; ++j)
+			if (thisArg.arr[i][j] !== undefined &&
+				thisArg.arr[i][j] !== null)
+				fn(thisArg.arr[i][j], j, i, thisArg.arr);
+};
+
 Grid.prototype.map = function(fn) {
 	var newGrid = new Grid(this.width, this.height);
-	this.forEach(function(val, col, row, arr) {
+	this.forAll(function(val, col, row, arr) {
 		newGrid.arr[row][col] = fn(val, col, row, arr); });
 	return newGrid;
 };
 
 Grid.prototype.fill = function(val) {
-	this.forEach(function(_, col, row, arr) { arr[row][col] = val; });
+	this.forAll(function(_, col, row, arr) { arr[row][col] = val; });
 };
 
 Grid.prototype.get = function(vector) {
 	return this.arr[vector.y][vector.x];
 };
+Grid.prototype.getAt = function(x, y) {
+	return this.arr[y][x];
+};
 
 Grid.prototype.set = function(vector, value) {
 	this.arr[vector.y][vector.x] = value;
+};
+Grid.prototype.setAt = function(x, y, value) {
+	this.arr[y][x] = value;
 };
 
 Grid.prototype.isOutside = function(vector) {
@@ -75,7 +95,9 @@ Grid.parse = function(rectangularString) {
 	var offset = 0;
 	for (i = 0; i < rectangularString.length; ++i) {
 		if (rectangularString[i] === "\n") ++offset;
-		grid.set(new Vector((i - offset) % width, ((i - offset) / width)>>0), rectangularString[i]);
+		else grid.set(
+			new Vector((i - offset) % width, ((i - offset) / width)>>0),
+			rectangularString[i]);
 	}
 
 	return grid;
