@@ -22,12 +22,26 @@ World.direction = new (function() { /* jshint ignore:line */
 	this.nw	= new Vector(-1,  1);
 })();
 
+World.view = function(world, position){ /* jshint ignore:line */
+	this.position = position;
+
+	this.look = function(critter, direction) {
+		var image = "";
+		var position = this.position;
+		for (var distance = 0; distance < critter.sight;
+			 ++distance) {
+				 image += world.grid.get(position.plus(direction));
+			 }
+			 return image;
+	};
+
+};
+World.prototype.newView = function(position) {
+	return new World.view(this, position);
+};
+
 World.Actions = function(self) {
 	return {
-		view: function(elem) {
-			return ;
-		},
-
 		move: function() {
 
 		},
