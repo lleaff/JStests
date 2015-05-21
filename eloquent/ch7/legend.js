@@ -30,5 +30,9 @@ var legend = (function() {
 
 	legend.default = legend.EmptySpace;
 
+	function bouncingCriterAct() {
+		/* TODO bouncing criter AI */
+	}
+
 	return legend;
 })();
