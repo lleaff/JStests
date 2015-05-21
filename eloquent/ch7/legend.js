@@ -17,14 +17,16 @@ var legend = (function() {
 			this.ch		= "o";
 			this.solid 	= true;
 			this.speed 	= 1;
+			this.sight	= 1;
 		},
 
 		BouncingCriter: function() {
 			this.type	= "bouncingCriter";
 			this.ch		= "@";
 			this.solid 	= true;
-			this.speed 	= 1;
 			this.act	= bouncingCriterAct;
+			this.speed 	= 1;
+			this.sight	= 1;
 		}
 	};
 
