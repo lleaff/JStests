@@ -1,3 +1,5 @@
 #!/bin/bash
 
-runJS --ignoremissing vector.js grid.js world.js data.js
+files='vector.js grid.js legend.js world.js'
+
+runJS --ignoremissing $files
