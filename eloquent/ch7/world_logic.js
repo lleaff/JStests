@@ -31,9 +31,11 @@ World.View = function(world, position){ /* jshint ignore:line */
 World.View.prototype.look = function(critter, direction) {
 	var image = []; /* Array of elements */
 	var position = this.position;
-	for (var distance = 0; distance < critter.sight;
+	for (var distance = 0, element; distance < critter.sight;
 		 ++distance) {
-			 image.push(this.world.grid.get(position.plus(direction)));
+			element = this.world.grid.get(position.plus(direction));
+			image.push(element);
+			if (element.blockSight) break;
 		 }
 		 return new Image(image);
 };
@@ -60,8 +62,6 @@ World.Image.prototype.canSee = function(elementType) {
 	for (var i = 0; i < this.image.length; ++i) {
 		if (this.image[i].type === elementType)
 			++count;
-		if (this.image[i].blockSight)
-			break;
 	}
 	return count; /* Number of elements in sight */
 };
