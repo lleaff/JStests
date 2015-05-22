@@ -11,9 +11,6 @@ function World(plan, legend) {
 World.charToElements = function(char, legend) {
 	var elements = legend[char].map(function(elemConstructor) {
 		return new elemConstructor(); });
-	elements.forEach(function(_, i, elements) {
-		elements[i].originChar = char;
-	});
 	return elements;
 };
 World.charGridToElemGrid = function(grid, legend) {
@@ -22,13 +19,13 @@ World.charGridToElemGrid = function(grid, legend) {
 };
 
 World.elementToChar = function(element) {
-	return element.originChar;
+	return element.ch;
 };
 World.elemGridToCharGrid = function(grid) {
 	return grid.map(function(elements) {
 		return elements.reduce(function(a, elem) {
 			return (elem.solid) ? elem : a; },
-			elements[0]).originChar;
+			elements[0]).ch;
 	});
 };
 
@@ -42,14 +39,9 @@ World.prototype.toString = World.prototype.draw;
 World.prototype.turn = function() {
 	var actors = [];
 	this.grid.forEach(function(elem) {
-		if (elem.act) actors.push(elem);
-	});
+		if (elem.act) this.actions.actors.push(elem); });
 
-	var actions = actors.map(function(elem) {
-		return elem.act();
-	});
-
-	World.actions.apply();
+	this.actions.apply(actions);
 };
 
 World.direction = new (function() { /* jshint ignore:line */
@@ -63,6 +55,14 @@ World.direction = new (function() { /* jshint ignore:line */
 	this.nw	= new Vector(-1,  1);
 })();
 
-World.prototype.actions = {
+World.Actions = function(self) {
+	this.actors = [];
+
+	this.move = function(direction, distance) {
+		var moveVec = !distance ? World.direction[direction] :
+			World.direction[direction]
+			.times(new Vector(distance, distance));
+
+	};
 
 };

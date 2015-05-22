@@ -47,6 +47,9 @@ var legend = (function() {
 		return legend;
 	})();
 
+	/* =Act methods
+	 * ------------------------------------------------------------ */
+	function bouncingCriterAct() {
 
 	}
 
