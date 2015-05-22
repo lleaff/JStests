@@ -1,33 +1,33 @@
 var legend = (function() {
 	var legend = {
-		EmptySpace: function() {
-			this.type 		= "emptySpace";
-			this.ch	  		= " ";
-			this.solid		= false;
+		EmptySpace: {
+			type:		 "emptySpace",
+			ch:			 " ",
+			solid:		 false,
 		},
 
-		Wall: function() {
-			this.type 		= "wall";
-			this.ch	  		= "#";
-			this.solid		= true;
-			this.blockSight	= true;
+		Wall: {
+			type:		 "wall",
+			ch:			 "#",
+			solid:		 true,
+			blockSight:	 true,
 		},
 
-		Critter: function() {
-			this.type 		= "critter";
-			this.ch	  		= "o";
-			this.solid		= true;
-			this.speed		= 1;
-			this.sight		= 1;
+		Critter: {
+			type:		 "critter",
+			ch:			 "o",
+			solid:		 true,
+			speed:		 1,
+			sight:		 1,
 		},
 
-		BouncingCriter: function() {
-			this.type		= "bouncingCriter";
-			this.ch			= "@";
-			this.solid 		= true;
-			this.act		= bouncingCriterAct;
-			this.speed 		= 1;
-			this.sight		= 1;
+		BouncingCriter:  {
+			type:		 "bouncingCriter",
+			ch:			 "@",
+			solid:		 true,
+			act:		 bouncingCriterAct,
+			speed:		 1,
+			sight:		 1,
 		}
 	};
 

@@ -11,8 +11,10 @@ function World(plan, legend) {
 /* =Helper functions
  * ------------------------------------------------------------ */
 World.charToElements = function(char, legend) {
-	var elements = legend[char].map(function(elemConstructor) {
-		return new elemConstructor(); });
+	var elements = legend[char].map(function(element) {
+		var instance = Object.create(element);
+		instance.prototype = element;
+	});
 	return elements;
 };
 World.charGridToElemGrid = function(grid, legend) {
@@ -36,17 +38,15 @@ World.prototype.draw = function() {
 };
 World.prototype.toString = World.prototype.draw;
 
-/* Build a map of characters->elementConstructors from a map of
- * elementName->elementConstructors */
-World.charMapFromElemMap = function(constructors) {
+/* Build a map of characters->elementPrototypes from a map of
+ *  elementName->elementPrototypes */
+World.charMapFromElemMap = function(elements) {
 	var legend = {};
-	for (var constructor in constructors) {
-		/* Create a new element from the constructor to be able to
-		 *  extract its ch property */
-		var elem = new constructors[constructor]();
-		legend[elem.ch] = [ constructors[constructor] ];
+	for (var element in elements) {
+		var elem = elements[element]();
+		legend[elem.ch] = [ elements[element] ];
 		/* If the element can move, put default element under it */
-		if (elem.speed) legend[elem.ch].push(constructors.default);
+		if (elem.speed) legend[elem.ch].push(elements.default);
 	}
 	return legend;
 };
