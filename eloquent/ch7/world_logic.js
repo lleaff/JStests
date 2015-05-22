@@ -36,9 +36,9 @@ World.view = function(world, position){ /* jshint ignore:line */
 	};
 
 };
-World.prototype.newView = function(position) {
+/* World.prototype.newView = function(position) {
 	return new World.view(this, position);
-};
+}; */
 
 World.Actions = function(self) {
 	return {
