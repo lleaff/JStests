@@ -1,16 +1,10 @@
 /* =Turn logic
  * ------------------------------------------------------------ */
 World.prototype.turn = function() {
-	var actors = [];
-	this.grid.forEach(function(elem) {
-		if (elem.act) actors.push(elem);
-	});
-
-	var actions = actors.map(function(elem) {
-		return elem.act();
-	});
-
-	World.actions.apply();
+	var actors = this.grid.filter(function(elem) { return !!elem.act; });
+	/* Shuffle actors so movement conflict resolutions aren't predictable */
+	shuffleArray(actors);
+	actors.forEach(function(elem) { elem.act(); });
 };
 
 /* ------------------------------------------------------------ */
