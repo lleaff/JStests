@@ -14,6 +14,7 @@ World.charToElements = function(char, legend) {
 	var elements = legend[char].map(function(element) {
 		var instance = Object.create(element);
 		instance.prototype = element;
+		return instance;
 	});
 	return elements;
 };
@@ -43,7 +44,8 @@ World.prototype.toString = World.prototype.draw;
 World.charMapFromElemMap = function(elements) {
 	var legend = {};
 	for (var element in elements) {
-		var elem = elements[element]();
+		var elem = elements[element];
+		if (!elem.ch) continue; /* skip bogus properties */
 		legend[elem.ch] = [ elements[element] ];
 		/* If the element can move, put default element under it */
 		if (elem.speed) legend[elem.ch].push(elements.default);
