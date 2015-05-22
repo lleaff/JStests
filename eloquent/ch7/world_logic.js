@@ -70,10 +70,15 @@ World.View.Image.prototype.canSee = function(elementType) {
 /* =Actions
  * ------------------------------------------------------------ */
 
-World.Actions = function(self) {
+World.Actions = function(world) {
 	return {
-		move: function(actor) {
-			
+		/* The actor's current View is stored in its .view property */
+
+		move: function(actor, direction, distance) {
+			if (distance === undefined) distance = actor.speed;
+
+
+
 		},
 	};
 };
