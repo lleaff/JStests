@@ -1,3 +1,5 @@
+/* =Turn logic
+ * ------------------------------------------------------------ */
 World.prototype.turn = function() {
 	var actors = [];
 	this.grid.forEach(function(elem) {
@@ -11,6 +13,7 @@ World.prototype.turn = function() {
 	World.actions.apply();
 };
 
+/* ------------------------------------------------------------ */
 World.direction = new (function() { /* jshint ignore:line */
 	this.n	= new Vector( 0,  1); this.up		= this.n;
 	this.ne	= new Vector( 1,  1);
@@ -22,7 +25,8 @@ World.direction = new (function() { /* jshint ignore:line */
 	this.nw	= new Vector(-1,  1);
 })();
 
-/* View object */
+/* =World perception
+ * ------------------------------------------------------------ */
 World.View = function(world, position){ /* jshint ignore:line */
 	this.world = world; /* self */
 	this.position = position;
@@ -39,10 +43,6 @@ World.View.prototype.look = function(critter, direction) {
 		 }
 		 return new Image(image);
 };
-
-/* World.prototype.newView = function(position) {
-   return new World.view(this, position);
-}; */
 
 World.Image = function(image) {
 	this.image = image;
@@ -66,6 +66,8 @@ World.Image.prototype.canSee = function(elementType) {
 	return count; /* Number of elements in sight */
 };
 
+/* =Actions
+ * ------------------------------------------------------------ */
 
 World.Actions = function(self) {
 	return {
