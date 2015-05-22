@@ -1,7 +1,9 @@
 function World(plan, legend) {
 	var grid = (typeof plan === "object") ? plan : Grid.parse(plan);
-	this.grid = World.charGridToElemGrid(grid, legend);
 
+	legend = World.charMapFromElemMap(legend);
+
+	this.grid = World.charGridToElemGrid(grid, legend);
 	this.legend = legend;
 	this.actions = new World.Actions(this);
 }
@@ -34,35 +36,17 @@ World.prototype.draw = function() {
 };
 World.prototype.toString = World.prototype.draw;
 
-/* =World logic
- * ------------------------------------------------------------ */
-World.prototype.turn = function() {
-	var actors = [];
-	this.grid.forEach(function(elem) {
-		if (elem.act) this.actions.actors.push(elem); });
-
-	this.actions.apply(actions);
-};
-
-World.direction = new (function() { /* jshint ignore:line */
-	this.n	= new Vector( 0,  1); this.up		= this.n;
-	this.ne	= new Vector( 1,  1);
-	this.e	= new Vector( 1,  0); this.right	= this.e;
-	this.se	= new Vector( 1, -1);
-	this.s	= new Vector( 0, -1); this.bottom	= this.s;
-	this.sw	= new Vector(-1, -1);
-	this.w	= new Vector(-1,  0); this.left		= this.w;
-	this.nw	= new Vector(-1,  1);
-})();
-
-World.Actions = function(self) {
-	this.actors = [];
-
-	this.move = function(direction, distance) {
-		var moveVec = !distance ? World.direction[direction] :
-			World.direction[direction]
-			.times(new Vector(distance, distance));
-
-	};
-
+/* Build a map of characters->elementConstructors from a map of
+ * elementName->elementConstructors */
+World.charMapFromElemMap = function(constructors) {
+	var legend = {};
+	for (var constructor in constructors) {
+		/* Create a new element from the constructor to be able to
+		 *  extract its ch property */
+		var elem = new constructors[constructor]();
+		legend[elem.ch] = [ constructors[constructor] ];
+		/* If the element can move, put default element under it */
+		if (elem.speed) legend[elem.ch].push(constructors.default);
+	}
+	return legend;
 };

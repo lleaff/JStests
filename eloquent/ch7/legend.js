@@ -1,8 +1,5 @@
 var legend = (function() {
-
-	/* =Constructors
-	 * ------------------------------------------------------------ */
-	var constructors = {
+	var legend = {
 		EmptySpace: function() {
 			this.type 	= "emptySpace";
 			this.ch		= " ";
@@ -20,37 +17,23 @@ var legend = (function() {
 			this.ch		= "o";
 			this.solid 	= true;
 			this.speed 	= 1;
+			this.sight	= 1;
 		},
 
 		BouncingCriter: function() {
 			this.type	= "bouncingCriter";
 			this.ch		= "@";
 			this.solid 	= true;
-			this.speed 	= 1;
 			this.act	= bouncingCriterAct;
-		},
+			this.speed 	= 1;
+			this.sight	= 1;
+		}
 	};
 
-	/* =Character map
-	 * ------------------------------------------------------------ */
-	/* Build a map of characters->constructors */
-	var legend = (function() {
-		var legend = {};
-		for (var constructor in constructors) {
-			/* Create a new element from the constructor to be able to
-			 *  extract its ch property */
-			var elem = new constructors[constructor]();
-			legend[elem.ch] = [ constructors[constructor] ];
-			/* If the element can move, put empty space under it */
-			if (elem.speed) legend[elem.ch].push(constructors.EmptySpace);
-		}
-		return legend;
-	})();
+	legend.default = legend.EmptySpace;
 
-	/* =Act methods
-	 * ------------------------------------------------------------ */
 	function bouncingCriterAct() {
-
+		/* TODO bouncing criter AI */
 	}
 
 	return legend;
