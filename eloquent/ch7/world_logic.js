@@ -1,10 +1,17 @@
 /* =Turn logic
  * ------------------------------------------------------------ */
 World.prototype.turn = function() {
-	var actors = this.grid.filter(function(elem) { return !!elem.act; });
-	/* Shuffle actors so movement conflict resolutions aren't predictable */
+	var actors = [];
+	this.grid.forEach(function(element, col, row, grid) {
+		if (element.act)
+			actors.push({elem: element, position: new Vector(col, row)});
+	});
+	/* Shuffle actors so conflict resolutions aren't predictable */
 	shuffleArray(actors);
-	actors.forEach(function(elem) { elem.act(); });
+	actors.forEach(function(elemPos) {
+		elemPos.elem.view = new World.View(this, elemPos.position);
+		elemPos.elem.act();
+	});
 };
 
 /* ------------------------------------------------------------ */
@@ -65,8 +72,8 @@ World.View.Image.prototype.canSee = function(elementType) {
 
 World.Actions = function(self) {
 	return {
-		move: function() {
-
+		move: function(actor) {
+			
 		},
 	};
 };
