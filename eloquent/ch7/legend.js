@@ -1,32 +1,33 @@
 var legend = (function() {
 	var legend = {
 		EmptySpace: function() {
-			this.type 	= "emptySpace";
-			this.ch		= " ";
-			this.solid	= false;
+			this.type 		= "emptySpace";
+			this.ch	  		= " ";
+			this.solid		= false;
 		},
 
 		Wall: function() {
-			this.type 	= "wall";
-			this.ch		= "#";
-			this.solid 	= true;
+			this.type 		= "wall";
+			this.ch	  		= "#";
+			this.solid		= true;
+			this.blockSight	= true;
 		},
 
 		Critter: function() {
-			this.type 	= "critter";
-			this.ch		= "o";
-			this.solid 	= true;
-			this.speed 	= 1;
-			this.sight	= 1;
+			this.type 		= "critter";
+			this.ch	  		= "o";
+			this.solid		= true;
+			this.speed		= 1;
+			this.sight		= 1;
 		},
 
 		BouncingCriter: function() {
-			this.type	= "bouncingCriter";
-			this.ch		= "@";
-			this.solid 	= true;
-			this.act	= bouncingCriterAct;
-			this.speed 	= 1;
-			this.sight	= 1;
+			this.type		= "bouncingCriter";
+			this.ch			= "@";
+			this.solid 		= true;
+			this.act		= bouncingCriterAct;
+			this.speed 		= 1;
+			this.sight		= 1;
 		}
 	};
 

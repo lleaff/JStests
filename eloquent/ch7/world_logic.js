@@ -55,6 +55,18 @@ World.Image.prototype.canReach = function(elementType) {
 	}
 };
 
+World.Image.prototype.canSee = function(elementType) {
+	var count = 0;
+	for (var i = 0; i < this.image.length; ++i) {
+		if (this.image[i].type === elementType)
+			++count;
+		if (this.image[i].blockSight)
+			break;
+	}
+	return count; /* Number of elements in sight */
+};
+
+
 World.Actions = function(self) {
 	return {
 		move: function() {
