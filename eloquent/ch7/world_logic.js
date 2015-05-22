@@ -50,12 +50,14 @@ World.View.Image = function(image) {
 };
 
 World.View.Image.prototype.canReach = function(elementType) {
+	var count = 0;
 	for (var i = 0; i < this.image.length; ++i) {
 		if (this.image[i].type === elementType)
-			return i + 1; /* distance to element */
+			++count;
 		else if (this.image[i].solid)
-			return 0; /* false */
+			break;
 	}
+	return count; /* Number of reachable elements */
 };
 
 World.View.Image.prototype.canSee = function(elementType) {
