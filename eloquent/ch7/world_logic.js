@@ -35,12 +35,25 @@ World.View.prototype.look = function(critter, direction) {
 		 ++distance) {
 			 image.push(this.world.grid.get(position.plus(direction)));
 		 }
-		 return image;
+		 return new Image(image);
 };
 
 /* World.prototype.newView = function(position) {
    return new World.view(this, position);
 }; */
+
+World.Image = function(image) {
+	this.image = image;
+};
+
+World.Image.prototype.canReach = function(elementType) {
+	for (var i = 0; i < this.image.length; ++i) {
+		if (this.image[i].type === elementType)
+			return i + 1; /* distance to element */
+		else if (this.image[i].solid)
+			return 0; /* false */
+	}
+};
 
 World.Actions = function(self) {
 	return {
