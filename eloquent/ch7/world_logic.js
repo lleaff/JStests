@@ -44,11 +44,11 @@ World.View.prototype.look = function(critter, direction) {
 		 return new Image(image);
 };
 
-World.Image = function(image) {
+World.View.Image = function(image) {
 	this.image = image;
 };
 
-World.Image.prototype.canReach = function(elementType) {
+World.View.Image.prototype.canReach = function(elementType) {
 	for (var i = 0; i < this.image.length; ++i) {
 		if (this.image[i].type === elementType)
 			return i + 1; /* distance to element */
@@ -57,7 +57,7 @@ World.Image.prototype.canReach = function(elementType) {
 	}
 };
 
-World.Image.prototype.canSee = function(elementType) {
+World.View.Image.prototype.canSee = function(elementType) {
 	var count = 0;
 	for (var i = 0; i < this.image.length; ++i) {
 		if (this.image[i].type === elementType)
