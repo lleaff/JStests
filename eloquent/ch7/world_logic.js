@@ -1,7 +1,7 @@
 /* =Turn logic
  * ----------------------------------------------------------- */
 World.prototype.turn = function() {
-	var self;
+	var self = this;
 	var actors = [];
 	this.grid.forEach(function(elements, col, row, grid) {
 		elements.forEach(function(element) {
