@@ -13,7 +13,8 @@ World.prototype.turn = function() {
 	});
 };
 
-/* ------------------------------------------------------------ */
+/* =Spatial directions
+ * ------------------------------------------------------------ */
 World.direction = new (function() { /* jshint ignore:line */
 	this.n	= new Vector( 0,  1); this.up		= this.n;
 	this.ne	= new Vector( 1,  1);
@@ -24,6 +25,10 @@ World.direction = new (function() { /* jshint ignore:line */
 	this.w	= new Vector(-1,  0); this.left		= this.w;
 	this.nw	= new Vector(-1,  1);
 })();
+
+World.direction.random = function() {
+	return new Vector(randomInt(-1, 1), randomInt(-1, 1));
+};
 
 /* =World perception
  * ------------------------------------------------------------ */

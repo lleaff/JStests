@@ -11,3 +11,10 @@ function shuffleArray(arr) {
 		arr[rand] = tmp;
 	}
 }
+
+/* =Random
+ * ------------------------------------------------------------ */
+function randomInt(lo, up) {
+	var range = up - lo;
+	return Math.round(Math.random()*range + lo) >>0;
+}
