@@ -241,9 +241,9 @@ echo "<!DOCTYPE html>
 		<style>
 			body { background-color:$bodyBackgroundColor; }
 		</style>
-		$SCRIPTTAGS
 	</head>
 	<body>
+	$SCRIPTTAGS
 	</body>
 </html>" 1> $HTMLFILE 2> /dev/null
 
