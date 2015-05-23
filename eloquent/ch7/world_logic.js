@@ -3,15 +3,15 @@
 World.prototype.turn = function() {
 	var self;
 	var actors = [];
-	this.grid.forEach(function(elements) {
-		elements.forEach(function(element, col, row, grid) {
+	this.grid.forEach(function(elements, col, row, grid) {
+		elements.forEach(function(element) {
 		if (element.act)
 			actors.push({elem: element, position: new Vector(col, row)});
 	}); });
 	/* Shuffle actors so conflict resolutions aren't predictable */
 	shuffleArray(actors);
 	actors.forEach(function(elemPos) {
-		elemPos.elem.view = new World.View(this, elemPos.position);
+		elemPos.elem.view = new World.View(self, elemPos.position);
 		elemPos.elem.act(self);
 	});
 };

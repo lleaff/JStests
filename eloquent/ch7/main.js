@@ -22,7 +22,7 @@
 	}
 
 	worlds.forEach(function(world) {
-		world.surface.onclick = toggleAnimation(world);
+		world.surface.onclick = toggleAnimation.bind(null, world);
 		startAnimation(world);
 	});
 
