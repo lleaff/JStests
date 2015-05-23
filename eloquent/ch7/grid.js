@@ -45,7 +45,7 @@ Grid.prototype.fill = function(val) {
 };
 
 Grid.prototype.get = function(vector) {
-	return this.arr[vector.y][vector.x];
+	return this.arr[vector.y] ? this.arr[vector.y][vector.x] : undefined;
 };
 Grid.prototype.getAt = function(x, y) {
 	return this.arr[y][x];
