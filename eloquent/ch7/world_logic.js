@@ -91,7 +91,7 @@ World.Actions = function(world) {
 			world.moveElement(actor.position,
 							  actor.position.plus(moveVec), actor);
 
-			return moveVec;
+			return i; /* Times direction vector was applied */
 		},
 	};
 };
