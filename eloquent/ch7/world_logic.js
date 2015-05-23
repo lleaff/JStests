@@ -11,7 +11,8 @@ World.prototype.turn = function() {
 	/* Shuffle actors so conflict resolutions aren't predictable */
 	shuffleArray(actors);
 	actors.forEach(function(elemPos) {
-		elemPos.elem.view = new World.View(self, elemPos.position);
+		elemPos.elem.view = new World.View(
+			self, elemPos.elem, elemPos.position);
 		elemPos.elem.act(self);
 	});
 };
@@ -30,30 +31,48 @@ World.direction = new (function() { /* jshint ignore:line */
 })();
 
 World.direction.random = function() {
-	return new Vector(randomInt(-1, 1), randomInt(-1, 1));
+	var x, y, vec;
+	while (!x && !y) {
+		x = randomInt(-1, 1); 
+		y = randomInt(-1, 1);
+	}
+	return new Vector(x, y);
 };
 
 /* =World perception
  * ------------------------------------------------------------ */
-World.View = function(world, position) {
-	this.world = world; /* self */
+World.View = function(world, actor, position) {
+	this.world = world;
+	this.actor = actor;
 	this.position = position;
 };
 
-World.View.prototype.look = function(actor, direction) {
+World.View.prototype.look = function(direction) {
 	var image = []; /* Array of elements */
 	var position = this.position;
-	for (var distance = 0, element; distance < actor.sight;
+	for (var distance = 0, element; distance < this.actor.sight;
 		 ++distance) {
-			element = this.world.grid.get(position.plus(direction));
-			image.push(element);
-			if (element.blockSight) break;
-		}
-		return new Image(image);
+		elements = this.world.grid.get(position.plus(direction));
+		image.push(elements);
+		if (elements.some(function(el) { return el.blockSight; })) break;
+	}
+	return new World.View.Image(image);
 };
 
 World.View.Image = function(image) {
 	this.image = image;
+};
+
+World.View.Image.prototype.isSolid = function(index) {
+	function solidTest(elements) {
+		return elements.some(function(el) { return el.solid; });
+	}
+	if (index === undefined)
+		for (var i = 0; i < this.image.length; ++i)
+			if (solidTest(this.image[i])) return true;
+	else
+		if (solidTest(this.image[index])) return true;
+	return false;
 };
 
 World.View.Image.prototype.canReach = function(elementType) {
@@ -61,7 +80,7 @@ World.View.Image.prototype.canReach = function(elementType) {
 	for (var i = 0; i < this.image.length; ++i) {
 		if (this.image[i].type === elementType)
 			++count;
-		else if (this.image[i].solid)
+		else if (this.isSolid(i))
 			break;
 	}
 	return count; /* Number of reachable elements */
@@ -70,7 +89,7 @@ World.View.Image.prototype.canReach = function(elementType) {
 World.View.Image.prototype.canMove = function() {
 	var count = 0;
 	for (var i = 0; i < this.image.length; ++i) {
-		if (this.image[i].solid) break;
+		if (this.isSolid(i)) break;
 		else ++count;
 	}
 	return count; /* Maximum possible move distance */
@@ -93,10 +112,11 @@ World.Actions = function(world) {
 
 		move: function(actor, direction, distance) {
 			if (distance === undefined) distance = actor.speed;
-			var moveVec = new vector(0, 0);
+			var moveVec = new Vector(0, 0);
+			var image = actor.view.look(direction);
 			/* Stop movement at the first obstacle */
 			for (var i = 0; i < distance; ++i) {
-				if (!actor.view.Image.image[i].solid) {
+				if (!image.image[i].solid) {
 					moveVec.add(direction);
 				} else {
 					break; }
@@ -104,9 +124,8 @@ World.Actions = function(world) {
 
 			if (moveVec.x === 0 && moveVec.y === 0) /* has moved? */
 				return false;
-
-			world.moveElement(actor.position,
-							  actor.position.plus(moveVec), actor);
+			world.moveElement(actor.view.position,
+							  actor.view.position.plus(moveVec), actor);
 
 			return i; /* Times direction vector was applied */
 		},
