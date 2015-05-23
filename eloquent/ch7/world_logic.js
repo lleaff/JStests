@@ -3,10 +3,11 @@
 World.prototype.turn = function() {
 	var self;
 	var actors = [];
-	this.grid.forEach(function(element, col, row, grid) {
+	this.grid.forEach(function(elements) {
+		elements.forEach(function(element, col, row, grid) {
 		if (element.act)
 			actors.push({elem: element, position: new Vector(col, row)});
-	});
+	}); });
 	/* Shuffle actors so conflict resolutions aren't predictable */
 	shuffleArray(actors);
 	actors.forEach(function(elemPos) {
@@ -39,10 +40,10 @@ World.View = function(world, position) {
 	this.position = position;
 };
 
-World.View.prototype.look = function(critter, direction) {
+World.View.prototype.look = function(actor, direction) {
 	var image = []; /* Array of elements */
 	var position = this.position;
-	for (var distance = 0, element; distance < critter.sight;
+	for (var distance = 0, element; distance < actor.sight;
 		 ++distance) {
 			element = this.world.grid.get(position.plus(direction));
 			image.push(element);
