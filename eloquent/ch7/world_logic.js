@@ -54,9 +54,11 @@ World.View.prototype.look = function(direction) {
 		 ++distance) {
 		elements = this.world.grid.get(position.plus(direction));
 		image.push(elements);
-		if (elements.some(function(el) { return el.blockSight; })) break;
+		if (!elements ||
+			elements.some(function(el) { return el.blockSight; }))
+			break;
 	}
-	return new World.View.Image(image);
+	return image ? new World.View.Image(image) : null;
 };
 
 World.View.Image = function(image) {
@@ -65,13 +67,15 @@ World.View.Image = function(image) {
 
 World.View.Image.prototype.isSolid = function(index) {
 	function solidTest(elements) {
-		return elements.some(function(el) { return el.solid; });
+		return elements.some(function(el) {
+			return !!el.solid; });
 	}
-	if (index === undefined)
+	if (index === undefined) {
 		for (var i = 0; i < this.image.length; ++i)
 			if (solidTest(this.image[i])) return true;
-	else
+	} else {
 		if (solidTest(this.image[index])) return true;
+	}
 	return false;
 };
 
@@ -116,7 +120,7 @@ World.Actions = function(world) {
 			var image = actor.view.look(direction);
 			/* Stop movement at the first obstacle */
 			for (var i = 0; i < distance; ++i) {
-				if (!image.image[i].solid) {
+				if (image.image && !image.isSolid(i)) {
 					moveVec.add(direction);
 				} else {
 					break; }
