@@ -89,13 +89,8 @@ World.Actions = function(world) {
 			if (moveVec.x === 0 && moveVec.y === 0) /* has moved? */
 				return false;
 
-			/* Push actor in new position */
-			var newPos = actor.position.plus(moveVec);
-			world.grid.set(newPos, world.grid.get(newPos.push(actor)));
-			/* Remove actor from old position */
-			var oldPosElems = world.grid.get(actor.position);
-			world.grid.set(actor.position,
-					   oldPosElems.splice(indexOf(actor), 1));
+			world.moveElement(actor.position,
+							  actor.position.plus(moveVec), actor);
 
 			return moveVec;
 		},
