@@ -10,8 +10,8 @@ function World(plan, legend) {
 
 /* =Helper functions
  * ------------------------------------------------------------ */
-World.charToElements = function(char, legend) {
-	var elements = legend[char].map(function(element) {
+World.charToElements = function(ch, legend) {
+	var elements = legend[ch].map(function(element) {
 		var instance = Object.create(element);
 		instance.prototype = element;
 		return instance;
