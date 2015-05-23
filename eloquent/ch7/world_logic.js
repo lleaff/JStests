@@ -1,5 +1,7 @@
-/* =Turn logic----------------------------------------------------------- */
+/* =Turn logic
+ * ----------------------------------------------------------- */
 World.prototype.turn = function() {
+	var self;
 	var actors = [];
 	this.grid.forEach(function(element, col, row, grid) {
 		if (element.act)
@@ -9,7 +11,7 @@ World.prototype.turn = function() {
 	shuffleArray(actors);
 	actors.forEach(function(elemPos) {
 		elemPos.elem.view = new World.View(this, elemPos.position);
-		elemPos.elem.act();
+		elemPos.elem.act(self);
 	});
 };
 
@@ -62,6 +64,15 @@ World.View.Image.prototype.canReach = function(elementType) {
 			break;
 	}
 	return count; /* Number of reachable elements */
+};
+
+World.View.Image.prototype.canMove = function() {
+	var count = 0;
+	for (var i = 0; i < this.image.length; ++i) {
+		if (this.image[i].solid) break;
+		else ++count;
+	}
+	return count; /* Maximum possible move distance */
 };
 
 World.View.Image.prototype.canSee = function(elementType) {
