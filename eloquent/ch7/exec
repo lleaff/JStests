@@ -1,5 +1,5 @@
 #!/bin/bash
 
-files='miscHelperFunctions.js vector.js grid.js world.js world_logic.js legend.js'
+files='miscHelperFunctions.js vector.js grid.js world.js world_logic.js legend.js animate.js'
 
 runJS --ignoremissing $files
