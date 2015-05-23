@@ -78,9 +78,26 @@ World.Actions = function(world) {
 
 		move: function(actor, direction, distance) {
 			if (distance === undefined) distance = actor.speed;
+			var moveVec = new vector(0, 0);
+			for (var i = 0; i < distance; ++i) {
+				if (!actor.view.Image.image[i].solid) {
+					moveVec.add(direction);
+				} else {
+					break; }
+			}
 
+			if (moveVec.x === 0 && moveVec.y === 0) /* has moved? */
+				return false;
 
+			/* Push actor in new position */
+			var newPos = actor.position.plus(moveVec);
+			world.grid.set(newPos, world.grid.get(newPos.push(actor)));
+			/* Remove actor from old position */
+			var oldPosElems = world.grid.get(actor.position);
+			world.grid.set(actor.position,
+					   oldPosElems.splice(indexOf(actor), 1));
 
+			return moveVec;
 		},
 	};
 };
