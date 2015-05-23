@@ -1,5 +1,4 @@
-/* =Turn logic
- * ------------------------------------------------------------ */
+/* =Turn logic----------------------------------------------------------- */
 World.prototype.turn = function() {
 	var actors = [];
 	this.grid.forEach(function(element, col, row, grid) {
@@ -28,7 +27,7 @@ World.direction = new (function() { /* jshint ignore:line */
 
 /* =World perception
  * ------------------------------------------------------------ */
-World.View = function(world, position){ /* jshint ignore:line */
+World.View = function(world, position) {
 	this.world = world; /* self */
 	this.position = position;
 };
@@ -41,8 +40,8 @@ World.View.prototype.look = function(critter, direction) {
 			element = this.world.grid.get(position.plus(direction));
 			image.push(element);
 			if (element.blockSight) break;
-		 }
-		 return new Image(image);
+		}
+		return new Image(image);
 };
 
 World.View.Image = function(image) {
@@ -71,7 +70,6 @@ World.View.Image.prototype.canSee = function(elementType) {
 
 /* =Actions
  * ------------------------------------------------------------ */
-
 World.Actions = function(world) {
 	return {
 		/* The actor's current View is stored in its .view property */
@@ -79,6 +77,7 @@ World.Actions = function(world) {
 		move: function(actor, direction, distance) {
 			if (distance === undefined) distance = actor.speed;
 			var moveVec = new vector(0, 0);
+			/* Stop movement at the first obstacle */
 			for (var i = 0; i < distance; ++i) {
 				if (!actor.view.Image.image[i].solid) {
 					moveVec.add(direction);
