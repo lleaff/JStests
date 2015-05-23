@@ -1,4 +1,7 @@
-function LivingWorld(htmlNode, plan) {
+function LivingWorld(plan, htmlNode) {
+	/* World */
+	this.world = new World(plan, legend);
+
 	/* Drawing surface */
 	this.surface = (function() {
 		if (!htmlNode) htmlNode = document.getElementById("world");
@@ -9,19 +12,19 @@ function LivingWorld(htmlNode, plan) {
 		var surface = htmlNode.children[0];
 		if (!surface || surface.tagName !== "PRE") {
 			surface = document.createElement("PRE");
-			htmlNode.appendChild(surface);
+			surface.appendChild(
+				document.createTextNode(this.world.draw()));
+				htmlNode.appendChild(surface);
 		} 
 		return surface;
-	})();
+	}).call(this);
 
-	/* World */
-	this.world = new World(plan);
 
 	/* Logic */
 	this.updateSurface = function() {
 		this.surface.replaceChild(
 			document.createTextNode(this.world.draw()),
-			this.surface.children[0]);
+			this.surface.childNodes[0]);
 	};
 
 	this.tick = function() {
