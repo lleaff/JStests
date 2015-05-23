@@ -52,3 +52,19 @@ World.charMapFromElemMap = function(elements) {
 	}
 	return legend;
 };
+
+/* =Interaction with elements
+ * ------------------------------------------------------------ */
+World.prototype.addElement = function(position, instance) {
+	this.grid.get(position).push(instance);
+};
+
+World.prototype.removeElement = function(position, instance) {
+	var elements = this.grid.get(position);
+	elements.splice(elements.indexOf(instance), 1);
+};
+
+World.prototype.moveElement = function(position1, position2, instance) {
+	this.addElement(position2, instance);
+	this.removeElement(position1, instance);
+};
