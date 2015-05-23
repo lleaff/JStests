@@ -33,8 +33,11 @@ var legend = (function() {
 
 	legend.default = legend.EmptySpace;
 
-	function bouncingCriterAct() {
-		/* TODO bouncing criter AI */
+	function bouncingCriterAct(world) {
+		if (!this.view.look(this.dir).canMove() || !this.dir)
+			this.dir = World.direction.random();
+
+		world.actions.move(this, this.dir);
 	}
 
 	return legend;
