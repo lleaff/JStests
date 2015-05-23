@@ -16,4 +16,16 @@ function LivingWorld(htmlNode, plan) {
 
 	/* World */
 	this.world = new World(plan);
+
+	/* Logic */
+	this.updateSurface = function() {
+		this.surface.replaceChild(
+			document.createTextNode(this.world.draw()),
+			this.surface.children[0]);
+	};
+
+	this.tick = function() {
+		this.world.turn();
+		this.updateSurface();
+	};
 }
