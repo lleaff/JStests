@@ -115,7 +115,8 @@ World.View.Image.prototype.canReach = function(elementType) {
 World.View.Image.prototype.canMove = function() {
 	var count = 0;
 	for (var i = 0; i < this.image.length; ++i) {
-		if (this.isSolid(i)) break;
+		if (this.image[i] === undefined || this.isSolid(i))
+			break;
 		else ++count;
 	}
 	return count; /* Maximum possible move distance */
