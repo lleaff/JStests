@@ -12,6 +12,7 @@ function LivingWorld(plan, htmlNode) {
 		var surface = htmlNode.children[0];
 		if (!surface || surface.tagName !== "PRE") {
 			surface = document.createElement("PRE");
+			surface.setAttribute("style", "line-height:1em;");
 			surface.appendChild(
 				document.createTextNode(this.world.draw()));
 				htmlNode.appendChild(surface);
