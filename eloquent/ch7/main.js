@@ -1,5 +1,5 @@
 function main() {
-	var updateTime = 500;
+	var updateTime = 250;
 
 	var worldsContainer = document.getElementById("worldsContainer");
 
