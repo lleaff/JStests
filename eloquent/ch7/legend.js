@@ -1,33 +1,47 @@
 var legend = (function() {
 	var legend = {
 		EmptySpace: {
-			type:		 "emptySpace",
-			ch:			 " ",
-			solid:		 false,
+			type:		"emptySpace",
+			ch:			" ",
+			solid:		false,
 		},
 
 		Wall: {
-			type:		 "wall",
-			ch:			 "#",
-			solid:		 true,
-			blockSight:	 true,
+			type:		"wall",
+			ch:			"#",
+			solid:		true,
+			blockSight:	true,
+		},
+
+		Plant: {
+			type:		"plant",
+			ch:			"+"
 		},
 
 		Critter: {
-			type:		 "critter",
-			ch:			 "o",
-			solid:		 true,
-			speed:		 1,
-			sight:		 1,
+			type:		"critter",
+			ch:			"o",
+			solid:		true,
+			speed:		1,
+			sight:		1,
 		},
 
-		BouncingCriter:  {
-			type:		 "bouncingCriter",
-			ch:			 "@",
-			solid:		 true,
-			act:		 bouncingCriterAct,
-			speed:		 1,
-			sight:		 1,
+		BouncingCriter: {
+			type:		"bouncingCriter",
+			ch:			"@",
+			solid:		true,
+			act:		bouncingCriterAct,
+			speed:		1,
+			sight:		1,
+		},
+
+		WallHugger: {
+			type:		"wallHugger",
+			ch:			"~",
+			solid:		true,
+			act:		wallHuggerAct,
+			speed:		1,
+			sight:		1,
 		}
 	};
 
@@ -40,6 +54,10 @@ var legend = (function() {
 
 			world.actions.move(this, this.dir);
 		}
+	}
+
+	function wallHuggerAct(world) {
+
 	}
 
 	return legend;

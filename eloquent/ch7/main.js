@@ -1,10 +1,12 @@
-//(function() {
+function main() {
 	var updateTime = 500;
+
+	var worldsContainer = document.getElementById("worldsContainer");
 
 	var worlds = Data.plans.map(function(plan) {
 		var container = document.createElement("DIV");
 		container.setAttribute("class", "world");
-		document.body.appendChild(container);
+		worldsContainer.appendChild(container);
 
 		return new LivingWorld(plan, container);
 	});
@@ -28,4 +30,4 @@
 		startAnimation(world);
 	});
 
-//})();
+}
