@@ -10,7 +10,9 @@
 	});
 
 	function startAnimation(world) {
-		world.intervalId = setInterval(world.tick.bind(world), updateTime);
+		if (!world.intervalId)
+			world.intervalId = setInterval(
+				world.tick.bind(world), updateTime);
 	}
 	function stopAnimation(world) {
 		clearInterval(world.intervalId);
