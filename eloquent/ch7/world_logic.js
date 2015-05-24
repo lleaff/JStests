@@ -45,6 +45,12 @@ World.direction.forEach = function(callback) {
 		function(str) { callback(self[str], str, self); });
 };
 
+World.direction.some = function(callback) {
+	var self = this;
+	return [ "n", "ne", "e", "se", "s", "sw", "w", "nw" ].some(
+		function(str) { return callback(self[str], str, self); });
+};
+
 /* =World perception
  * ------------------------------------------------------------ */
 World.View = function(world, actor, position) {
@@ -68,7 +74,13 @@ World.View.prototype.look = function(direction) {
 };
 
 World.View.prototype.isTrapped = function() {
-	World.direction.forEach();
+	var self = this;
+	var exit = 0;
+	return !World.direction.some(function(dir) {
+		var cell = self.world.grid.get(self.position.plus(dir));
+		return (cell && cell.some(function(el) { 
+			return !el.solid; })) || false;
+	});
 };
 
 World.View.Image = function(image) {

@@ -34,11 +34,12 @@ var legend = (function() {
 	legend.default = legend.EmptySpace;
 
 	function bouncingCriterAct(world) {
-		while ((!this.dir || !this.view.look(this.dir).canMove()) &&
-			  !this.view.isTrapped())
-			this.dir = World.direction.random();
+		if (!this.view.isTrapped()) {
+			while (!this.dir || !this.view.look(this.dir).canMove())
+				this.dir = World.direction.random();
 
-		world.actions.move(this, this.dir);
+			world.actions.move(this, this.dir);
+		}
 	}
 
 	return legend;
