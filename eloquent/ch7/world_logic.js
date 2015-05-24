@@ -59,10 +59,13 @@ World.View = function(world, actor, position) {
 	this.position = position;
 };
 
-World.View.prototype.look = function(direction) {
+/* The 'sight' argument can be used to override the actor's sight
+ * property, to get images for use in non-sight related actions */
+World.View.prototype.look = function(direction, sight) {
 	var image = []; /* Array of elements */
+	if (sight === undefined) sight = this.actor.sight;
 	var position = this.position;
-	for (var distance = 0, element; distance < this.actor.sight;
+	for (var distance = 0, element; distance < sight;
 		 ++distance) {
 		elements = this.world.grid.get(position.plus(direction));
 		image.push(elements);
@@ -140,8 +143,8 @@ World.Actions = function(world) {
 		move: function(actor, direction, distance) {
 			if (distance === undefined) distance = actor.speed;
 			var moveVec = new Vector(0, 0);
-			var image = actor.view.look(direction);
-			/* Stop movement at the first obstacle */
+			var image = actor.view.look(direction, distance);
+			/* Stop movement at first obstacle */
 			for (var i = 0; i < distance; ++i) {
 				if (image.image && !image.isSolid(i)) {
 					moveVec.add(direction);
