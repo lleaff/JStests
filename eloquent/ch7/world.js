@@ -1,3 +1,18 @@
+/* 'plan' can be either a Grid object or a string, 'legend' must be a set
+ *  of element object prototypes, with a 'default' property pointing to
+ *  the default element.
+ * An element has the following properties:
+ *  (* = mandatory, [] = default value)
+ * *ch:			character representing the element on the plan.
+ *  act:		function to be executed every turn, takes the world
+ *      		  object as argument and can refer to the actor as 'this',
+ *      		  with 'this.view' being an up-to-date View object. Use
+ *      		  the methods in 'world.actions' for various interactions.
+ *  speed:		maximum speed at which the element can move
+ *  solid:		[false] can the element be passed through?
+ *  sight:		number of elements returned by 'actor.view.look()'
+ *  blockSight:	[false] does the element blocks vision?
+ *  */
 function World(plan, legend) {
 	var grid = (typeof plan === "object") ? plan : Grid.parse(plan);
 
