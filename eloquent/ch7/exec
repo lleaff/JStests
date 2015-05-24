@@ -2,4 +2,4 @@
 
 files='miscHelperFunctions.js vector.js grid.js world.js world_logic.js legend.js animate.js plans.js main.js'
 
-runJS --ignoremissing $files
+runJS --ignoremissing $files $@

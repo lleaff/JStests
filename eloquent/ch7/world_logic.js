@@ -78,8 +78,8 @@ World.View.prototype.isTrapped = function() {
 	var exit = 0;
 	return !World.direction.some(function(dir) {
 		var cell = self.world.grid.get(self.position.plus(dir));
-		return (cell && cell.some(function(el) { 
-			return !el.solid; })) || false;
+		return (cell && !cell.some(function(el) { 
+			return el.solid; })) || false;
 	});
 };
 
