@@ -4,7 +4,6 @@
 
 # Default browser
 _BROWSERCMD=''
-bodyBackgroundColor='#262626'
 BASEDIR='/tmp'
 
 ####### Script variables #######
@@ -84,8 +83,8 @@ USAGE="Usage: $(basename $0) [FILE]... [OPTIONS]...${nocolor}
 		Command to launch the browser
 	-I, --ignoremissing
 		Ignore missing files
-	-c, --color:
-		background-color CSS argument for body tag, default is \"$bodyBackgroundColor\"
+	-c, --colorscheme [dark|light]:
+		\"dark\" or \"light\" body style attribute
 	--install DIR [EXECUTABLE_NAME]:
 		copy the script file to DIR and rename to EXECUTABLE_NAME
 
@@ -105,8 +104,8 @@ while [[ $1 ]]; do
 			_inst $INSTALLDIR $INSTALLNAME; exit 0 ;;
 		"-b" | "--browser" ) 
 			_BROWSERCMD=$2; shift 2 ;;
-		"-c" | "--color" )
-			bodyBackgroundColor=$2; shift 2 ;;
+		"-c" | "--colorscheme" )
+			colorscheme=$2; shift 2 ;;
 		"-x" | "--extra" )
 			extrafiles=$extrafiles' '$2; shift 2 ;;
 		"-l" | "--nosymlink" )
@@ -181,6 +180,15 @@ done
 
 ################################
 
+#Colors
+if [[ $colorscheme == "light" ]]; then
+	backgroundColor="#f1f1f1"; textColor="#050505";
+else
+	backgroundColor="#262626"; textColor="#dedede";
+fi
+
+################################
+
 # If no user-specified browser cmd, try to find the most appropriate one
 if [[ ! $_BROWSERCMD ]]; then
 	if [[ $(uname -s) == Linux ]]; then
@@ -239,7 +247,9 @@ echo "<!DOCTYPE html>
 		<meta charset=\"utf-8\">
 		<title>$HTMLDOCTITLE</title>
 		<style>
-			body { background-color:$bodyBackgroundColor; }
+			body {
+				background-color:$backgroundColor;
+				color:$textColor; }
 		</style>
 	</head>
 	<body>
