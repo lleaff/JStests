@@ -34,7 +34,8 @@ var legend = (function() {
 	legend.default = legend.EmptySpace;
 
 	function bouncingCriterAct(world) {
-		while (!this.dir || !this.view.look(this.dir).canMove())
+		while ((!this.dir || !this.view.look(this.dir).canMove()) &&
+			  !this.view.isTrapped())
 			this.dir = World.direction.random();
 
 		world.actions.move(this, this.dir);

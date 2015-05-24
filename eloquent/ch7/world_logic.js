@@ -39,6 +39,12 @@ World.direction.random = function() {
 	return new Vector(x, y);
 };
 
+World.direction.forEach = function(callback) {
+	var self = this;
+	[ "n", "ne", "e", "se", "s", "sw", "w", "nw" ].forEach(
+		function(str) { callback(self[str], str, self); });
+};
+
 /* =World perception
  * ------------------------------------------------------------ */
 World.View = function(world, actor, position) {
@@ -59,6 +65,10 @@ World.View.prototype.look = function(direction) {
 			break;
 	}
 	return image ? new World.View.Image(image) : null;
+};
+
+World.View.prototype.isTrapped = function() {
+	World.direction.forEach();
 };
 
 World.View.Image = function(image) {
