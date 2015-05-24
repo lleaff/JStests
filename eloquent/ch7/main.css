@@ -1,4 +1,34 @@
 body {
-	background-color: #373737;
+	background-color: #303030;
 	color: #f0f0f0;
+	margin: 0; padding: 0;
+	height: 100vh;
+}
+
+#worldsContainer {
+	/*background-color: rgba(0,0,0,0.2);*/
+	font-size: 1.5em;
+	text-align: center;
+
+	width: 100%;
+
+	position: absolute;
+	top: 40%;
+	transform: translateY(-40%);
+}
+
+.world {
+	background: #374135;
+	height: auto;
+	margin: 1em 1.3em;
+	width: auto;
+	display: inline-block;
+	vertical-align:middle;
+}
+
+.world pre {
+	font-family: Monaco, "monospace";
+	line-height: 0.83em!important;
+	font-size: 0.6em;
+	margin:0px;
 }
