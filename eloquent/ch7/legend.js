@@ -1,3 +1,10 @@
+var colorLegend = {
+	wall:		[ "wall" ],
+	nature:		[ "plant" ],
+	character:	[ "critter", "bouncingCriter" ],
+	animal:		[ "wallHugger" ]
+};
+
 var legend = (function() {
 	var legend = {
 		EmptySpace: {
@@ -46,26 +53,22 @@ var legend = (function() {
 
 	legend.default = legend.EmptySpace;
 
-	function bouncingCriterAct(world) {
+	function bouncingCriterAct() {
 		if (!this.view.isTrapped()) {
-			while (!this.dir ||
-				   !this.view.look(this.dir).possibleMoves()[0])
+			while (!this.dir || !this.ai.keepMoving())
 				this.dir = World.direction.random();
 
-			world.actions.move(this, this.dir);
 		}
 	}
 
-	function wallHuggerAct(world) {
+	function wallHuggerAct() {
+		if (!this.view.isTrapped()) {
+			if (!this.dir) this.dir = World.direction.random();
+			if (!this.view.look(this.dir).possibleMoves()[0]) {
 
+			}
+		}
 	}
 
 	return legend;
 })();
-
-var colorLegend = {
-	wall:		[ "wall" ],
-	nature:		[ "plant" ],
-	character:	[ "critter", "bouncingCriter" ],
-	animal:		[ "wallHugger" ]
-};
