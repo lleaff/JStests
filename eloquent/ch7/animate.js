@@ -6,6 +6,10 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 	this.colorLegend = Output.processColorLegend(colorLegend, legend);
 
 	this.print = function() {
+		/* Clear the surface */
+		while(this.surface.lastChild)
+			this.surface.removeChild(this.surface.lastChild);
+
 		Output.appendTaggedTextTo( this.surface, this.world.draw(),
 								  this.colorLegend, "color",
 								  { capitalize: true });
@@ -24,19 +28,17 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 			surface = document.createElement("PRE");
 			surface.setAttribute("class", "world");
 			surface.setAttribute("style", "line-height:1em;");
-			this.print();
 			htmlNode.appendChild(surface);
 		} 
 		return surface;
 	}).call(this);
 
+	/* Initialize */
+	this.print();
+
 
 	/* Logic */
 	this.updateSurface = function() {
-		/* Clear the surface */
-		while(this.surface.lastChild)
-			this.surface.removeChild(this.surface.lastChild);
-
 		this.print();
 	};
 
