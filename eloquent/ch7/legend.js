@@ -48,7 +48,8 @@ var legend = (function() {
 
 	function bouncingCriterAct(world) {
 		if (!this.view.isTrapped()) {
-			while (!this.dir || !this.view.look(this.dir).canMove())
+			while (!this.dir ||
+				   !this.view.look(this.dir).possibleMoves()[0])
 				this.dir = World.direction.random();
 
 			world.actions.move(this, this.dir);

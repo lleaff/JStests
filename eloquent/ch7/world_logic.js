@@ -59,6 +59,20 @@ World.View = function(world, actor, position) {
 	this.position = position;
 };
 
+World.View.prototype.isTrapped = function() {
+	var self = this;
+	var exit = 0;
+	return !World.direction.some(function(dir) {
+		var cell = self.world.grid.get(self.position.plus(dir));
+		return (cell && !cell.some(function(el) { 
+			return el.solid; })) || false;
+	});
+};
+
+World.View.canReach = function(elementType) {
+
+};
+
 /* The 'sight' argument can be used to override the actor's sight
  * property, to get images for use in non-sight related actions */
 World.View.prototype.look = function(direction, sight) {
@@ -73,21 +87,12 @@ World.View.prototype.look = function(direction, sight) {
 			elements.some(function(el) { return el.blockSight; }))
 			break;
 	}
-	return image ? new World.View.Image(image) : null;
+	return new World.View.Image(image, direction);
 };
 
-World.View.prototype.isTrapped = function() {
-	var self = this;
-	var exit = 0;
-	return !World.direction.some(function(dir) {
-		var cell = self.world.grid.get(self.position.plus(dir));
-		return (cell && !cell.some(function(el) { 
-			return el.solid; })) || false;
-	});
-};
-
-World.View.Image = function(image) {
+World.View.Image = function(image, direction) {
 	this.image = image;
+	this.direction = direction;
 };
 
 World.View.Image.prototype.isSolid = function(index) {
@@ -104,34 +109,44 @@ World.View.Image.prototype.isSolid = function(index) {
 	return false;
 };
 
-World.View.Image.prototype.canReach = function(elementType) {
-	var count = 0;
+/* Helper function */
+Object.defineProperty(World.View.Image.prototype, "_addDirection", {
+	enumerable: false, writable: false,
+	value: function(vectorsArray, i) {
+		vectorsArray.push(this.direction.plus(new Vector(i, i))); }
+}); 
+
+/* Returns vectors to positions containing element of 'elementType' */
+World.View.Image.prototype.reachable = function(elementType) {
+	var vectors = [];
 	for (var i = 0; i < this.image.length; ++i) {
 		if (this.image[i].type === elementType)
-			++count;
+			this._addDirection(vectors, i);
 		else if (this.isSolid(i))
 			break;
 	}
-	return count; /* Number of reachable elements */
+	return vectors;
 };
 
-World.View.Image.prototype.canMove = function() {
-	var count = 0;
+/* Returns vectors to positions containing element of 'elementType' */
+World.View.Image.prototype.visible = function(elementType) {
+	var vectors = [];
+	for (var i = 0; i < this.image.length; ++i) {
+		if (this.image[i].type === elementType)
+			this._addDirection(vectors, i);
+	}
+	return vectors;
+};
+
+/* Possible move vectors */
+World.View.Image.prototype.possibleMoves = function() {
+	var vectors = [];
 	for (var i = 0; i < this.image.length; ++i) {
 		if (this.image[i] === undefined || this.isSolid(i))
 			break;
-		else ++count;
+		else this._addDirection(vectors, i);
 	}
-	return count; /* Maximum possible move distance */
-};
-
-World.View.Image.prototype.canSee = function(elementType) {
-	var count = 0;
-	for (var i = 0; i < this.image.length; ++i) {
-		if (this.image[i].type === elementType)
-			++count;
-	}
-	return count; /* Number of elements in sight */
+	return vectors;
 };
 
 /* =Actions
