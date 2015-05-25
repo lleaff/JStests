@@ -7,24 +7,22 @@ World.View = function(world, actor, position) {
 };
 
 World.View.prototype.isTrapped = function() {
-	var self = this;
 	var exit = 0;
 	return !World.direction.some(function(dir) {
-		var cell = self.world.grid.get(self.position.plus(dir));
+		var cell = this.world.grid.get(this.position.plus(dir));
 		return (cell && !cell.some(function(el) { 
 			return el.solid; })) || false;
-	});
+	}, this);
 };
 
 /* Returns vectors to positions in all directions containing element
  *  of 'elementType' */
 World.View.reachable = function(elementType) {
 	var vectors = [];
-	var self;
 	World.direction.forEach(function(direction) {
-		vectors.concat(self.look(direction, this.actor.speed)
+		vectors.concat(this.look(direction, this.actor.speed)
 					   .reachable(elementType));
-	});
+	}, this);
 	return vectors;
 };
 

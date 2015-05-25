@@ -15,10 +15,18 @@ World.directions.vectors = [ new Vector(0, 1), new Vector(1, 1),
 	 new Vector(1, 0), new Vector(1, -1), new Vector(0, -1),
 	 new Vector(-1, -1), new Vector(-1, 0), new Vector(-1, 1) ];
 
-World.direction.vectorToDirection = function(vector) {
+World.direction.vectorToDirectionName = function(vector) {
 	for (var i = 0; i < World.directions.vectors.length; ++i)
 		if (World.directions.vectors[i].equal(vector))
 			return World.directions[i];
+};
+
+World.direction.vectorToDirection = function(vector) {
+	return new Vector(vector.x ? 1 : 0, vector.y ? 1 : 0);
+};
+
+World.direction.vectorToDistance = function(vector) {
+	return vector.x;
 };
 
 World.direction.random = function() {
@@ -46,14 +54,16 @@ World.direction.forEachFrom = function(callback, initialDirection) {
 	function incrementLo() {
 		currentLo = currentLo > 0 ?
 			currentLo - 1 : World.directions.length; }
-	
 
+		/* TODO */
 
 };
 
-World.direction.some = function(callback) {
+World.direction.some = function(callback, thisArg) {
 	var self = this;
 	return World.directions.some(
-		function(str) { return callback(self[str], str, self); });
+		function(str) {
+			return callback.call(thisArg, self[str], str, self); },
+			thisArg);
 };
 
