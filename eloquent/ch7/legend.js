@@ -1,6 +1,6 @@
 var colorLegend = {
 	wall:		[ "wall" ],
-	nature:		[ "plant" ],
+	nature:		[ "plant", "flower" ],
 	character:	[ "critter", "bouncingCriter" ],
 	animal:		[ "wallHugger" ]
 };
@@ -8,24 +8,34 @@ var colorLegend = {
 var legend = (function() {
 	var legend = {
 		EmptySpace: {
-			type:		"emptySpace",
+			name:		"emptySpace",
+			type:		[ "floor" ],
 			ch:			" ",
 		},
 
 		Wall: {
-			type:		"wall",
+			name:		"wall",
+			type:		[ "obstacle" ],
 			ch:			"#",
 			solid:		true,
 			blockSight:	true,
 		},
 
 		Plant: {
-			type:		"plant",
+			name:		"plant",
+			type:		[ "vegetal" ],
 			ch:			"+"
 		},
 
+		Flower: {
+			name:		"flower",
+			type:		[ "vegetal" ],
+			ch:			"*"
+		},
+
 		Critter: {
-			type:		"critter",
+			name:		"critter",
+			type:		[ "animal" ],
 			ch:			"o",
 			solid:		true,
 			speed:		1,
@@ -33,7 +43,8 @@ var legend = (function() {
 		},
 
 		BouncingCriter: {
-			type:		"bouncingCriter",
+			name:		"bouncingCriter",
+			type:		[ "animal" ],
 			ch:			"@",
 			solid:		true,
 			act:		bouncingCriterAct,
@@ -42,7 +53,8 @@ var legend = (function() {
 		},
 
 		WallHugger: {
-			type:		"wallHugger",
+			name:		"wallHugger",
+			type:		[ "animal" ],
 			ch:			"~",
 			solid:		true,
 			act:		wallHuggerAct,
@@ -53,11 +65,14 @@ var legend = (function() {
 
 	legend.default = legend.EmptySpace;
 
+	function critterAct() {
+	
+	}
+
 	function bouncingCriterAct() {
 		if (!this.view.isTrapped()) {
 			while (!this.dir || !this.ai.keepMoving())
 				this.dir = World.direction.random();
-
 		}
 	}
 

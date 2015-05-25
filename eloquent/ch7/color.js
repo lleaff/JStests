@@ -10,20 +10,21 @@ Output.reverseSetOfArrays = function(oldSet) {
 	return newSet;
 };
 
-/* Prepare a { color: [elementTypes] } legend for use by
+/* Prepare a { color: [elementNames] } legend for use by
  *   appendTaggedTextTo()  */
 Output.processColorLegend = function(colorLegend, legend) {
-	function getElementOfType(type) {
-		for (var elem in legend)
-			if (legend[elem].type === type)
+	function getElementOfName(name) {
+		for (var elem in legend) {
+			if (legend[elem].name === name)
 				return legend[elem];
+		}
 	}
 
 	colorLegend = Output.reverseSetOfArrays(colorLegend);
 
 	var processedLegend = {};
 	Object.keys(colorLegend).forEach(function(element) {
-		processedLegend[getElementOfType(element).ch] =
+		processedLegend[getElementOfName(element).ch] =
 			colorLegend[element];
 	});
 	return processedLegend;
