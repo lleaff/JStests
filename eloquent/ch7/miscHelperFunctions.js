@@ -14,7 +14,12 @@ function shuffleArray(arr) {
 
 /* =Random
  * ------------------------------------------------------------ */
+/* 'lo' and 'up' included */
 function randomInt(lo, up) {
 	var range = up - lo;
 	return Math.round(Math.random()*range + lo) >>0;
+}
+
+function randomArrayElement(arr) {
+	return randomInt(0, arr.length - 1);
 }
