@@ -18,7 +18,7 @@ function World(plan, legend) {
 
 	legend = World.charMapFromElemMap(legend);
 
-	this.grid = World.charGridToElemGrid(grid, legend);
+	this.grid = World.charGridToElemGrid(grid, legend, this);
 	this.legend = legend;
 	this.actions = new World.Actions(this);
 }
@@ -33,9 +33,15 @@ World.charToElements = function(ch, legend) {
 	});
 	return elements;
 };
-World.charGridToElemGrid = function(grid, legend) {
+World.charGridToElemGrid = function(grid, legend, world) {
 	return grid.map(function(char) {
-		return World.charToElements(char, legend); });
+		var elems = World.charToElements(char, legend);
+		/* Add 'world' property to actors */
+		elems.forEach(function(el, i, elems) { 
+			if (el.act) el.world = world;
+		});
+		return elems;
+	});
 };
 
 World.elementToChar = function(element) {
