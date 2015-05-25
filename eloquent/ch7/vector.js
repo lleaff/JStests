@@ -27,3 +27,21 @@ Vector.prototype.multiply = function(vec) {
 Vector.prototype.toString = function() {
 	return "{"+this.x+", "+this.y+"}";
 };
+
+/* =Properties
+ * ------------------------------------------------------------ */
+Object.defineProperty(Vector.prototype, "length", {
+	get: function() {
+		return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2)); }
+});
+
+/* =Comparison
+ * ------------------------------------------------------------ */
+Vector.prototype.equal = function(vec) {
+	return this.x === vec.x && this.y === vec.y; };
+
+Vector.prototype.greater = function(vec) {
+	return this.length > vec.length; };
+
+Vector.prototype.less = function(vec) {
+	return this.length < vec.length; };
