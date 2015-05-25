@@ -77,14 +77,20 @@ World.View.canReach = function(elementType) {
  * property, to get images for use in non-sight related actions */
 World.View.prototype.look = function(direction, sight) {
 	var image = []; /* Array of elements */
-	if (sight === undefined) sight = this.actor.sight;
+	var nonVisual;
+	if (sight === undefined) {
+		sight = this.actor.sight;
+		nonVisual = false;
+	} else {
+		nonVisual = true; }
+
 	var position = this.position;
 	for (var distance = 0, element; distance < sight;
 		 ++distance) {
 		elements = this.world.grid.get(position.plus(direction));
 		image.push(elements);
-		if (!elements ||
-			elements.some(function(el) { return el.blockSight; }))
+		if (!elements || (!nonVisual &&
+			elements.some(function(el) { return el.blockSight; })))
 			break;
 	}
 	return new World.View.Image(image, direction);
@@ -100,7 +106,7 @@ World.View.Image.prototype.isSolid = function(index) {
 		return elements.some(function(el) {
 			return !!el.solid; });
 	}
-	if (index === undefined) {
+	if (index === undefined) { /* Test all cells in image */
 		for (var i = 0; i < this.image.length; ++i)
 			if (solidTest(this.image[i])) return true;
 	} else {
