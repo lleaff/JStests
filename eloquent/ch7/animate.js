@@ -22,6 +22,7 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 		var surface = htmlNode.children[0];
 		if (!surface || surface.tagName !== "PRE") {
 			surface = document.createElement("PRE");
+			surface.setAttribute("class", "world");
 			surface.setAttribute("style", "line-height:1em;");
 			this.print();
 			htmlNode.appendChild(surface);

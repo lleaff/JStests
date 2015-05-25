@@ -5,7 +5,7 @@ function main() {
 
 	var worlds = Data.plans.map(function(plan) {
 		var container = document.createElement("DIV");
-		container.setAttribute("class", "world");
+		container.setAttribute("class", "worldContainer");
 		worldsContainer.appendChild(container);
 
 		return new LivingWorld(plan, legend, colorLegend, container);
