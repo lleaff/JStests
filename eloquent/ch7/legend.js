@@ -3,7 +3,6 @@ var legend = (function() {
 		EmptySpace: {
 			type:		"emptySpace",
 			ch:			" ",
-			solid:		false,
 		},
 
 		Wall: {
@@ -62,3 +61,10 @@ var legend = (function() {
 
 	return legend;
 })();
+
+var colorLegend = {
+	wall:		[ "wall" ],
+	nature:		[ "plant" ],
+	character:	[ "critter", "bouncingCriter" ],
+	animal:		[ "wallHugger" ]
+};
