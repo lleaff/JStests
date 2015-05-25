@@ -19,6 +19,8 @@ function World(plan, legend) {
 	legend = World.charMapFromElemMap(legend);
 
 	this.grid = World.charGridToElemGrid(grid, legend, this);
+	World.initializeActors(this);
+
 	this.legend = legend;
 	this.actions = new World.Actions(this);
 }
@@ -35,12 +37,7 @@ World.charToElements = function(ch, legend) {
 };
 World.charGridToElemGrid = function(grid, legend, world) {
 	return grid.map(function(char) {
-		var elems = World.charToElements(char, legend);
-		/* Add 'world' property to actors */
-		elems.forEach(function(el, i, elems) { 
-			if (el.act) el.world = world;
-		});
-		return elems;
+		return World.charToElements(char, legend);
 	});
 };
 
@@ -72,6 +69,18 @@ World.charMapFromElemMap = function(elements) {
 		if (elem.speed) legend[elem.ch].push(elements.default);
 	}
 	return legend;
+};
+
+/* Add 'world' and 'ai' properties to actors */
+World.initializeActors = function(world) {
+	world.grid.forEach(function(elems) {
+		elems.forEach(function(element, i, elems) { 
+			if (element.act) {
+				element.world = world;
+				element.ai = new Ai(element);
+			}
+		});
+	});
 };
 
 /* =Interaction with elements
