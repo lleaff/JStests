@@ -23,8 +23,17 @@ World.Actions = function(world) {
 	return {
 		/* The actor's current View is stored in its .view property */
 
+		/* 'direction' can also be a direct movement vector, in that
+		 *  case you must leave out 'distance' */
 		move: function(actor, direction, distance) {
-			if (distance === undefined) distance = actor.speed;
+			if (distance === undefined) {
+				if (Math.abs(direction.x) > 1)
+					distance = Math.abs(direction.x);
+				else if (Math.abs(direction.y) > 1)
+					distance = Math.abs(direction.y);
+				else
+					distance = actor.speed;
+			}
 			var moveVec = new Vector(0, 0);
 			var image = actor.view.look(direction, distance);
 			/* Stop movement at first obstacle */
