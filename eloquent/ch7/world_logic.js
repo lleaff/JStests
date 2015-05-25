@@ -29,6 +29,16 @@ World.direction = new (function() { /* jshint ignore:line */
 	this.w	= new Vector(-1,  0); this.left		= this.w;
 	this.nw	= new Vector(-1,  1);
 })();
+World.directions = [ "n", "ne", "e", "se", "s", "sw", "w", "nw" ];
+World.directions.vectors = [ new Vector(0, 1), new Vector(1, 1),
+	 new Vector(1, 0), new Vector(1, -1), new Vector(0, -1),
+	 new Vector(-1, -1), new Vector(-1, 0), new Vector(-1, 1) ];
+
+World.direction.vectorToDirection = function(vector) {
+	for (var i = 0; i < World.directions.vectors.length; ++i)
+		if (World.directions.vectors[i].equal(vector))
+			return World.directions[i];
+};
 
 World.direction.random = function() {
 	var x, y, vec;
@@ -41,13 +51,13 @@ World.direction.random = function() {
 
 World.direction.forEach = function(callback) {
 	var self = this;
-	[ "n", "ne", "e", "se", "s", "sw", "w", "nw" ].forEach(
+	World.directions.forEach(
 		function(str) { callback(self[str], str, self); });
 };
 
 World.direction.some = function(callback) {
 	var self = this;
-	return [ "n", "ne", "e", "se", "s", "sw", "w", "nw" ].some(
+	return World.directions.some(
 		function(str) { return callback(self[str], str, self); });
 };
 
