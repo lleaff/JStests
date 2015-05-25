@@ -21,8 +21,9 @@
 	"grid.js",
 	"world.js",
 	"world_logic.js",
-	"animate.js",
 	"legend.js",
+	"color.js",
 	"plans.js",
+	"animate.js",
 	"main.js"
 ]);

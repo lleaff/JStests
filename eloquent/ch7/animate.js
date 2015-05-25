@@ -1,6 +1,16 @@
-function LivingWorld(plan, htmlNode) {
+function LivingWorld(plan, legend, colorLegend, htmlNode) {
 	/* World */
 	this.world = new World(plan, legend);
+
+	/* Convert the elements to characters */
+	this.colorLegend = Output.processColorLegend(colorLegend, legend);
+
+	this.print = function() {
+		Output.appendTaggedTextTo( this.surface, this.world.draw(),
+								  this.colorLegend, "color",
+								  { capitalize: true });
+	};
+
 
 	/* Drawing surface */
 	this.surface = (function() {
@@ -13,9 +23,8 @@ function LivingWorld(plan, htmlNode) {
 		if (!surface || surface.tagName !== "PRE") {
 			surface = document.createElement("PRE");
 			surface.setAttribute("style", "line-height:1em;");
-			surface.appendChild(
-				document.createTextNode(this.world.draw()));
-				htmlNode.appendChild(surface);
+			this.print();
+			htmlNode.appendChild(surface);
 		} 
 		return surface;
 	}).call(this);
@@ -23,9 +32,11 @@ function LivingWorld(plan, htmlNode) {
 
 	/* Logic */
 	this.updateSurface = function() {
-		this.surface.replaceChild(
-			document.createTextNode(this.world.draw()),
-			this.surface.childNodes[0]);
+		/* Clear the surface */
+		while(this.surface.lastChild)
+			this.surface.removeChild(this.surface.lastChild);
+
+		this.print();
 	};
 
 	this.tick = function() {

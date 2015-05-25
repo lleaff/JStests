@@ -8,7 +8,7 @@ function main() {
 		container.setAttribute("class", "world");
 		worldsContainer.appendChild(container);
 
-		return new LivingWorld(plan, container);
+		return new LivingWorld(plan, legend, colorLegend, container);
 	});
 
 	function startAnimation(world) {
