@@ -120,3 +120,15 @@ World.View.Image.prototype.possibleMoves = function() {
 	}
 	return vectors;
 };
+
+/* =Array of vectors
+ * ------------------------------------------------------------ */
+World.View.closest = function(vectors) {
+	return vectors.reduce(function(a, b) {
+		return a ? (a.x+a.y < b.x+b.y ? a : b) : b; });
+};
+
+World.View.farthest = function(vectors) {
+	return vectors.reduce(function(a, b) {
+		return a ? (a.x+a.y > b.x+b.y ? a: b) : b; });
+};
