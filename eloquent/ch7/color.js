@@ -14,11 +14,9 @@ Output.reverseSetOfArrays = function(oldSet) {
  *   appendTaggedTextTo()  */
 Output.processColorLegend = function(colorLegend, legend) {
 	function getElementOfType(type) {
-		for (var elem in legend) {
-			if (legend[elem].type === type) {
+		for (var elem in legend)
+			if (legend[elem].type === type)
 				return legend[elem];
-			}
-		}
 	}
 
 	colorLegend = Output.reverseSetOfArrays(colorLegend);
@@ -30,3 +28,43 @@ Output.processColorLegend = function(colorLegend, legend) {
 	});
 	return processedLegend;
 };
+
+/* 'colorLegend' must be a set of character: className */
+Output.appendTaggedTextTo = function(
+	element, string, colorLegend, cssClassPrefix, cssClassNameOptions) {
+	if (element === undefined) element = document.createElement("div");
+
+	function prependClassPrefix(cssClassName) {
+		if (cssClassNameOptions.capitalize) {
+			cssClassName = cssClassName.charAt(0).toUpperCase() +
+				cssClassName.slice(1);
+		}
+		return cssClassPrefix + cssClassName;
+	}
+
+	function tagAndAppend(str) {
+		var tag;
+		if (colorLegend[str[0]]) {
+			tag = document.createElement("span");
+			tag.setAttribute("class",
+							 prependClassPrefix(colorLegend[str[0]]));
+			tag.appendChild(document.createTextNode(str));
+		} else {
+			tag = document.createTextNode(str);
+		}
+		element.appendChild(tag);
+	}
+
+	/* Go over each character in the string */
+	for (var i = 0, buffer = ""; i < string.length; ++i) {
+		buffer += string[i];
+		/* If character sequence ends, process buffer and reset it */
+		if (string[i + 1] !== string[i]) {
+			tagAndAppend(buffer);
+			buffer = "";
+		}
+	}
+
+	return element;
+};
+
