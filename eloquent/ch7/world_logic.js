@@ -69,11 +69,30 @@ World.View.prototype.isTrapped = function() {
 	});
 };
 
-World.View.canReach = function(elementType) {
-
+/* Returns vectors to positions in all directions containing element
+ *  of 'elementType' */
+World.View.reachable = function(elementType) {
+	var vectors = [];
+	var self;
+	World.direction.forEach(function(direction) {
+		vectors.concat(self.look(direction, this.actor.speed)
+					   .reachable(elementType));
+	});
+	return vectors;
 };
 
-/* The 'sight' argument can be used to override the actor's sight
+/* Returns vectors to positions in all directions containing element
+ *  of 'elementType' */
+World.View.visible = function(elementType) {
+	var vectors = [];
+	var self;
+	World.direction.forEach(function(direction) {
+		vectors.concat(self.look(direction).visible(elementType));
+	});
+	return vectors;
+};
+
+/* The 'sight' argument can be used to overide the actor's sight
  * property, to get images for use in non-sight related actions */
 World.View.prototype.look = function(direction, sight) {
 	var image = []; /* Array of elements */
