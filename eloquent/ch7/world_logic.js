@@ -167,10 +167,10 @@ World.Actions = function(world) {
 			var image = actor.view.look(direction, distance);
 			/* Stop movement at first obstacle */
 			for (var i = 0; i < distance; ++i) {
-				if (image.image && !image.isSolid(i)) {
+				if (image.image && !image.isSolid(i))
 					moveVec.add(direction);
-				} else {
-					break; }
+				else
+					break;
 			}
 
 			if (moveVec.x === 0 && moveVec.y === 0) /* has moved? */
