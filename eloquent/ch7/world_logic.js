@@ -1,7 +1,6 @@
 /* =Turn logic
  * ----------------------------------------------------------- */
 World.prototype.turn = function() {
-	var self = this;
 	var actors = [];
 	this.grid.forEach(function(elements, col, row, grid) {
 		elements.forEach(function(element) {
@@ -12,9 +11,9 @@ World.prototype.turn = function() {
 	shuffleArray(actors);
 	actors.forEach(function(elemPos) {
 		elemPos.elem.view = new World.View(
-			self, elemPos.elem, elemPos.position);
+			this, elemPos.elem, elemPos.position);
 		elemPos.elem.act();
-	});
+	}, this);
 };
 
 /* =Actions
@@ -52,4 +51,18 @@ World.Actions = function(world) {
 			return i; /* Times direction vector was applied */
 		},
 	};
+};
+
+/* =Elements
+ * ------------------------------------------------------------ */
+if (World.Element === undefined) World.Element = {};
+if (World.Elements === undefined) World.Elements = {};
+
+World.Element.hasType = function(element, elementType) {
+	return element.type.indexOf(elementType) !== -1;
+};
+
+World.Elements.hasType = function(elements, elementType) {
+	return elements.filter(function(el) {
+		return World.Element.hasType(el, elementType); }).length;
 };
