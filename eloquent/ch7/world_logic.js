@@ -33,12 +33,16 @@ World.Actions = function(world) {
 		 * @return {Vector} Movement vector actually applied or null */
 		move: function(actor, direction, distance) {
 			if (distance === undefined) {
-				if (Math.abs(direction.x) > 1)
+				if (Math.abs(direction.x) > 1) {
 					distance = Math.abs(direction.x);
-				else if (Math.abs(direction.y) > 1)
+					direction =
+						World.direction.vectorToDirection(direction);
+				} else if (Math.abs(direction.y) > 1) {
 					distance = Math.abs(direction.y);
-				else
-					distance = actor.speed;
+					direction =
+						World.direction.vectorToDirection(direction);
+				} else {
+					distance = actor.speed; }
 			}
 			var moveVec = new Vector(0, 0);
 			var image = actor.view.look(direction, distance);
