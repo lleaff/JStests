@@ -5,6 +5,9 @@ function Ai(actor) {
 
 /* =General
  * ------------------------------------------------------------ */
+/**
+ *  Move in the same direction the actor was moving in during the last turn
+ *  @return {Vector} The move vector applied, or null */
 Ai.prototype.keepMoving = function() {
 	if (this.actor.dir) {
 		var longestMove = this.actor.view.look(this.actor.dir)
