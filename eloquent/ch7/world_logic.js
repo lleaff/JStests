@@ -59,6 +59,9 @@ World.Actions = function(world) {
 			world.moveElement(actor.view.position,
 							  actor.view.position.plus(moveVec), actor);
 
+			/* Update actor's direction property */
+			actor.dir = i ? direction : null;
+
 			return i ? moveVec : null;
 		},
 	};
