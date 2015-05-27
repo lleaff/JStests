@@ -6,9 +6,26 @@ function main() {
 	var worlds = Data.plans.map(function(plan) {
 		var container = document.createElement("DIV");
 		container.setAttribute("class", "worldContainer");
-		worldsContainer.appendChild(container);
 
-		return new LivingWorld(plan, legend, colorLegend, container);
+
+		var worldInstance =
+			 new LivingWorld(plan, legend, colorLegend, container);
+
+		/* Create an overlay to catch click events, otherwise the span
+		 *  elements disappear to quickly to bubble up their events */
+		var overlay = document.createElement("DIV");
+		overlay.setAttribute("class", "worldOverlay");
+		/* Make the overlay overlay over the whole container */
+		container.style.position = "relative";
+		overlay.setAttribute("style",
+		   "width:100%; height:100%; position:absolute; top:0; bottom:0;");
+		overlay.addEventListener("click",
+							 toggleAnimation.bind(null, worldInstance));
+
+		container.appendChild(overlay);
+		worldsContainer.appendChild(container);
+		return worldInstance;
+
 	});
 
 	function startAnimation(world) {
@@ -26,7 +43,8 @@ function main() {
 	}
 
 	worlds.forEach(function(world) {
-		world.surface.onclick = toggleAnimation.bind(null, world);
+		/*world.surface.parent.addEventListener("click",
+									   toggleAnimation.bind(null, world));*/
 		startAnimation(world);
 	});
 

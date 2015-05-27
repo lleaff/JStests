@@ -33,6 +33,9 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 		return surface;
 	}).call(this);
 
+	/* Reference container for DOM events */
+	this.surface.parent = htmlNode; 
+
 	/* Initialize */
 	this.print();
 
