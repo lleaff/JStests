@@ -1,5 +1,5 @@
 function main() {
-	var updateTime = 75;
+	var updateTime = 0.1; /* seconds */
 
 	var worldsContainer = document.getElementById("worldsContainer");
 
@@ -22,16 +22,18 @@ function main() {
 		overlay.addEventListener("click",
 							 toggleAnimation.bind(null, worldInstance));
 
+		worldInstance.surface.overlay = overlay;
 		container.appendChild(overlay);
 		worldsContainer.appendChild(container);
 		return worldInstance;
 
 	});
 
+	/* Control animation */
 	function startAnimation(world) {
 		if (!world.intervalId)
 			world.intervalId = setInterval(
-				world.tick.bind(world), updateTime);
+				world.tick.bind(world), updateTime*1000);
 	}
 	function stopAnimation(world) {
 		clearInterval(world.intervalId);
@@ -42,9 +44,8 @@ function main() {
 		else stopAnimation(world);
 	}
 
+	/* Start animation */
 	worlds.forEach(function(world) {
-		/*world.surface.parent.addEventListener("click",
-									   toggleAnimation.bind(null, world));*/
 		startAnimation(world);
 	});
 
