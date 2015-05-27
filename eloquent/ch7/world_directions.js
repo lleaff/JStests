@@ -44,19 +44,26 @@ World.direction.forEach = function(callback, thisArg) {
 		function(str) { callback(self[str], str, self); }, thisArg);
 };
 
-World.direction.forEachFrom = function(callback, initialDirection) {
-	var up, lo;
-	var currentUp, currentLo;
+/* Iterate through directions by gradually going farther
+ *  from 'initialDirection' */
+World.direction.forEachFrom =
+					function(initialDirection, callback, thisArg) {
+	var initI = World.directions.indexOf(
+			 World.direction.vectorToDirectionName(initialDireciton));
+	var curI = initI;
 
+	var upI, loI;
 	function incrementUp() {
-		currentUp = currentUp < World.directions.length ?
-			currentUp + 1 : 0; }
+		return upI += upI < World.directions.length ?  1 : 0; }
 	function incrementLo() {
-		currentLo = currentLo > 0 ?
-			currentLo - 1 : World.directions.length; }
+		return loI -= loI > 0 ? 1 : World.directions.length; }
 
-		/* TODO */
-
+	while (upI !== initI && loI !== initI) {
+		callback.call(thisArg,
+				  directions.vectors[curI], directions[curI], this);
+		if (curI === upI)	{ curI = incrementUp(); }
+		else				{ curI = incrementLo(); }
+	}
 };
 
 World.direction.some = function(callback, thisArg) {
