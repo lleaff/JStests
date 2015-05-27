@@ -9,6 +9,9 @@
 *.swn
 *.swm
 
+# Build files
+*node_modules*
+
 ###OS X
 
 .DS_Store

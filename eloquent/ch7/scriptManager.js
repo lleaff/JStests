@@ -29,4 +29,6 @@
 	"plans.js",
 	"animate.js",
 	"main.js"
-]);
+].map(function(scriptName) {
+	return "js/"+scriptName;
+}));
