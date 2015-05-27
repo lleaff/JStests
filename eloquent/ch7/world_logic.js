@@ -23,8 +23,8 @@ World.Actions = function(world) {
 		/* The actor's current View is stored in its .view property */
 
 		/** 
-		 * Try moving the specified actor in the specified direction 
-		 * @param {Actor} Element to move
+		 * Try moving the actor in the specified direction 
+		 * @param {Actor} actor Element to move
 		 * @param {Direction/Vector} direction Direction to move in, or
 		 *   direct move vector to try applying
 		 * @param {integer} distance Number of times to try to apply

@@ -7,6 +7,7 @@ function Ai(actor) {
  * ------------------------------------------------------------ */
 /**
  *  Move in the same direction the actor was moving in during the last turn
+ *  @function keepMoving
  *  @return {Vector} The move vector applied, or null */
 Ai.prototype.keepMoving = function() {
 	if (this.actor.dir) {
@@ -21,6 +22,8 @@ Ai.prototype.keepMoving = function() {
 
 /**
  * Move the calling actor toward an element of type 'elementType'
+ * @function moveToward
+ * @param {string} elementType Type of element to go toward
  * @param {Direction} defaultDirection Direction in which to move if
  *   no matching element is found
  * @return {Vector} The move vector applied, or null */
