@@ -10,21 +10,24 @@ Ai.prototype.keepMoving = function() {
 		var longestMove = this.actor.view.look(this.actor.dir)
 												.possibleMoves().pop();
 		if (longestMove) {
-			this.world.actions.move(this.actor, longestMove);
-			return longestMove;
+			return this.world.actions.move(this.actor, longestMove);
 		}
 	}
-	return false;
+	return null;
 };
 
+/**
+ * Move the calling actor toward an element of type 'elementType'
+ * @param {Direction} defaultDirection Direction in which to move if
+ *   no matching element is found
+ * @return {Vector} The move vector applied, or null */
 Ai.prototype.moveToward = function(elementType, defaultDirection) {
 	var reachable = this.actor.view.reachable(elementType);
 	shuffleArray(reachable); /* Avoid predictable resolution */
 	var closestPos = World.View.closest(reachable);
 	if (closestPos) {
-		this.world.actions.move(
-			 this.actor, closestPos);
-		return true;		/* Moving toward element */
+		/* Moving toward element */
+		return this.world.actions.move(this.actor, closestPos);
 	} else {
 		/* If no element of 'elementType' is in sight, move in specified
 		 *  'defaultDirection' or a random valid one */
@@ -32,7 +35,7 @@ Ai.prototype.moveToward = function(elementType, defaultDirection) {
 			defaultDirection = this.actor.view.reacheable();
 			World.direction.random();
 		}
-		return false;		/* No element in sight */
+		return null; /* No element in sight */
 	}
 };
 
