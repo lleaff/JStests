@@ -22,8 +22,15 @@ World.Actions = function(world) {
 	return {
 		/* The actor's current View is stored in its .view property */
 
-		/* 'direction' can also be a direct movement vector, in that
-		 *  case you must leave out 'distance' */
+		/** 
+		 * Try moving the specified actor in the specified direction 
+		 * @param {Actor} Element to move
+		 * @param {Direction/Vector} direction Direction to move in, or
+		 *   direct move vector to try applying
+		 * @param {integer} distance Number of times to try to apply
+		 *   the direction vector. Must be left out if 'direction' is
+		 *   a direct move vector
+		 * @return {Vector} Movement vector actually applied or null */
 		move: function(actor, direction, distance) {
 			if (distance === undefined) {
 				if (Math.abs(direction.x) > 1)
@@ -48,7 +55,7 @@ World.Actions = function(world) {
 			world.moveElement(actor.view.position,
 							  actor.view.position.plus(moveVec), actor);
 
-			return i; /* Times direction vector was applied */
+			return i ? moveVec : null;
 		},
 	};
 };
