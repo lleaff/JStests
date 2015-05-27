@@ -38,10 +38,10 @@ World.direction.random = function() {
 	return new Vector(x, y);
 };
 
-World.direction.forEach = function(callback) {
+World.direction.forEach = function(callback, thisArg) {
 	var self = this;
 	World.directions.forEach(
-		function(str) { callback(self[str], str, self); });
+		function(str) { callback(self[str], str, self); }, thisArg);
 };
 
 World.direction.forEachFrom = function(callback, initialDirection) {
