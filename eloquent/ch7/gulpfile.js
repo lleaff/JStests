@@ -33,6 +33,8 @@ gulp.task('default', function() {
 
 });
 
+gulp.task('deploy', ['build', 'license']);
+
 gulp.task('build', ['js', 'css', 'html']);
 
 gulp.task('js', function() {
