@@ -10,7 +10,9 @@
 *.swm
 
 # Build files
-*node_modules*
+build/
+sourcemaps/
+node_modules/
 
 ###OS X
 
