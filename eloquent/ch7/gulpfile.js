@@ -38,31 +38,45 @@ gulp.task('deploy', ['build', 'license']);
 gulp.task('build', ['js', 'css', 'html']);
 
 gulp.task('js', function() {
-	var jsfolder = paths.source+'/js/';
-	var jsFilenames = [
-		'miscHelperFunctions.js',
-		'vector.js',
-		'grid.js',
-		'world.js',
-		'world_directions.js',
-		'world_perception.js',
-		'world_logic.js',
-		'ai.js',
-		'color.js',
-		'legend.js',
-		'plans.js',
-		'animate.js',
-		'main.js'
-	];
+	var jsFolder = paths.source+'/js/';
+	var jsFiles = {
+		framework: [
+			'miscHelperFunctions.js',
+			'vector.js',
+			'grid.js',
+			'world.js',
+			'world_directions.js',
+			'world_perception.js',
+			'world_logic.js',
+			'ai.js',
+			'color.js',
+			'animate.js'
+		],
+		data: [
+			'legend.js',
+			'plans.js',
+			'main.js'
+		]
+	};
 
 	return merge (
-		gulp.src([jsfolder+'*.js',
-				 '!'+jsfolder+'main.js',
-				 '!'+jsfolder+'test*']),
-		gulp.src(jsfolder+'main.js')
-			.pipe(insert.append('main()')))
-			.pipe(order(jsFilenames.map(
+		/* Data files */
+		merge(
+			gulp.src(jsFiles.data.map(function(file) {
+											return jsFolder+file; })
+					/* Exclude main file */
+					.concat(['!'+jsFolder+
+							jsFiles.data[jsFiles.data.length - 1]])),
+					/* Append main() to main file */
+			gulp.src(jsFolder+jsFiles.data[jsFiles.data.length - 1])
+				.pipe(insert.append('main()'))),
+		/* Framework files */
+		gulp.src(jsFiles.framework.map(function(file) {
+											return jsFolder+file; })))
+			/* Order files as in 'jsFiles' object */
+			.pipe(order(jsFiles.framework.concat(jsFiles.data).map(
 				function(filename) { return '**/'+filename; })))
+			/* Sourcemaps-compatible operations */
 			.pipe(sourcemaps.init())
 				.pipe(concat(mainJs))
 				.pipe(uglify())
@@ -83,7 +97,7 @@ gulp.task('html', function() {
 		.pipe(gulp.dest(paths.build));
 });
 
-gulp.task('license', function() {
+gulp.task('license', ['js', 'css', 'html' ], function() {
 	var copyrightText =
 		"Copyright "+new Date().getFullYear()+" "+
 		package.pretty.author+"\n";
