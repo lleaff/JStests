@@ -78,6 +78,7 @@ gulp.task('css', function() {
 
 gulp.task('html', function() {
 	return gulp.src(paths.source+'/*html')
+		.pipe(replace('$Title', package.pretty.name))
 		.pipe(replace('scriptManager.js', mainJs))
 		.pipe(gulp.dest(paths.build));
 });
