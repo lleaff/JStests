@@ -3,13 +3,26 @@ var merge = require('merge-stream');
 var order = require('gulp-order');
 var concat = require('gulp-concat'); /* sourcemaps */
 var uglify = require('gulp-uglify'); /* sourcemaps */
-var sourcemaps = require('gulp-sourcemaps');
+var sourcemaps = require('gulp-sourcemaps'); /* sourcemaps */
 var insert = require('gulp-insert');
+var replace = require('gulp-replace');
 var minifyCss = require('gulp-minify-css');
 
-/* ------------------------------------------------------------ */
-var srcD = './src';
-var buildD = './build';
+var debug = require('gulp-debug'); /* DEBUG */
+
+var package = require('./package.json');
+
+/* =Variables
+ * ------------------------------------------------------------ */
+var paths = {
+	source: './src',
+	build: './build',
+};
+
+var mainJs = 'all.js';
+
+/* =Tasks
+ * ------------------------------------------------------------ */
 
 gulp.task('default', function() {
 
@@ -18,7 +31,7 @@ gulp.task('default', function() {
 gulp.task('build', ['js', 'css', 'html']);
 
 gulp.task('js', function() {
-	var jsfolder = srcD+'/js/';
+	var jsfolder = paths.source+'/js/';
 	var jsFilenames = [
 		'miscHelperFunctions.js',
 		'vector.js',
@@ -44,19 +57,20 @@ gulp.task('js', function() {
 			.pipe(order(jsFilenames.map(
 				function(filename) { return '**/'+filename; })))
 			.pipe(sourcemaps.init())
-				.pipe(concat('all.js'))
+				.pipe(concat(mainJs))
 				.pipe(uglify())
 			.pipe(sourcemaps.write('../sourcemaps'))
-			.pipe(gulp.dest(buildD));
+			.pipe(gulp.dest(paths.build));
 });
 
 gulp.task('css', function() {
-	return gulp.src(srcD+'/*css')
+	return gulp.src(paths.source+'/*css')
 		.pipe(minifyCss())
-		.pipe(gulp.dest(buildD));
+		.pipe(gulp.dest(paths.build));
 });
 
 gulp.task('html', function() {
-	return gulp.src(srcD+'/*html')
-		.pipe(gulp.dest(buildD));
+	return gulp.src(paths.source+'/*html')
+		.pipe(gulp.dest(paths.build));
+});
 });
