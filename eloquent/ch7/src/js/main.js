@@ -11,19 +11,9 @@ function main() {
 		var worldInstance =
 			 new LivingWorld(plan, legend, colorLegend, container);
 
-		/* Create an overlay to catch click events, otherwise the span
-		 *  elements disappear too quickly to bubble up their events */
-		var overlay = document.createElement("DIV");
-		overlay.setAttribute("class", "worldOverlay");
-		/* Make the overlay hover over the whole container */
-		container.style.position = "relative";
-		overlay.setAttribute("style",
-		   "width:100%; height:100%; position:absolute; top:0; bottom:0;");
-		overlay.addEventListener("click",
+		worldInstance.surface.overlay.addEventListener("click",
 							 toggleAnimation.bind(null, worldInstance));
 
-		worldInstance.surface.overlay = overlay;
-		container.appendChild(overlay);
 		worldsContainer.appendChild(container);
 		return worldInstance;
 

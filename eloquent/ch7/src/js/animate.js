@@ -33,8 +33,24 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 		return surface;
 	}).call(this);
 
-	/* Reference container for DOM events */
+	/* Container */
 	this.surface.parent = htmlNode; 
+
+	/* Overlay div for catching DOM events */
+	this.surface.overlay = (function() {
+		/* Create an overlay to catch click events, otherwise the span
+		 *  elements disappear too quickly to bubble up their events */
+		var overlay = document.createElement("DIV");
+		overlay.setAttribute("class", "worldOverlay");
+		/* Make the overlay hover over the whole this.surface.parent */
+		this.surface.parent.style.position = "relative";
+		overlay.setAttribute("style",
+			   "width:100%; height:100%; position:absolute; top:0; bottom:0;");
+
+		this.surface.parent.appendChild(overlay);
+
+		return overlay;
+	}).call(this);
 
 	/* Logic */
 	this.updateSurface = function() {
@@ -52,5 +68,5 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 		 *  in .print() */
 		this.surface.appendChild(document.createElement("SPAN"));
 		this.print();
-	})();
+	}).call(this);
 }
