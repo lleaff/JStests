@@ -7,10 +7,11 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 
 	this.print = function() {
 		/* Clear the surface */
-		while(this.surface.lastChild)
-			this.surface.removeChild(this.surface.lastChild);
+		this.surface.removeChild(this.surface.firstChild);
 
-		Output.appendTaggedTextTo( this.surface, this.world.draw(),
+		Output.appendTaggedTextTo(
+			this.surface.appendChild(document.createElement("SPAN")),
+								  this.world.draw(),
 								  this.colorLegend, "color",
 								  { capitalize: true });
 	};
