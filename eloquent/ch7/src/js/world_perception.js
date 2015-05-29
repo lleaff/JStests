@@ -4,6 +4,11 @@ World.View = function(world, actor, position) {
 	this.world = world;
 	this.actor = actor;
 	this.position = position;
+	/* Creates a new view by applying 'vector' to '.position' */
+	this.New = function(vector) {
+		return new World.View(
+			this.world, this.actor, this.position.plus(vector));
+	};
 };
 
 World.View.prototype.isTrapped = function() {
