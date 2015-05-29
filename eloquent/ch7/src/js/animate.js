@@ -16,7 +16,6 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 								  { capitalize: true });
 	};
 
-
 	/* Drawing surface */
 	this.surface = (function() {
 		if (!htmlNode) htmlNode = document.getElementById("world");
@@ -37,15 +36,6 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 	/* Reference container for DOM events */
 	this.surface.parent = htmlNode; 
 
-	/* Initialize */
-	(function initialize() {
-		/* Create dummy element so we don't have to check for child existence
-		 *  in .print() */
-		this.surface.appendChild(document.createElement("SPAN"));
-		this.print();
-	})();
-
-
 	/* Logic */
 	this.updateSurface = function() {
 		this.print();
@@ -55,4 +45,12 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 		this.world.turn();
 		this.updateSurface();
 	};
+
+	/* Initialize */
+	(function initialize() {
+		/* Create dummy element so we don't have to check for child existence
+		 *  in .print() */
+		this.surface.appendChild(document.createElement("SPAN"));
+		this.print();
+	})();
 }
