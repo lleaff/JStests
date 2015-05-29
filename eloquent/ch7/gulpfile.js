@@ -14,10 +14,40 @@ var package = require('./package.json');
 
 /* =Variables
  * ------------------------------------------------------------ */
-var paths = {
-	source: './src',
-	build: './build',
+var basePaths = {
+	source: 'src',
+	build: 'build',
 };
+
+var paths = {
+	js: basePaths.source+'/js',
+	css: basePaths.source,
+	html: basePaths.source,
+};
+
+var jsFiles = {
+	framework: [
+		'miscHelperFunctions.js',
+		'vector.js',
+		'grid.js',
+		'world.js',
+		'world_directions.js',
+		'world_perception.js',
+		'world_logic.js',
+		'ai.js',
+		'color.js',
+		'animate.js'
+	],
+	data: [
+		'legend.js',
+		'plans.js',
+		'main.js'
+	]
+};
+Object.keys(jsFiles).forEach(function(group) {
+	jsFiles[group].map(function(fileName) {
+		return basePaths.js+'/'+fileName; });
+});
 
 package.pretty = {
 	name: package.name.replace('-',' '),
@@ -29,50 +59,33 @@ var mainJs = 'all.js';
 /* =Tasks
  * ------------------------------------------------------------ */
 
-gulp.task('default', function() {
-
-});
+gulp.task('default', ['deploy']);
 
 gulp.task('deploy', ['build', 'license']);
 
 gulp.task('build', ['js', 'css', 'html']);
 
 gulp.task('js', function() {
-	var jsFolder = paths.source+'/js/';
-	var jsFiles = {
-		framework: [
-			'miscHelperFunctions.js',
-			'vector.js',
-			'grid.js',
-			'world.js',
-			'world_directions.js',
-			'world_perception.js',
-			'world_logic.js',
-			'ai.js',
-			'color.js',
-			'animate.js'
-		],
-		data: [
-			'legend.js',
-			'plans.js',
-			'main.js'
-		]
-	};
+	function sourcemapProcess(output, stream) {
+		return stream.pipe(sourcemaps.init())
+				.pipe(concat(output))
+				.pipe();
+	}
 
 	return merge (
 		/* Data files */
 		merge(
 			gulp.src(jsFiles.data.map(function(file) {
-											return jsFolder+file; })
+											return paths.js+file; })
 					/* Exclude main file */
-					.concat(['!'+jsFolder+
+					.concat(['!'+paths.js+
 							jsFiles.data[jsFiles.data.length - 1]])),
 					/* Append main() to main file */
-			gulp.src(jsFolder+jsFiles.data[jsFiles.data.length - 1])
+			gulp.src(paths.js+jsFiles.data[jsFiles.data.length - 1])
 				.pipe(insert.append('main()'))),
 		/* Framework files */
 		gulp.src(jsFiles.framework.map(function(file) {
-											return jsFolder+file; })))
+											return paths.js+file; })))
 			/* Order files as in 'jsFiles' object */
 			.pipe(order(jsFiles.framework.concat(jsFiles.data).map(
 				function(filename) { return '**/'+filename; })))
@@ -81,20 +94,20 @@ gulp.task('js', function() {
 				.pipe(concat(mainJs))
 				.pipe(uglify())
 			.pipe(sourcemaps.write('../sourcemaps'))
-			.pipe(gulp.dest(paths.build));
+			.pipe(gulp.dest(basePaths.build));
 });
 
 gulp.task('css', function() {
-	return gulp.src(paths.source+'/*css')
+	return gulp.src(basePaths.source+'/*css')
 		.pipe(minifyCss())
-		.pipe(gulp.dest(paths.build));
+		.pipe(gulp.dest(basePaths.build));
 });
 
 gulp.task('html', function() {
-	return gulp.src(paths.source+'/*html')
+	return gulp.src(basePaths.source+'/*html')
 		.pipe(replace('$Title', package.pretty.name))
 		.pipe(replace('scriptManager.js', mainJs))
-		.pipe(gulp.dest(paths.build));
+		.pipe(gulp.dest(basePaths.build));
 });
 
 gulp.task('license', ['js', 'css', 'html' ], function() {
@@ -107,13 +120,13 @@ gulp.task('license', ['js', 'css', 'html' ], function() {
 	var headerText = copyrightText + licenseText;
 
 	return merge(
-		gulp.src(paths.build+'/*.js')
+		gulp.src(basePaths.build+'/*.js')
 			.pipe(insert.prepend(commentString(headerText, "js"))),
-		gulp.src(paths.build+'/*.css')
+		gulp.src(basePaths.build+'/*.css')
 			.pipe(insert.prepend(commentString(headerText, "css"))),
-		gulp.src(paths.build+'/*.html')
+		gulp.src(basePaths.build+'/*.html')
 			.pipe(insert.prepend(commentString(headerText, "html")))
-	).pipe(gulp.dest(paths.build));
+	).pipe(gulp.dest(basePaths.build));
 
 });
 
