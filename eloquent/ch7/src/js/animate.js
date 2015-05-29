@@ -38,7 +38,12 @@ function LivingWorld(plan, legend, colorLegend, htmlNode) {
 	this.surface.parent = htmlNode; 
 
 	/* Initialize */
-	this.print();
+	(function initialize() {
+		/* Create dummy element so we don't have to check for child existence
+		 *  in .print() */
+		this.surface.appendChild(document.createElement("SPAN"));
+		this.print();
+	})();
 
 
 	/* Logic */
