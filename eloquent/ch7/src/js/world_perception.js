@@ -4,11 +4,11 @@ World.View = function(world, actor, position) {
 	this.world = world;
 	this.actor = actor;
 	this.position = position;
-	/* Creates a new view by applying 'vector' to '.position' */
-	this.New = function(vector) {
-		return new World.View(
-			this.world, this.actor, this.position.plus(vector));
-	};
+};
+
+/* Creates a new view by applying 'vector' to actor's '.position' */
+World.View.prototype.New = function(vector) {
+	return new World.View(this.world, this.actor, this.position.plus(vector));
 };
 
 World.View.prototype.isTrapped = function() {
@@ -27,11 +27,11 @@ World.View.prototype.isOn = function(elementType) {
 
 /* Returns vectors to positions in all directions containing element
  *  of 'elementType' */
-World.View.prototype.reachable = function(elementType) {
+World.View.prototype.reachable = function(elementType, distance) {
 	var vectors = [];
 	World.direction.forEach(function(direction) {
-		vectors.concat(this.look(direction, this.actor.speed)
-					   .reachable(elementType));
+		vectors.concat(this.look(direction, distance || this.actor.speed)
+													   .reachable(elementType));
 	}, this);
 	return vectors;
 };
