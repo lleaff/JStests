@@ -3,7 +3,7 @@ var defaultName = "Robert";
 var timesAsked = 1;
 while (true) {
 	name = prompt("Hello, what's your name?");
-
+	
 	/* Test result and react accordingly */
 	if (!isNaN(name)) {
 		if (timesAsked++ <= 2) {

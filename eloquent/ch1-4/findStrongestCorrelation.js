@@ -3,6 +3,9 @@ if (JOURNAL === undefined) {
 	throw new Error("JOURNAL not found, no file to operate on");
 }
 
+var eventPhi = { eventName: "", phi: 0 };
+var eventPhiArr = [];
+
 // string: journalEvent
 function hasEvent(journalEvent)
 {

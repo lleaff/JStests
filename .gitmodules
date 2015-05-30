@@ -1,0 +1,3 @@
+[submodule "eloquent/ch7"]
+	path = eloquent/ch7
+	url = git@github.com:lleaff/ASCII-life
