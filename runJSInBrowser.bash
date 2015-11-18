@@ -4,7 +4,7 @@
 
 # Default browser
 _BROWSERCMD=''
-BASEDIR='/tmp'
+BASEDIR="$HOME/.tmp"
 
 ####### Script variables #######
 
@@ -205,8 +205,9 @@ if [[ ! $_BROWSERCMD ]]; then
 			fi
 		fi
 	elif [[ $(uname -s) == "Darwin" ]]; then 
-		# For OSX
+		  # For OSX
 		_BROWSERCMD='firefox'
+		_BROWSERCMD='Google Chrome'
 	fi
 fi
 
@@ -280,5 +281,7 @@ if hash xset 2>/dev/null; then
 		echo "You should install xdotool so this script can open your browser's JavaScript console automatically"
 	fi
 fi
+
+echo -e "=======================\n$OSX"
 
 exit 0
