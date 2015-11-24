@@ -4,14 +4,18 @@ function createCanvas() {
   var canvas = $('<canvas>', {
     id: 'mainCanvas'
   }).css({
-    'width'            : '100%',
-    'height'           : '100%',
-    'max-width'        : '50rem',
-    'max-height'       : '25rem',
-    'border'           : '1px solid #aaaaaa'
+    'width'            : '500px',
+    'height'           : '300px',
+    'border'           : '1px solid #eeeeee',
+    'margin'           : '0 auto'
   });
   return canvas;
 }
+
+/*------------------------------------------------------------*/
+var vec = function vector2(x, y) {
+  return { x: x, y: y };
+};
 
 /*------------------------------------------------------------*/
 
@@ -19,6 +23,20 @@ var canvas = createCanvas().appendTo('body');
 
 var c = canvas[0].getContext('2d');
 
-c.fillStyle = 'rgba(200, 255, 170, 0.8)';
+c.imageSmoothingEnabled = false;
 
+/**
+ * @param {CanvasRenderingContext2D} context - Rendering context
+ * @param {string} color - CSS style color
+ * @param {Vector2} size - Width and height in pixels
+ * @param {Vector2} pos - Top-left corner position in pixels
+ */
+var drawRec = R.curry(function(context, color, size, pos) {
+  context.fillStyle = color;
+  context.fillRect(pos.x, pos.y, size.x, size.y);
+})(c);
+
+drawRec('rgba(255, 170, 200, 0.5)', vec(80, 80), vec(35, 30));
+
+c.fillStyle = 'rgba(200, 255, 170, 0.7)';
 c.fillRect(10, 10, 80, 80);
