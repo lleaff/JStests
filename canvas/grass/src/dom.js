@@ -7,4 +7,4 @@ var getAttr = R.invoker(1, 'attr');
 var setAttr = R.invoker(2, 'attr');
 
 var width = getCss('width');
-
+var height = getCss('height');
