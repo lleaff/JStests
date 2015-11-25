@@ -1,14 +1,15 @@
 /*global $, R*/
 
 function createCanvas() {
-  var canvas = $('<canvas>', {
-    id: 'mainCanvas'
+  var canvas = setAttr(document.createElement('canvas'),
+					   'id', 'mainCanvas');
+  /*.attr({
+	'width':  '600px',
+	'height': '350px'
   }).css({
-    'width'            : '500px',
-    'height'           : '300px',
-    'border'           : '1px solid #eeeeee',
-    'margin'           : '0 auto'
-  });
+    'border': '1px solid #eeeeee',
+    'margin': '0 auto'
+  });*/
   return canvas;
 }
 
@@ -19,9 +20,9 @@ var vec = function vector2(x, y) {
 
 /*------------------------------------------------------------*/
 
-var canvas = createCanvas().appendTo('body');
+var canvas = createCanvas();
 
-var c = canvas[0].getContext('2d');
+var c = canvas.getContext('2d');
 
 c.imageSmoothingEnabled = false;
 

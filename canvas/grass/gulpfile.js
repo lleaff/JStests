@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat'); // sourcemaps
+//var order = require('gulp-order');
 var R = require('ramda');
 
 var babel = require('gulp-babel'); // sourcemaps
@@ -31,6 +32,7 @@ var libsDir = '../../libs/';
 var srcGlob = R.concat(dirSrc);
 
 var jsFiles = [
+	'utils.js',
 	'!(main)*.js',
 	'main.js',
   '!!!flycheck_*' /* emacs tmp files */
@@ -54,8 +56,9 @@ gulp.task('otherFiles', function () {
 
 gulp.task('js', function () {
 	return gulp.src(jsFiles)
+	  //.pipe(debug())
 		.pipe(sourcemaps.init())
-      .pipe(concat('all.js'))
+			.pipe(concat('all.js'))
 			.pipe(babel())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(dirDist));
