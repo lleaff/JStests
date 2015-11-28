@@ -38,7 +38,7 @@ gulp.task('js', function() {
     .pipe(gulp.dest(paths.destDir));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.html, ['html']);
 });

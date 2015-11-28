@@ -1,8 +1,8 @@
-/*global $, R*/
-
 function createCanvas() {
   var canvas = setAttr(document.createElement('canvas'),
-					   'id', 'mainCanvas');
+					             'id', 'mainCanvas',
+                       'width', '600px',
+                       'height', '350px');
   /*.attr({
 	'width':  '600px',
 	'height': '350px'
@@ -21,6 +21,7 @@ var vec = function vector2(x, y) {
 /*------------------------------------------------------------*/
 
 var canvas = createCanvas();
+document.body.appendChild(canvas);
 
 var c = canvas.getContext('2d');
 

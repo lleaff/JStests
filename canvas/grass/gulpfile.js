@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat'); // sourcemaps
 //var order = require('gulp-order');
@@ -27,6 +28,7 @@ var negateMaybe = R.curry(function (str, fn) {
 
 var dirSrc  = './src/';
 var dirDist = './dist/';
+var dirSourcemaps = './sourcemaps/';
 var libsDir = '../../libs/';
 
 var srcGlob = R.concat(dirSrc);
@@ -60,7 +62,7 @@ gulp.task('js', function () {
 		.pipe(sourcemaps.init())
 			.pipe(concat('all.js'))
 			.pipe(babel())
-		.pipe(sourcemaps.write())
+		.pipe(sourcemaps.write(dirSourcemaps))
 		.pipe(gulp.dest(dirDist));
 });
 
@@ -69,7 +71,7 @@ gulp.task('jsLibs', function () {
 		.pipe(gulp.dest(dirDist + 'libs'));
 });
 
-gulp.task('watch', function () {
-	gulp.watch(jsFiles, ['js']);
-	gulp.watch(otherFiles, ['otherFiles']);
+gulp.task('watch', ['build'], function () {
+  gulp.watch(jsFiles, ['js']);
+  gulp.watch(otherFiles, ['otherFiles']);
 });

@@ -2,5 +2,11 @@
     "env": {
         "es6": true,
         "browser": true
+    },
+    "plugins": [
+        "ramda"
+    ],
+    "rules": {
+        "ramda/prefer-reject": 2
     }
 }
