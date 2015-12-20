@@ -1,0 +1,12 @@
+{
+    "libs": [
+        "browser"
+    ],
+    "loadEagerly": [
+        "./testjs.js",
+        "./ramdaForTern.js"
+    ],
+    "plugins": {
+        "doc_comment": {}
+    }
+}
