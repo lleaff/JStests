@@ -7,32 +7,30 @@ var equalsW = R.curry(function (val1, val2) {
 });
 
 /*------------------------------------------------------------*/
-
-var isFunction = function isFunction(a) {
-  return typeof a === 'function';
-};
-var whenFunction = R.when(isFunction);
-var ifFunction = R.ifElse(isFunction);
-
-var fluentize = R.curry(function (length, methStr) {
-  return function (obj) {
-    var args = R.concat(R.slice(1, R.length(arguments), arguments), [obj]);
-    return R.apply(R.compose(R.always(obj), R.invoker(length, methStr)), args);
-  };
-});
-
-/*global $, R*/
-
 /**
  * @param {number} length: Arity of fn.
  * @param {array} args - List of arguments which will be split in arrays of
  *  'length' length.
  */
 var repeatApply = R.curry(function (length, fn, args) {
-  return map(R.aperture(length), R.apply(fn));
+  return R.map(R.apply(fn), R.splitEvery(length, args));
 });
 
 var repeatCall = R.partial(R.compose(R.apply(repeatApply), R.concat));
+
+/*------------------------------------------------------------*/
+
+var whenFunction = R.when(R.is(Function));
+var ifFunction = R.ifElse(R.is(Function));
+
+var fluentize = R.curry(function (length, methStr) {
+  return function (obj) {
+    var args = R.concat(R.slice(1, R.length(arguments), arguments), [obj]);
+    return R.head(repeatApply(length, R.compose(R.always(obj), R.invoker(length, methStr)), args));
+  };
+});
+
+/*global $, R*/
 
 var getCss = R.invoker(1, 'style');
 var setCss = fluentize(2, 'style');
@@ -56,8 +54,13 @@ function createCanvas() {
 }
 
 /*------------------------------------------------------------*/
-var vec = function vector2(x, y) {
-  return { x: x, y: y };
+function Vector2(x, y) {
+  this.x = x;
+  this.y = y;
+};
+
+var vec = function vec(x, y) {
+  return new Vector2(x, y);
 };
 
 /*------------------------------------------------------------*/
@@ -70,6 +73,7 @@ var c = canvas.getContext('2d');
 c.imageSmoothingEnabled = false;
 
 /**
+ * Draw rectangle with fillRect
  * @param {CanvasRenderingContext2D} context - Rendering context
  * @param {string} color - CSS style color
  * @param {Vector2} size - Width and height in pixels

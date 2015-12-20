@@ -15,8 +15,7 @@
         "ramda": "^0.18.0"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "while true; do gulp watch; done"
+        "watch": "while true; do gulp watch; done"
     },
     "author": "lleaff",
     "license": "ISC"

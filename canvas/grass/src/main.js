@@ -14,8 +14,13 @@ function createCanvas() {
 }
 
 /*------------------------------------------------------------*/
-var vec = function vector2(x, y) {
-  return { x: x, y: y };
+function Vector2(x, y) {
+  this.x = x;
+  this.y = y;
+};
+
+var vec = function(x, y) {
+  return new Vector2(x, y);
 };
 
 /*------------------------------------------------------------*/
@@ -28,6 +33,7 @@ var c = canvas.getContext('2d');
 c.imageSmoothingEnabled = false;
 
 /**
+ * Draw rectangle with fillRect
  * @param {CanvasRenderingContext2D} context - Rendering context
  * @param {string} color - CSS style color
  * @param {Vector2} size - Width and height in pixels

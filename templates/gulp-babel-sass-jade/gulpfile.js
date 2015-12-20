@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel'); // sourcemaps
+var sass = require('gulp-sass'); // sourcemaps
+var jade = require('gulp-jade');
 
 //------------------------------------------------------------
 var concat = (a, b) => a.concat(b);
@@ -31,6 +33,7 @@ gulp.task('build', ['js', 'html', 'css'], function() {
 
 gulp.task('html', function() {
   return gulp.src(paths.html)
+        .pipe(jade(cfg.jade))
     .pipe(gulp.dest(paths.destDir));
 });
 
@@ -42,15 +45,16 @@ gulp.task('js', function() {
     .pipe(gulp.dest(paths.destDir));
 });
 
-gulp.task('css', function() {
-  return gulp.src(paths.css)
+gulp.task('sass', function() {
+  return gulp.src(paths.sass)
     .pipe(sourcemaps.init())
+        .pipe(sass(cfg.sass))
     .pipe(sourcemaps.write(paths.sourcemaps))
     .pipe(gulp.dest(paths.destDir));
 });
 
 gulp.task('watch', ['build'], function() {
   gulp.watch(paths.js, ['js']);
-  gulp.watch(paths.html, ['html']);
-  gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.jade, ['jade']);
+  gulp.watch(paths.sass, ['sass']);
 });
