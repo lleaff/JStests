@@ -373,9 +373,13 @@ function updateViews() {
 
 var arcUpdateTimeInput = document.getElementsByClassName('arcUpdateTime')[0];
 
+function fpsToMs(fps) {
+  return fps ? 1000 / fps : fps;
+}
+
 Object.defineProperty(arc, 'updateTime', {
   get: function get() {
-    return Math.abs(Number(arcUpdateTimeInput.value));
+    return fpsToMs(Number(arcUpdateTimeInput.value));
   }
 });
 Object.defineProperty(arc, 'stepAmount', {
