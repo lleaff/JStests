@@ -314,17 +314,15 @@ function closestDistanceFromRectangleSide(rectangle, point) {
   return Math.min(Math.abs(rectangle[0].x - point.x), Math.abs(rectangle[0].y - point.y), Math.abs(rectangle[1].x - point.x), Math.abs(rectangle[1].y - point.y));
 }
 
-function drawMyArc(center, radius) {
-  c.beginPath();
-  c.arc(center.x, center.y, p(radius, 100), pc(0), pc(75));
-  c.stroke();
-}
-
 var arc = new Arc(vec(pw(50), ph(50)), 0, pc(80), pc(90));
 
-arc.step = function (rad) {
+arc.calculateRadius = function () {
   var maxContainedRadius = closestDistanceFromRectangleSide(line(vec(0, 0), vec(W, H)), this.center) - 2;
   this.radius = maxContainedRadius;
+};
+
+arc.step = function (rad) {
+  arc.calculateRadius();
   this.mapStartEnd(add(rad));
 };
 
@@ -448,6 +446,7 @@ canvas.addEventListener('click', function (e) {
   fixedCenter = mousePos(e);
   if (!arcUpdateInterval) {
     arc.center = fixedCenter;
+    arc.calculateRadius();
     scene.draw();
   }
 });
