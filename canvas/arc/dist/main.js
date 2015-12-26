@@ -31,7 +31,6 @@ var div = function div(x, y) {
 };
 
 function zipWithObj(f, a, b) {
-  //console.log('f:', f, 'a:', a, 'b:', b);//DEBUG
   function zipWithObjF(a, b) {
     function zipWithObjFA(b) {
       var newObj = a.prototype ? Object.create(a.prototype) : {};
@@ -178,6 +177,28 @@ function line(a, b) {
 
 /*------------------------------------------------------------*/
 
+function drawCross() {
+  var ctx = arguments.length <= 0 || arguments[0] === undefined ? ctx : arguments[0];
+  var width = arguments.length <= 1 || arguments[1] === undefined ? 5 : arguments[1];
+  var point = arguments[2];
+  var slanted = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
+
+  var s = width / 2;
+  if (slanted) {
+    ctx.moveTo(point.x - s, point.y - s);
+    ctx.lineTo(point.x + s, point.y + s);
+    ctx.moveTo(point.x + s, point.y - s);
+    ctx.lineTo(point.x - s, point.y + s);
+  } else {
+    ctx.moveTo(point.x - s, point.y);
+    ctx.lineTo(point.x + s, point.y);
+    ctx.moveTo(point.x, point.y - s);
+    ctx.lineTo(point.x, point.y + s);
+  }
+}
+
+/*------------------------------------------------------------*/
+
 var wrapRadian = wrap(0, Math.PI * 2);
 
 var Arc = (function () {
@@ -224,14 +245,15 @@ var Arc = (function () {
     value: function draw() {
       var ctx = arguments.length <= 0 || arguments[0] === undefined ? ctx : arguments[0];
 
-      ctx.beginPath();
       ctx.arc(this.center.x, this.center.y, this.radius, this.start, this.end);
+      drawCross(ctx, 7, this.center);
     }
   }, {
     key: 'stroke',
     value: function stroke() {
       var ctx = arguments.length <= 0 || arguments[0] === undefined ? ctx : arguments[0];
 
+      ctx.beginPath();
       this.draw(ctx);
       ctx.stroke();
     }
@@ -262,6 +284,14 @@ var Arc = (function () {
 })();
 
 /*------------------------------------------------------------*/
+
+function canvasMousePos(canvas, e) {
+  var rect = canvas.getBoundingClientRect();
+  function canvasMousePosCanvas(e) {
+    return vec(e.clientX - rect.left, e.clientY - rect.top);
+  }
+  return e === undefined ? canvasMousePosCanvas : canvasMousePosCanvas(e);
+}
 
 function clearCanvas() {
   var ctx = arguments.length <= 0 || arguments[0] === undefined ? ctx : arguments[0];
@@ -303,9 +333,15 @@ arc.step = function (rad) {
 var arcStep = 0.1;
 
 var scene = {};
+var drawCalls = [];
 
 scene.draw = function () {
   clearCanvas(c);
+  for (var key in drawCalls) {
+    drawCalls[key]();
+  }
+  drawCalls = [];
+  c.strokeStyle = '#000';
   arc.stroke(c);
 };
 
@@ -315,6 +351,8 @@ scene.step = function () {
 };
 
 /*------------------------------------------------------------*/
+
+var mousePos = canvasMousePos(canvas);
 
 var afterComma = 3;
 var cropNum = cropNumAt(afterComma);
@@ -352,15 +390,20 @@ var turnOnArcUpdate = function turnOnArcUpdate(timeInterval) {
   if (arcUpdateInterval) {
     clearInterval(arcUpdateInterval);
   }
-  arcUpdateInterval = setInterval(function () {
-    scene.step();
-  }, timeInterval);
+  if (timeInterval) {
+    arcUpdateInterval = setInterval(function () {
+      scene.step();
+    }, timeInterval);
+  }
+};
+var turnOffArcUpdate = function turnOffArcUpdate() {
+  clearInterval(arcUpdateInterval);
+  arcUpdateInterval = undefined;
 };
 
 var toggleArcUpdate = function toggleArcUpdate(timeInterval) {
   if (arcUpdateInterval) {
-    clearInterval(arcUpdateInterval);
-    arcUpdateInterval = undefined;
+    turnOffArcUpdate();
   } else {
     turnOnArcUpdate(timeInterval);
   }
@@ -385,11 +428,33 @@ function sliderChangeListener(e) {
 sliderStart.addEventListener('input', sliderChangeListener);
 sliderEnd.addEventListener('input', sliderChangeListener);
 
-canvas.addEventListener('click', function () {
-  toggleArcUpdate(arc.updateTime);
+sliderStart.addEventListener('change', function () {
+  turnOnArcUpdate(arc.updateTime);
+});
+sliderEnd.addEventListener('change', function () {
+  turnOnArcUpdate(arc.updateTime);
 });
 
 arcUpdateTimeInput.addEventListener('change', function () {
-  turnOnArcUpdate(arc.updateTime);
+  if (arc.updateTime) {
+    turnOnArcUpdate(arc.updateTime);
+  } else {
+    turnOffArcUpdate();
+  }
+});
+
+canvas.addEventListener('click', function (e) {
+  arc.center = mousePos(e);
+  if (!arcUpdateInterval) {
+    scene.draw();
+  }
+});
+canvas.addEventListener('mousemove', function (e) {
+  drawCalls['mousemoveCross'] = function () {
+    c.beginPath();
+    drawCross(c, 10, mousePos(e), false);
+    c.strokeStyle = '#f00';
+    c.stroke();
+  };
 });
 //# sourceMappingURL=sourcemaps/main.js.map

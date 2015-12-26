@@ -25,7 +25,6 @@ var div  = function(x, y) {
 };
 
 function zipWithObj(f, a, b) {
-  //console.log('f:', f, 'a:', a, 'b:', b);//DEBUG
   function zipWithObjF(a, b) {
     function zipWithObjFA(b) {
       var newObj = a.prototype ? Object.create(a.prototype) : {};
@@ -154,6 +153,23 @@ function line(a, b) {
 
 /*------------------------------------------------------------*/
 
+function drawCross(ctx = ctx, width = 5, point, slanted = true) {
+  var s = width / 2;
+  if (slanted) {
+    ctx.moveTo(point.x - s, point.y - s);
+    ctx.lineTo(point.x + s, point.y + s);
+    ctx.moveTo(point.x + s, point.y - s);
+    ctx.lineTo(point.x - s, point.y + s);
+  } else {
+    ctx.moveTo(point.x - s, point.y);
+    ctx.lineTo(point.x + s, point.y);
+    ctx.moveTo(point.x, point.y - s);
+    ctx.lineTo(point.x, point.y + s);
+  }
+}
+
+/*------------------------------------------------------------*/
+
 var wrapRadian = wrap(0, Math.PI * 2);
 
 class Arc {
@@ -202,11 +218,12 @@ class Arc {
   }
 
   draw(ctx = ctx) {
-    ctx.beginPath();
     ctx.arc(this.center.x, this.center.y, this.radius, this.start, this.end);
+    drawCross(ctx, 7, this.center);
   }
 
   stroke(ctx = ctx) {
+    ctx.beginPath();
     this.draw(ctx);
     ctx.stroke();
   }
@@ -216,6 +233,15 @@ class Arc {
 }
 
 /*------------------------------------------------------------*/
+
+function canvasMousePos(canvas, e) {
+  var rect = canvas.getBoundingClientRect();
+  function canvasMousePosCanvas(e) {
+    return vec(e.clientX - rect.left,
+               e.clientY - rect.top);
+  }
+  return e === undefined ? canvasMousePosCanvas : canvasMousePosCanvas(e);
+}
 
 function clearCanvas(ctx = ctx) {
   ctx.clearRect(0, 0, W, H);
@@ -260,9 +286,13 @@ arc.step = function(rad) {
 var arcStep = 0.1;
 
 var scene = {};
+var drawCalls = [];
 
 scene.draw = function() {
   clearCanvas(c);
+  for (let key in drawCalls) { drawCalls[key](); }
+  drawCalls = [];
+  c.strokeStyle = '#000';
   arc.stroke(c);
 };
 
@@ -273,6 +303,8 @@ scene.step = function() {
 
 
 /*------------------------------------------------------------*/
+
+var mousePos = canvasMousePos(canvas);
 
 var afterComma = 3;
 var cropNum = cropNumAt(afterComma);
@@ -310,15 +342,20 @@ var turnOnArcUpdate = function(timeInterval) {
   if (arcUpdateInterval) {
     clearInterval(arcUpdateInterval);
   }
-  arcUpdateInterval = setInterval(function() {
-    scene.step();
-  }, (timeInterval));
+  if (timeInterval) {
+    arcUpdateInterval = setInterval(function() {
+      scene.step();
+    }, (timeInterval));
+  }
+};
+var turnOffArcUpdate = function() {
+  clearInterval(arcUpdateInterval);
+  arcUpdateInterval = undefined;
 };
 
 var toggleArcUpdate = function(timeInterval) {
   if (arcUpdateInterval) {
-    clearInterval(arcUpdateInterval);
-    arcUpdateInterval = undefined;
+    turnOffArcUpdate();
   } else {
     turnOnArcUpdate(timeInterval);
   }
@@ -343,10 +380,32 @@ function sliderChangeListener(e) {
 sliderStart.addEventListener('input', sliderChangeListener);
 sliderEnd.addEventListener('input', sliderChangeListener);
 
-canvas.addEventListener('click', function() {
-  toggleArcUpdate(arc.updateTime);
+sliderStart.addEventListener('change', function() {
+  turnOnArcUpdate(arc.updateTime);
+});
+sliderEnd.addEventListener('change', function() {
+  turnOnArcUpdate(arc.updateTime);
 });
 
 arcUpdateTimeInput.addEventListener('change', function() {
-  turnOnArcUpdate(arc.updateTime);
+  if (arc.updateTime) {
+    turnOnArcUpdate(arc.updateTime);
+  } else {
+    turnOffArcUpdate();
+  }
+});
+
+canvas.addEventListener('click', function(e) {
+  arc.center = mousePos(e);
+  if (!arcUpdateInterval) {
+    scene.draw();
+  }
+});
+canvas.addEventListener('mousemove', function(e) {
+  drawCalls['mousemoveCross'] = () => {
+    c.beginPath();
+    drawCross(c, 10, mousePos(e), false);
+    c.strokeStyle = '#f00';
+    c.stroke();
+  };
 });
