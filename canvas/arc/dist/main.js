@@ -57,8 +57,14 @@ function zipWithObj(f, a, b) {
 var canvas = document.getElementById('canvas');
 
 var c = canvas.getContext('2d');
-var W = canvas.getAttribute('width');
-var H = canvas.getAttribute('height');
+//var W = canvas.getAttribute('width');
+//var H = canvas.getAttribute('height');
+Object.defineProperty(window, 'W', { get: function get() {
+    return canvas.getAttribute('width');
+  } });
+Object.defineProperty(window, 'H', { get: function get() {
+    return canvas.getAttribute('height');
+  } });
 
 /*------------------------------------------------------------*/
 
@@ -286,8 +292,8 @@ var Arc = (function () {
 /*------------------------------------------------------------*/
 
 function canvasMousePos(canvas, e) {
-  var rect = canvas.getBoundingClientRect();
   function canvasMousePosCanvas(e) {
+    var rect = canvas.getBoundingClientRect();
     return vec(e.clientX - rect.left, e.clientY - rect.top);
   }
   return e === undefined ? canvasMousePosCanvas : canvasMousePosCanvas(e);
@@ -469,5 +475,12 @@ canvas.addEventListener('mousemove', function (e) {
 });
 canvas.addEventListener('mouseleave', function (e) {
   arc.center = fixedCenter;
+});
+
+document.getElementById('canvasWidth').addEventListener('input', function (e) {
+  canvas.setAttribute('width', e.target.value);
+});
+document.getElementById('canvasHeight').addEventListener('input', function (e) {
+  canvas.setAttribute('height', e.target.value);
 });
 //# sourceMappingURL=sourcemaps/main.js.map

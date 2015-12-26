@@ -49,8 +49,10 @@ function zipWithObj(f, a, b) {
 var canvas = document.getElementById('canvas');
 
 var c = canvas.getContext('2d');
-var W = canvas.getAttribute('width');
-var H = canvas.getAttribute('height');
+//var W = canvas.getAttribute('width');
+//var H = canvas.getAttribute('height');
+Object.defineProperty(window, 'W', { get: () => canvas.getAttribute('width') });
+Object.defineProperty(window, 'H', { get: () => canvas.getAttribute('height') });
 
 /*------------------------------------------------------------*/
 
@@ -235,8 +237,8 @@ class Arc {
 /*------------------------------------------------------------*/
 
 function canvasMousePos(canvas, e) {
-  var rect = canvas.getBoundingClientRect();
   function canvasMousePosCanvas(e) {
+    var rect = canvas.getBoundingClientRect();
     return vec(e.clientX - rect.left,
                e.clientY - rect.top);
   }
@@ -419,4 +421,11 @@ canvas.addEventListener('mousemove', function(e) {
 });
 canvas.addEventListener('mouseleave', function(e) {
   arc.center = fixedCenter;
+});
+
+document.getElementById('canvasWidth').addEventListener('input', function(e) {
+  canvas.setAttribute('width', e.target.value);
+});
+document.getElementById('canvasHeight').addEventListener('input', function(e) {
+  canvas.setAttribute('height', e.target.value);
 });
