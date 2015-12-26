@@ -1,0 +1,100 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Breakout
+    style.
+        body, html {
+            padding: 0; margin: 0;
+            width: 100%; height: 100%;
+        }
+        body {
+            display: table;
+        }
+        #canvasWrapper {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+        #canvas {
+            background: #eee;
+            border: 1px solid #e0e0e0;
+            display: inline;
+            margin: 0 auto;
+        }
+        .panels {
+            display: table;
+            margin: 0 auto;
+        }
+        .panel {
+            display: table-row;
+            height: 1.5rem;
+        }
+        .panel .slider {
+            width: 480px;
+            height: 1em;
+        }
+        .panel .label {
+            display: table-cell;
+        }
+        .panel .input {
+            display: table-cell;
+        }
+        .panel .view {
+            display: table-cell;
+            font-family: monospace;
+            width: 5em;
+            color: #555;
+            text-align: left;
+            padding-left: 1em;
+        }
+        .objects {
+          float: left;
+        }
+        .objects .view {
+          display: table;
+        }
+        .objects .entry {
+          display: table-row;
+        }
+        .objects .label {
+          display: table-cell;
+        }
+        .objects .value {
+          display: table-cell;
+          padding-left: 1em;
+          text-align: left;
+          width: 5em;
+          color: #555;
+        }
+        
+        
+          
+  body
+    #canvasWrapper
+      canvas#canvas(width='480', height='320')
+      .objects
+        #arcView.view
+            h1.title arc
+            div.entry
+                span.label start
+                span.value.start
+            div.entry
+                span.label end: 
+                span.value.end
+      .panels
+        .panel
+            label.label(for='sliderStart') start:
+            .view#sliderStartView
+            input.input.slider#sliderStart(type='range', min='-4000', max='9000', step='50', data-prop='start')
+        .panel
+            label.label(for='sliderEnd') end:
+            .view#sliderEndView
+            input.input.slider#sliderEnd(type='range', min='-4000', max='9000', step='50', data-prop='end')
+        .panel
+            label.label Update time:
+            input.input.arcUpdateTime(type='number', value='50', step='10')
+        .panel
+            label.label Step:
+            input.input.arcUpdateStep(type='number', value='0.1', step='0.01')
+    script(src='main.js')

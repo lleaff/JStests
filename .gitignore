@@ -6,6 +6,9 @@ node_modules
 *.out
 *.o
 
+#Emacs auto completion
+flycheck_* 
+
 #Vim temp files
 *.swp
 *.swo
