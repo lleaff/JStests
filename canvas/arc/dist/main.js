@@ -245,7 +245,7 @@ var Arc = (function () {
     value: function draw() {
       var ctx = arguments.length <= 0 || arguments[0] === undefined ? ctx : arguments[0];
 
-      ctx.arc(this.center.x, this.center.y, this.radius, this.start, this.end);
+      ctx.arc(this.center.x, this.center.y, Math.max(1, this.radius), this.start, this.end);
       drawCross(ctx, 7, this.center);
     }
   }, {
@@ -443,18 +443,25 @@ arcUpdateTimeInput.addEventListener('change', function () {
   }
 });
 
+var fixedCenter = arc.center;
 canvas.addEventListener('click', function (e) {
-  arc.center = mousePos(e);
+  fixedCenter = mousePos(e);
   if (!arcUpdateInterval) {
+    arc.center = fixedCenter;
     scene.draw();
   }
 });
 canvas.addEventListener('mousemove', function (e) {
-  drawCalls['mousemoveCross'] = function () {
-    c.beginPath();
-    drawCross(c, 10, mousePos(e), false);
-    c.strokeStyle = '#f00';
-    c.stroke();
-  };
+  var pos = mousePos(e);
+  arc.center = pos;
+  //drawCalls['mousemoveCross'] = () => {
+  //  c.beginPath();
+  //  drawCross(c, 10, pos, false);
+  //  c.strokeStyle = '#f00';
+  //  c.stroke();
+  //};
+});
+canvas.addEventListener('mouseleave', function (e) {
+  arc.center = fixedCenter;
 });
 //# sourceMappingURL=sourcemaps/main.js.map
