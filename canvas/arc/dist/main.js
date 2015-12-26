@@ -354,7 +354,6 @@ var turnOnArcUpdate = function turnOnArcUpdate(timeInterval) {
   }
   arcUpdateInterval = setInterval(function () {
     scene.step();
-    updateViews();
   }, timeInterval);
 };
 
@@ -369,7 +368,6 @@ var toggleArcUpdate = function toggleArcUpdate(timeInterval) {
 toggleArcUpdate(arc.updateTime);
 
 function sliderChangeListener(e) {
-  /* extern: scene, arc, updateInterval */
   clearInterval(arcUpdateInterval);
 
   var slider = e.target;
