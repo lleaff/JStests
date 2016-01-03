@@ -23,7 +23,8 @@ paths.css = ['**.css'].map(toSrc);
 
 var cfg = {};
 cfg.babel = {
-  presets: [ "es2015"]
+  presets: [ "es2015"],
+  plugins: [ "transform-class-properties" ]
 };
 
 //------------------------------------------------------------

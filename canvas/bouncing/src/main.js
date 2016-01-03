@@ -1,6 +1,24 @@
 /*global R*/
 Object.assign(window, R);
 
+/* =OO utils
+ *------------------------------------------------------------*/
+
+var mergeWithThis = curry(function(fn, other) {
+  return mergeWith(fn, this, other);
+});
+
+function mkClass(constructorFn, prototypeObj) {
+  constructorFn.prototype = prototypeObj;
+  function factory() {
+    return new (Function.prototype.bind.apply(
+      constructorFn,
+      [constructorFn].concat(Array.prototype.slice.call(arguments))));
+  }
+  factory._class = constructorFn;
+  return factory;
+};
+
 /*------------------------------------------------------------*/
 
 var IO = {};
@@ -25,26 +43,16 @@ IO.setUpPage = (canvas) => {
 
 /*------------------------------------------------------------*/
 
-class Vec {
-  constructor(x, y) {
+var vec = mkClass(
+  function Vec(x, y) {
     this.x = x;
     this.y = y;
+  },
+  {
+    add: mergeWithThis(add),
+    mult: mergeWithThis(multiply)
   }
-
-  map(f) {
-    return new Vec(f(this.x), f(this.y));
-  }
-  mapVec(f, vec) {
-    return new Vec(f(this.x, vec.x), f(this.y, vec.y));
-  }
-
-  add(vec) {
-    return this.mapVec(add, vec);
-  }
-  mult(vec) {
-    return this.mapVec(mult, vec);
-  }
-}
+);
 
 /* =Execution
  *------------------------------------------------------------*/

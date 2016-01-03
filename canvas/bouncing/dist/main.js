@@ -1,11 +1,23 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 /*global R*/
 Object.assign(window, R);
+
+/* =OO utils
+ *------------------------------------------------------------*/
+
+var mergeWithThis = curry(function (fn, other) {
+  return mergeWith(fn, this, other);
+});
+
+function mkClass(constructorFn, prototypeObj) {
+  constructorFn.prototype = prototypeObj;
+  function factory() {
+    return new (Function.prototype.bind.apply(constructorFn, [constructorFn].concat(Array.prototype.slice.call(arguments))))();
+  }
+  factory._class = constructorFn;
+  return factory;
+};
 
 /*------------------------------------------------------------*/
 
@@ -35,62 +47,16 @@ IO.setUpPage = function (canvas) {
 
 /*------------------------------------------------------------*/
 
-var Vec = (function () {
-  function Vec(x, y) {
-    _classCallCheck(this, Vec);
-
-    this.x = x;
-    this.y = y;
-  }
-
-  _createClass(Vec, [{
-    key: 'map',
-    value: function map(f) {
-      return new Vec(f(this.x), f(this.y));
-    }
-  }, {
-    key: 'mapVec',
-    value: function mapVec(f, vec) {
-      return new Vec(f(this.x, vec.x), f(this.y, vec.y));
-    }
-  }, {
-    key: 'add',
-    value: (function (_add) {
-      function add(_x) {
-        return _add.apply(this, arguments);
-      }
-
-      add.toString = function () {
-        return _add.toString();
-      };
-
-      return add;
-    })(function (vec) {
-      return this.mapVec(add, vec);
-    })
-  }, {
-    key: 'mult',
-    value: (function (_mult) {
-      function mult(_x2) {
-        return _mult.apply(this, arguments);
-      }
-
-      mult.toString = function () {
-        return _mult.toString();
-      };
-
-      return mult;
-    })(function (vec) {
-      return this.mapVec(mult, vec);
-    })
-  }]);
-
-  return Vec;
-})();
+var vec = mkClass(function Vec(x, y) {
+  this.x = x;
+  this.y = y;
+}, {
+  add: mergeWithThis(add),
+  mult: mergeWithThis(multiply)
+});
 
 /* =Execution
  *------------------------------------------------------------*/
-
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
