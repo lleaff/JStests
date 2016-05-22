@@ -9,6 +9,9 @@ var middle = { x: width * 0.5, y: height * 0.5 };
 var topLeft = { x: width * 0.25, y: height * 0.25 };
 var bottomRight = { x: width * 0.75, y: height * 0.75 };
 
+
+
+
 function drawCross(topLeft, bottomRight) {
   var topRight = { x: bottomRight.x, y: topLeft.y };
   var bottomLeft = { x: topLeft.x, y: bottomRight.y };
@@ -34,3 +37,21 @@ var addVecs2d = function(v1, v2) { return { x: v1.x + v2.x, y: v1.y + v2.y }; };
 
 drawCrossAt(addVecs2d(middle, { x: 0, y: 5 }), width * 0.45);
 drawCrossAt(addVecs2d(middle, { x: 0, y: -5 }), width * 0.45);
+
+var drawLine = function(from, to) {
+  c.moveTo(from.x, from.y);
+  c.lineTo(to.x, to.y);
+};
+
+function drawCrossEcho(middle, width, echos, interval) {
+  var swidth = width * 0.5;
+
+  c.beginPath();
+  drawLine({ x: middle.x - swidth, y: middle.y - swidth},
+           { x: middle.x + swidth, y: middle.y + swidth});
+  drawLine({ x: middle.x + swidth, y: middle.y - swidth},
+           { x: middle.x - swidth, y: middle.y + swidth});
+  // TODO
+}
+
+drawCrossEcho(middle, width / 2, 2, 5);

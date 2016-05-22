@@ -1,0 +1,20 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #333;
+}
+
+#app {
+  display: block;
+  margin: 0 auto;
+}
+
+.sprite {
+  background: #fff;
+  display: block;
+  float: left;
+  margin: 1px;
+}

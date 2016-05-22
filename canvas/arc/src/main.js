@@ -267,17 +267,20 @@ function closestDistanceFromRectangleSide(rectangle, point) {
                   Math.abs(rectangle[1].y - point.y));
 }
 
-var arc = new Arc(vec(pw(50), ph(50)), 0, pc(0), pc(50));
+class prArc extends Arc {
+  calculateRadius() {
+    var maxContainedRadius = closestDistanceFromRectangleSide(line(vec(0,0), vec(W,H)), this.center) - 2;
+    this.radius = maxContainedRadius;
+  }
 
-arc.calculateRadius = function() {
-  var maxContainedRadius = closestDistanceFromRectangleSide(line(vec(0,0), vec(W,H)), this.center) - 2;
-  this.radius = maxContainedRadius;
-};
+  step(rad) {
+    arc.calculateRadius();
+    this.mapStartEnd(add(rad));
+  }
+}
 
-arc.step = function(rad) {
-  arc.calculateRadius();
-  this.mapStartEnd(add(rad));
-};
+var arc = new prArc(vec(pw(50), ph(50)), 0, pc(0), pc(50));
+
 
 /*------------------------------------------------------------*/
 

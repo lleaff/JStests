@@ -39,4 +39,20 @@ var addVecs2d = function addVecs2d(v1, v2) {
 
 drawCrossAt(addVecs2d(middle, { x: 0, y: 5 }), width * 0.45);
 drawCrossAt(addVecs2d(middle, { x: 0, y: -5 }), width * 0.45);
+
+var drawLine = function drawLine(from, to) {
+  c.moveTo(from.x, from.y);
+  c.lineTo(to.x, to.y);
+};
+
+function drawCrossEcho(middle, width, echos, interval) {
+  var swidth = width * 0.5;
+
+  c.beginPath();
+  drawLine({ x: middle.x - swidth, y: middle.y - swidth }, { x: middle.x + swidth, y: middle.y + swidth });
+  drawLine({ x: middle.x + swidth, y: middle.y - swidth }, { x: middle.x - swidth, y: middle.y + swidth });
+  // TODO
+}
+
+drawCrossEcho(middle, width / 2, 2, 5);
 //# sourceMappingURL=sourcemaps/main.js.map

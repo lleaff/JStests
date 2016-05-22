@@ -2,6 +2,10 @@
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var cropNumAt = function cropNumAt(at, num) {
@@ -320,17 +324,33 @@ function closestDistanceFromRectangleSide(rectangle, point) {
   return Math.min(Math.abs(rectangle[0].x - point.x), Math.abs(rectangle[0].y - point.y), Math.abs(rectangle[1].x - point.x), Math.abs(rectangle[1].y - point.y));
 }
 
-var arc = new Arc(vec(pw(50), ph(50)), 0, pc(0), pc(50));
+var prArc = (function (_Arc) {
+  _inherits(prArc, _Arc);
 
-arc.calculateRadius = function () {
-  var maxContainedRadius = closestDistanceFromRectangleSide(line(vec(0, 0), vec(W, H)), this.center) - 2;
-  this.radius = maxContainedRadius;
-};
+  function prArc() {
+    _classCallCheck(this, prArc);
 
-arc.step = function (rad) {
-  arc.calculateRadius();
-  this.mapStartEnd(add(rad));
-};
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(prArc).apply(this, arguments));
+  }
+
+  _createClass(prArc, [{
+    key: 'calculateRadius',
+    value: function calculateRadius() {
+      var maxContainedRadius = closestDistanceFromRectangleSide(line(vec(0, 0), vec(W, H)), this.center) - 2;
+      this.radius = maxContainedRadius;
+    }
+  }, {
+    key: 'step',
+    value: function step(rad) {
+      arc.calculateRadius();
+      this.mapStartEnd(add(rad));
+    }
+  }]);
+
+  return prArc;
+})(Arc);
+
+var arc = new prArc(vec(pw(50), ph(50)), 0, pc(0), pc(50));
 
 /*------------------------------------------------------------*/
 
