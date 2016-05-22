@@ -1,0 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #444;
+}
+
+#app {
+  display: block;
+  margin: 0 auto;
+}
