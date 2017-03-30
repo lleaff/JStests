@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <body>
+    <pre>
+      Expected console output:
+      1
+      2a
+      {ERROR}
+      3
+      {ERROR}
+      4
+    </pre>
+    <script>
+      console.log('1')
+    </script>
+    <script>
+      console.log('2a')
+      throw new Error('test')
+      console.log('2b')
+    </script>
+    <script>
+      console.log('3')
+    </script>
+    <script>
+      }
+    </script>
+    <script>
+      console.log('4')
+    </script>
+  </body>
+</html>
