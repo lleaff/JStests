@@ -12,12 +12,17 @@ app.use('*', (req, res, next) => {
   next();
 });
 
+app.use('/foobar', (req, res, next) => {
+  console.log(`use: /foobar`);
+  next();
+});
+
 app.get('/foobar', (req, res, next) => {
   console.log(`route: /foobar`);
   next();
 });
 
-app.get('*', (req, res) => {
+app.get('*', (req, res, next) => {
   console.log(`route: *`);
   res.send('nothing');
 });
